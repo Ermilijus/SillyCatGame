@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Virtual Cat Companion</title>
+
+
+<!-- ============================
+MAIN STYLESHEET
+This controls ALL visual appearance of the page
+============================ -->
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- INTRO / TUTORIAL OVERLAY -->
+<div id="introOverlay">
+  <div id="introBox">
+    <h1>Welcome to Cat Companion 🐾</h1>
+    <p>
+      Take care of your little digital kitty!  
+      Feed, play and love them or face their wrath 😼
+    </p>
+    <input type="text" id="catsName" placeholder="Name your Kitty :3" maxlength="12"/>
+    <button id="startBtn">Start</button>
+  </div>
+</div>
+
+<!-- ACHIEVEMENT DISPLAY OVERLAY -->
+<div class="achievementSection" id="achievementDisplay" style="display:none;">
+  <div class="achievementBox">
+    <h3 id="achievementTitle">Title</h3>
+    <p id="achievementDesc">Description</p>
+    <button id="achievementBtn">Yay!</button>
+  </div>
+</div>
+
+  <!-- INVENTORY OVERLAY -->
+  <div id="invOverlay" style="display:none;">
+    <div id="invBox">
+      <div id="invHeader">
+        <h2>Inventory</h2>
+        <button id="closeInvBtn" class="close-btn">✕</button>
+      </div>
+      <div id="invGrid"></div>
+    </div>
+  </div>
+
+  <!-- CONTEXT MENU FOR ITEMS -->
+<div id="itemContextMenu" class="item-context-menu" style="display:none; position:absolute; z-index:9999;">
+    <div class="ctx-item-info">
+    <div class="ctx-item-title" id="ctxItemTitle"></div>
+    <div class="ctx-item-desc" id="ctxItemDesc"></div>
+  </div>
+  <div class="ctx-actions">
+    <button class="ctx-buttons" id="ctxUseBtn">Use</button>
+    <button class="ctx-buttons" id="ctxCombineBtn">Combine</button>
+    <button id="ctxSellBtn" class="ctx-buttons">
+  <span id="ctxSellBtnText">Sell</span>
+  <span id="ctxSellBtnPrice"></span>
+</button>
+  </div>
+</div>
+
+<!-- SHOP OVERLAY -->
+<div id="shopOverlay" style="display:none;">
+  <div id="shopBox">
+    <div id="shopHeader">
+      <h2>Shop</h2>
+      <button id="closeShopBtn" class="close-btn">✕</button>
+    </div>
+    <div id="shopGrid"></div>
+  </div>
+</div>
+
+<!-- SHOP CONTEXT MENU -->
+<div id="shopContextMenu" class="item-context-menu" style="display:none;">
+  <div class="ctx-item-info">
+    <div class="ctx-item-title" id="shopCtxItemTitle"></div>
+    <div class="ctx-item-desc" id="shopCtxItemDesc"></div>
+    <div class="ctx-item-price" id="shopCtxItemPrice"></div>
+  </div>
+  <div class="ctx-actions">
+    <button id="shopBuyBtn" class="ctx-buttons">Buy</button>
+  </div>
+</div>
+
+
+<!-- =====================================================
+MAIN GAME CONTAINER
+This represents the "visible window" the user sees
+Soft modern card instead of harsh borders
+===================================================== -->
+<main id="game-container">
+
+<!----------------------- Debug START ---------------------------->
+<div class="debugButton">
+<button id="debugBtn" style="display:none;">Toggle Debug</button></div>
+<div id="debugMenu" style="display:none;">
+  <p>Debug Menu </p>
+
+  <!-- Stats -->
+  <div class="debug-section">
+    <button class="debug-section-toggle">Stats</button>
+    <div class="debug-section-content">
+      <button id="resetStats">Reset Stats</button>
+      <button id="addJoyBtn">Add 100 Joy</button>
+      <button id="reduceJoyBtn">Reduce 100 Joy</button>
+      <button id="addHungerBtn">Add 100 Hunger</button>
+      <button id="reduceHungerBtn">Reduce 100 Hunger</button>
+      <button id="addEnergyBtn">Add 100 Energy</button>
+      <button id="reduceEnergyBtn">Reduce 100 Energy</button>
+    </div>
+  </div>
+
+  <!-- Freeze Stats-->
+  <div class="debug-section">
+    <button class="debug-section-toggle">Freeze Stats</button>
+    <div class="debug-section-content">
+      <button id="freezeHungerBtn">Freeze Hunger</button>
+      <button id="freezeEnergyBtn">Freeze Energy</button>
+      <button id="freezeJoyBtn">Freeze Joy</button>
+    </div>
+  </div>
+
+<!-- Mood -->
+ <div class="debug-section">
+    <button class="debug-section-toggle">Mood</button>
+    <div class="debug-section-content">
+      <button id="setPlayfulBtn">Set Playful</button>
+      <button id="setGrumpyBtn">Set Grumpy</button>
+      <button id="setSleepyBtn">Set Sleepy</button>
+      <button id="setNeutralBtn">Set Neutral</button>
+    </div>
+  </div>
+
+  <!-- Items -->
+  <div class="debug-section">
+    <button class="debug-section-toggle">Items</button>
+    <div class="debug-section-content">
+      <button id="clearInventoryBtn">Clear Inventory</button>
+      <button id="addFoodBtn">Add Random Food</button>
+      <button id="addToyBtn">Add Random Toy</button>
+      <button id="addQuestBtn">Add Random Quest</button>
+      <button id="addMiscBtn">Add Random Misc</button>
+      <button id="addPowerupBtn">Add Random Powerup</button>
+      <button id="addTrophyBtn">Add Random Trophy</button>
+      <button id="addValuableBtn">Add Random Valuable</button>
+    </div>
+    </div>
+
+</div>
+<!----------------------- Debug END ---------------------------->
+
+<!-- =============================
+VISUAL CAT DISPLAY AREA
+(Red box concept - now styled cleanly)
+Where the cat image + expressions will live
+============================= -->
+<section id="cat-visual-area">
+<div id="cat-frame">
+<!-- Placeholder image - you can later swap this -->
+<img id="cat-image" src="https://i.imgur.com/FXC4zb2.gif" alt="Virtual Cat" />
+</div>
+</section>
+
+<div id="moodDisplay">Neutral</span></div>
+
+
+
+<!-- =============================
+DIALOGUE / TEXT AREA
+(Blue box concept - now modern pane)
+For story, emotions, and user prompts
+============================= -->
+<section id="dialogue-area">
+<p id="dialogue-text">Welcome to this little virtual cat game!,</p>
+</section>
+
+
+
+
+<!-- =============================
+CONTROL PANEL
+(Green box concept - now UI bar)
+Buttons, stats, interactions
+============================= -->
+<section id="control-panel">
+
+
+<!-- Example: put inside your control panel -->
+<div class="stat" data-stat="hunger">
+  <div class="stat-label">Hunger <span class="stat-value" id="hunger-value">30</span></div>
+  <div class="stat-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="30">
+    <div class="stat-fill" id="hungerBar"></div>
+  </div>
+</div>
+
+<div class="stat" data-stat="energy">
+  <div class="stat-label">Energy <span class="stat-value" id="energy-value">50</span></div>
+  <div class="stat-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+    <div class="stat-fill" id="energyBar"></div>
+  </div>
+</div>
+
+<div class="stat" data-stat="joy">
+  <div class="stat-label">Joy <span class="stat-value" id="joy-value">50</span></div>
+  <div class="stat-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100000" aria-valuenow="50">
+    <div class="stat-fill" id="joyBar"></div>
+  </div>
+</div>
+
+<!-- CAT STATS DISPLAY 
+<div id="stats">
+<div class="stat">Hunger: <span id="hunger-value">30</span></div>
+<div class="stat">Joy: <span id="joy-value">50</span></div>
+<div class="stat">Energy: <span id="energy-value">50</span></div>
+<div class="point">♥ <span id="love-value">0</span></div>
+</div>
+-->
+
+
+
+<!-- ACTION BUTTONS -->
+
+<div id="buttons">
+<button class="game-btn" id="feed-btn">Feed</button>
+<button class="game-btn" id="play-btn">Play</button>
+<button class="game-btn" id="rest-btn">Rest</button>
+</div>
+
+  <!--  inventory -->
+<div>
+  <button class="game-btn" id="invBtn">Inventory 📦</button>
+  <button class="game-btn" id="shopBtn">Shop 🛒</button>
+  <div id="coinsDisplay">
+    <span id="coinsValue">0</span>
+    <span class="coin-emoji">💰</span>
+  </div>
+</div>
+
+</section>
+
+
+</main>
+
+
+
+
+<!-- =====================================================
+JAVASCRIPT FILES
+Keep logic separated & organised
+===================================================== -->
+
+
+<!-- Handles cat mood & visual changes -->
+<script src="visual.js"></script>
+
+
+<!-- Handles UI buttons & interactions -->
+<script src="ui.js"></script>
+
+
+<!-- Handles dialogue and story flow -->
+<script src="dialogue.js"></script>
+
+<!-- Handles Achievements and Ending routes-->
+<script src="achievements.js"></script>
+
+<!-- Debug Menu-->
+<script src="debug.js"></script>
+
+<!-- Handles Inventory system -->
+<script src="items.js"></script>
+
+<!-- Notification Area -->
+<div id="notification-area"></div>
+
+
+</body>
+</html>

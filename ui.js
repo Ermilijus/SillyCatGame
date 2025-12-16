@@ -1,0 +1,155 @@
+/* ============================
+ui.js
+Handles buttons and stats
+============================ */
+
+const moodDisplay = document.getElementById('moodDisplay');
+const displayImage = document.getElementById('cat-image');
+const hungerValue = document.getElementById('hunger-value');
+const joyValue = document.getElementById('joy-value');
+const energyValue = document.getElementById('energy-value');
+const loveValue = document.getElementById('love-value');
+const catsNameInput = document.getElementById('catsName');
+let catsName = "Catoot";	//default name before user inputs their own name
+const feedBtn = document.getElementById('feed-btn');
+const playBtn = document.getElementById('play-btn');
+const restBtn = document.getElementById('rest-btn');
+
+
+let love = 0;	//initial stat values
+let energy = 50;
+let hunger = 50;
+let joy = 0;
+
+// =============================== Update all game state values and UI START ===============================
+function updateGameState() {
+  statsClamp();  //calls the function to clamp values within their min/max
+
+  updateStatBar('hunger', hunger);// update stat meters
+  updateStatBar('energy', energy);
+  updateJoyBar(joy); // joy bar remains custom
+  
+  achievmentTracker();  //calls the function from achievements.js to check for achievements
+}
+// =============================== Update all game state values and UI STOP ===============================
+
+
+  //clamp values to their max/min
+  function statsClamp() {
+  love = Math.max(0, Math.min(1000, love));
+  energy = Math.max(0, Math.min(100, energy));
+  hunger = Math.max(0, Math.min(100, hunger));
+  joy = Math.max(0, joy); // no upper limit
+  }
+
+// =============================== Button Event Listeners START ===============================
+document.getElementById('feed-btn').addEventListener('click', () => {
+  hungerUpdate(-20), energyUpdate(-6), joyUpdate(15);
+  updateGameState();
+  updateCatState();
+});
+document.getElementById('play-btn').addEventListener('click',  () => {
+  hungerUpdate(10), energyUpdate(-20), joyUpdate(25);
+  updateGameState();
+  updateCatState();
+});
+document.getElementById('rest-btn').addEventListener('click',  () => {
+  energyUpdate(30), hungerUpdate(5), joyUpdate(10);
+  updateGameState();
+  updateCatState();
+});
+// =============================== Button Event Listeners END ===============================
+
+// Functions to update stats with freeze checks
+function hungerUpdate(amount) {
+  if (freezeHunger) return;
+  hunger += amount;
+  if (hunger < 0) hunger = 0;
+  if (hunger > 100) hunger = 100;
+}
+function energyUpdate(amount) {
+  if (freezeEnergy) return;
+  energy += amount;
+  if (energy < 0) energy = 0;
+  if (energy > 100) energy = 100;
+}
+function joyUpdate(amount) {
+  if (freezeJoy) return;
+  joy += amount;
+  if (joy < 0) joy = 0;
+}
+
+/* =================================== CatState START ===================================*/
+let catState = "neutral";
+function updateCatState() {
+  if (energy >= 50 && hunger <= 20) {
+    moodPlayful();
+  } else if (energy <= 30) {
+    moodSleepy();
+  } else if (hunger >= 50 && energy <= 30) {
+    moodGrumpy();
+  } else {
+    moodNeutral();
+  }
+}
+
+ function moodPlayful() {
+    displayImage.src = "images/Cat-Playful.png";
+    catState = "playful";
+    moodDisplay.textContent = "Playful";
+}
+
+  function moodSleepy() {
+    displayImage.src = "images/Cat-Sleepy.png";
+    catState = "sleepy";
+    moodDisplay.textContent = "Sleepy";
+}
+
+  function moodGrumpy() {
+    displayImage.src = "images/Cat-Grumpy.png";
+    catState = "grumpy";
+    moodDisplay.textContent = "Grumpy";
+}
+
+  function moodNeutral() {
+    displayImage.src = "images/Cat-Neutral.png";
+    catState = "neutral";
+    moodDisplay.textContent = "Neutral";
+}
+
+/* =================================== CatState END ===================================*/
+
+// Button cooldown utility function
+function buttonCooldown(button, cooldownMs, action) {
+  if (button.disabled) return; // Prevent multiple clicks during cooldown
+
+  action();
+  button.disabled = true;
+  setTimeout(() => {
+    button.disabled = false;
+  }, cooldownMs);
+}
+
+  function disableAllButtons() {
+    feedBtn.disabled = true;
+    playBtn.disabled = true;
+    restBtn.disabled = true;
+  }
+  function enableAllButtons() {
+    feedBtn.disabled = false;
+    playBtn.disabled = false;
+    restBtn.disabled = false;
+  }
+
+let coins = 0; //initial coins value
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+updateGameState();  //initial call to set stats on page load 
+});

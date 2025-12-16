@@ -1,0 +1,148 @@
+
+let debug = false; // Set to true to enable debug mode
+
+// -----------------------------------------------
+
+const debugbtn = document.getElementById('debugBtn');
+const debugMenu = document.getElementById('debugMenu');
+
+function applyDebugVisibility() {
+    if (debug) {
+        debugbtn.style.display = 'block';
+    } else {
+        debugbtn.style.display = 'none';
+        debugMenu.style.display = 'none';
+    }
+}
+
+debugbtn.addEventListener('click', () => {
+    debugMenu.style.display = debugMenu.style.display === 'none' ? 'block' : 'none';
+});
+
+// Toggle debug mode with a keyboard shortcut ( Ctrl+F1 )
+document.addEventListener('keydown', (event) => {
+    if (event.ctrlKey && event.key === 'F1') {
+        debug = !debug;
+        applyDebugVisibility();
+    }
+});
+
+// -----------------------------------------------
+
+// Toggle each debug subsection
+document.querySelectorAll(".debug-section-toggle").forEach(toggleBtn => {
+  toggleBtn.addEventListener("click", () => {
+    const content = toggleBtn.nextElementSibling;
+
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+});
+
+// modify stats directly from debug menu --------------------------------------
+document.getElementById('resetStats').addEventListener('click', () => {
+  hunger = 50;
+  energy = 50;
+  joy = 0;
+  updateGameState();
+});
+document.getElementById('addJoyBtn').addEventListener('click', () => {
+  joy += 100;
+  updateGameState();
+});
+document.getElementById('reduceJoyBtn').addEventListener('click', () => {
+  joy -= 100;
+  updateGameState();
+});
+document.getElementById('addHungerBtn').addEventListener('click', () => {
+  hunger += 100;
+  updateGameState();
+});
+document.getElementById('reduceHungerBtn').addEventListener('click', () => {
+  hunger -= 100;
+  updateGameState();
+});
+document.getElementById('addEnergyBtn').addEventListener('click', () => {
+  energy += 100;
+  updateGameState();
+});
+document.getElementById('reduceEnergyBtn').addEventListener('click', () => {
+  energy -= 100;
+  updateGameState();
+});
+
+// freeze stats toggle --------------------------------------
+let freezeHunger = false;
+let freezeEnergy = false;
+let freezeJoy = false;
+
+document.getElementById('freezeHungerBtn').addEventListener('click', () => {
+  freezeHunger = !freezeHunger;
+  document.getElementById('freezeHungerBtn').textContent = freezeHunger ? "Unfreeze Hunger" : "Freeze Hunger";
+});
+document.getElementById('freezeEnergyBtn').addEventListener('click', () => {
+  freezeEnergy = !freezeEnergy;
+  document.getElementById('freezeEnergyBtn').textContent = freezeEnergy ? "Unfreeze Energy" : "Freeze Energy";
+});
+document.getElementById('freezeJoyBtn').addEventListener('click', () => {
+  freezeJoy = !freezeJoy;
+  document.getElementById('freezeJoyBtn').textContent = freezeJoy ? "Unfreeze Joy" : "Freeze Joy";
+});
+
+// set cat mood directly from debug menu --------------------------------------
+document.getElementById('setPlayfulBtn').addEventListener('click', () => {
+  moodPlayful();
+  catState = moodPlayful;
+});
+document.getElementById('setGrumpyBtn').addEventListener('click', () => {
+  moodGrumpy();
+  catState = moodGrumpy;
+});
+document.getElementById('setSleepyBtn').addEventListener('click', () => {
+  moodSleepy();
+  catState = moodSleepy;
+});
+document.getElementById('setNeutralBtn').addEventListener('click', () => {
+  moodNeutral();
+  catState = moodNeutral;
+});
+
+// Items debug --------------------------------------
+document.getElementById('clearInventoryBtn').addEventListener('click', () => {
+  inventoryItems = inventoryItems.map(() => null);
+  initializeInventory();
+});
+document.getElementById('addFoodBtn').addEventListener('click', () => {
+  giveLoot("Food");
+  initializeInventory();
+});
+document.getElementById('addToyBtn').addEventListener('click', () => {
+  giveLoot("Toy");
+  initializeInventory();
+});
+document.getElementById('addQuestBtn').addEventListener('click', () => {
+  giveLoot("Quest");
+  initializeInventory();
+});
+document.getElementById('addMiscBtn').addEventListener('click', () => {
+  giveLoot("Misc");
+  initializeInventory();
+});
+document.getElementById('addPowerupBtn').addEventListener('click', () => {
+  giveLoot("Powerup");
+  initializeInventory();
+});
+document.getElementById('addTrophyBtn').addEventListener('click', () => {
+  giveLoot("Trophy");
+  initializeInventory();
+});
+document.getElementById('addValuableBtn').addEventListener('click', () => {
+  giveLoot("Valuable");
+  initializeInventory();
+});
+
+/* Initialize debug visibility on load */
+applyDebugVisibility();
