@@ -5,7 +5,7 @@ Handles buttons and stats
 
 const moodDisplay = document.getElementById('moodDisplay');
 const displayImage = document.getElementById('cat-image');
-const hungerValue = document.getElementById('hunger-value');
+const fullnessValue = document.getElementById('fullness-value');
 const joyValue = document.getElementById('joy-value');
 const energyValue = document.getElementById('energy-value');
 const loveValue = document.getElementById('love-value');
@@ -18,17 +18,18 @@ const restBtn = document.getElementById('rest-btn');
 
 let love = 0;	//initial stat values
 let energy = 50;
-let hunger = 50;
+let fullness = 50;
 let joy = 0;
+let coins = 10; //initial coins value
 
 // =============================== Update all game state values and UI START ===============================
 function updateGameState() {
   statsClamp();  //calls the function to clamp values within their min/max
-
-  updateStatBar('hunger', hunger);// update stat meters
+  
+  updateStatBar('fullness', fullness);// update stat meters
   updateStatBar('energy', energy);
   updateJoyBar(joy); // joy bar remains custom
-  
+  updateLoveDisplay(); // update love display
   achievmentTracker();  //calls the function from achievements.js to check for achievements
 }
 // =============================== Update all game state values and UI STOP ===============================
@@ -38,34 +39,34 @@ function updateGameState() {
   function statsClamp() {
   love = Math.max(0, Math.min(1000, love));
   energy = Math.max(0, Math.min(100, energy));
-  hunger = Math.max(0, Math.min(100, hunger));
+  fullness = Math.max(0, Math.min(100, fullness));
   joy = Math.max(0, joy); // no upper limit
   }
 
 // =============================== Button Event Listeners START ===============================
 document.getElementById('feed-btn').addEventListener('click', () => {
-  hungerUpdate(-20), energyUpdate(-6), joyUpdate(15);
+  fullnessUpdate(20), energyUpdate(-6), joyUpdate(15);
   updateGameState();
   updateCatState();
 });
 document.getElementById('play-btn').addEventListener('click',  () => {
-  hungerUpdate(10), energyUpdate(-20), joyUpdate(25);
+  fullnessUpdate(-10), energyUpdate(-20), joyUpdate(25);
   updateGameState();
   updateCatState();
 });
 document.getElementById('rest-btn').addEventListener('click',  () => {
-  energyUpdate(30), hungerUpdate(5), joyUpdate(10);
+  energyUpdate(30), fullnessUpdate(-5), joyUpdate(10);
   updateGameState();
   updateCatState();
 });
 // =============================== Button Event Listeners END ===============================
 
 // Functions to update stats with freeze checks
-function hungerUpdate(amount) {
-  if (freezeHunger) return;
-  hunger += amount;
-  if (hunger < 0) hunger = 0;
-  if (hunger > 100) hunger = 100;
+function fullnessUpdate(amount) {
+  if (freezeFullness) return;
+  fullness += amount;
+  if (fullness < 0) fullness = 0;
+  if (fullness > 100) fullness = 100;
 }
 function energyUpdate(amount) {
   if (freezeEnergy) return;
@@ -82,11 +83,11 @@ function joyUpdate(amount) {
 /* =================================== CatState START ===================================*/
 let catState = "neutral";
 function updateCatState() {
-  if (energy >= 50 && hunger <= 20) {
+  if (energy >= 50 && fullness <= 20) {
     moodPlayful();
   } else if (energy <= 30) {
     moodSleepy();
-  } else if (hunger >= 50 && energy <= 30) {
+  } else if (fullness >= 50 && energy <= 30) {
     moodGrumpy();
   } else {
     moodNeutral();
@@ -141,8 +142,10 @@ function buttonCooldown(button, cooldownMs, action) {
     restBtn.disabled = false;
   }
 
-let coins = 0; //initial coins value
-
+function updateLoveDisplay() {
+  const loveValue = document.getElementById('love-value');
+  if (loveValue) loveValue.textContent = `♥ ${love}`;
+}
 
 
 

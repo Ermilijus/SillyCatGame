@@ -107,8 +107,8 @@ Soft modern card instead of harsh borders
       <button id="resetStats">Reset Stats</button>
       <button id="addJoyBtn">Add 100 Joy</button>
       <button id="reduceJoyBtn">Reduce 100 Joy</button>
-      <button id="addHungerBtn">Add 100 Hunger</button>
-      <button id="reduceHungerBtn">Reduce 100 Hunger</button>
+      <button id="addFullnessBtn">Add 100 Fullness</button>
+      <button id="reduceFullnessBtn">Reduce 100 Fullness</button>
       <button id="addEnergyBtn">Add 100 Energy</button>
       <button id="reduceEnergyBtn">Reduce 100 Energy</button>
     </div>
@@ -118,7 +118,7 @@ Soft modern card instead of harsh borders
   <div class="debug-section">
     <button class="debug-section-toggle">Freeze Stats</button>
     <div class="debug-section-content">
-      <button id="freezeHungerBtn">Freeze Hunger</button>
+      <button id="freezeFullnessBtn">Freeze Fullness</button>
       <button id="freezeEnergyBtn">Freeze Energy</button>
       <button id="freezeJoyBtn">Freeze Joy</button>
     </div>
@@ -190,10 +190,10 @@ Buttons, stats, interactions
 
 
 <!-- Example: put inside your control panel -->
-<div class="stat" data-stat="hunger">
-  <div class="stat-label">Hunger <span class="stat-value" id="hunger-value">30</span></div>
+<div class="stat" data-stat="fullness">
+  <div class="stat-label">Fullness <span class="stat-value" id="fullness-value">30</span></div>
   <div class="stat-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="30">
-    <div class="stat-fill" id="hungerBar"></div>
+    <div class="stat-fill" id="fullnessBar"></div>
   </div>
 </div>
 
@@ -213,7 +213,7 @@ Buttons, stats, interactions
 
 <!-- CAT STATS DISPLAY 
 <div id="stats">
-<div class="stat">Hunger: <span id="hunger-value">30</span></div>
+<div class="stat">Fullness: <span id="fullness-value">30</span></div>
 <div class="stat">Joy: <span id="joy-value">50</span></div>
 <div class="stat">Energy: <span id="energy-value">50</span></div>
 <div class="point">♥ <span id="love-value">0</span></div>
@@ -228,6 +228,7 @@ Buttons, stats, interactions
 <button class="game-btn" id="feed-btn">Feed</button>
 <button class="game-btn" id="play-btn">Play</button>
 <button class="game-btn" id="rest-btn">Rest</button>
+  <span id="love-value">♥ 0</span>
 </div>
 
   <!--  inventory -->
@@ -245,8 +246,10 @@ Buttons, stats, interactions
 
 </main>
 
-
-
+<div id="questPocketRow" style="display:none;">
+  <h4>Quest Pocket</h4>
+  <div id="questPocketGrid"></div>
+</div>
 
 <!-- =====================================================
 JAVASCRIPT FILES

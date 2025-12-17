@@ -44,7 +44,7 @@ document.querySelectorAll(".debug-section-toggle").forEach(toggleBtn => {
 
 // modify stats directly from debug menu --------------------------------------
 document.getElementById('resetStats').addEventListener('click', () => {
-  hunger = 50;
+  fullness = 50;
   energy = 50;
   joy = 0;
   updateGameState();
@@ -57,12 +57,12 @@ document.getElementById('reduceJoyBtn').addEventListener('click', () => {
   joy -= 100;
   updateGameState();
 });
-document.getElementById('addHungerBtn').addEventListener('click', () => {
-  hunger += 100;
+document.getElementById('addFullnessBtn').addEventListener('click', () => {
+  fullness += 100;
   updateGameState();
 });
-document.getElementById('reduceHungerBtn').addEventListener('click', () => {
-  hunger -= 100;
+document.getElementById('reduceFullnessBtn').addEventListener('click', () => {
+  fullness -= 100;
   updateGameState();
 });
 document.getElementById('addEnergyBtn').addEventListener('click', () => {
@@ -75,13 +75,13 @@ document.getElementById('reduceEnergyBtn').addEventListener('click', () => {
 });
 
 // freeze stats toggle --------------------------------------
-let freezeHunger = false;
+let freezeFullness = false;
 let freezeEnergy = false;
 let freezeJoy = false;
 
-document.getElementById('freezeHungerBtn').addEventListener('click', () => {
-  freezeHunger = !freezeHunger;
-  document.getElementById('freezeHungerBtn').textContent = freezeHunger ? "Unfreeze Hunger" : "Freeze Hunger";
+document.getElementById('freezeFullnessBtn').addEventListener('click', () => {
+  freezeFullness = !freezeFullness;
+  document.getElementById('freezeFullnessBtn').textContent = freezeFullness ? "Unfreeze Fullness" : "Freeze Fullness";
 });
 document.getElementById('freezeEnergyBtn').addEventListener('click', () => {
   freezeEnergy = !freezeEnergy;

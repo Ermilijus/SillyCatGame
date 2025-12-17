@@ -256,7 +256,7 @@ border-radius: 10px;
 /* Optional: different visuals per stat via classes */
 .stat[data-stat="energy"] .stat-fill { background: linear-gradient(90deg, #7ee8fa, #4ac1ff); }
 .stat[data-stat="joy"]    .stat-fill { background: linear-gradient(90deg, #ffd1ff, #ff8ec7); }
-.stat[data-stat="hunger"] .stat-fill { background: linear-gradient(90deg, #ffb347, #ffcc33); }
+.stat[data-stat="fullness"] .stat-fill { background: linear-gradient(90deg, #ffb347, #ffcc33); }
 
 /* small pulse for critical state */
 .stat-fill.pulse {
@@ -899,4 +899,13 @@ border-radius: 10px;
 #ctxSellBtn .coin-emoji {
   font-size: 1.1em;
   margin-right: 2px;
+}
+
+#love-value {
+  position: relative;
+  top: 2px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ff6f91;
+  text-shadow: 0 0 6px rgba(255, 111, 145, 0.7);
 }

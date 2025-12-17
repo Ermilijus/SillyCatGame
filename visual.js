@@ -9,10 +9,10 @@ const startBtn = document.getElementById("startBtn");
 
 // ============================== Stat Bars Start =============================
 
-const hungerBar = document.getElementById('hungerBar');
+const fullnessBar = document.getElementById('fullnessBar');
 const energyBar = document.getElementById('energyBar');
 const joyBar   = document.getElementById('joyBar');
-const hungerValueEl = document.getElementById('hunger-value');
+const fullnessValueEl = document.getElementById('fullness-value');
 const energyValueEl = document.getElementById('energy-value');
 const joyValueEl    = document.getElementById('joy-value');
 
@@ -27,7 +27,7 @@ startBtn.addEventListener("click", () => {
 
 // Stat bar configuration
 const STAT_CONFIG = {
-  hunger: { min: 0, max: 100, barEl: document.getElementById('hungerBar'), valueEl: document.getElementById('hunger-value') },
+  fullness: { min: 0, max: 100, barEl: document.getElementById('fullnessBar'), valueEl: document.getElementById('fullness-value') },
   energy: { min: 0, max: 100, barEl: document.getElementById('energyBar'), valueEl: document.getElementById('energy-value') },
   // Add more stats here as needed, e.g.:
   // love:   { min: 0, max: 1000, barEl: document.getElementById('loveBar'), valueEl: document.getElementById('love-value') },
