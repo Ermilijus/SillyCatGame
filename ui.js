@@ -21,6 +21,7 @@ let energy = 50;
 let fullness = 50;
 let joy = 0;
 let coins = 10; //initial coins value
+let luck = 0; //initial luck stat value
 
 // =============================== Update all game state values and UI START ===============================
 function updateGameState() {
@@ -31,6 +32,7 @@ function updateGameState() {
   updateJoyBar(joy); // joy bar remains custom
   updateLoveDisplay(); // update love display
   achievmentTracker();  //calls the function from achievements.js to check for achievements
+  updateCoinsDisplay(); // update coins display
 }
 // =============================== Update all game state values and UI STOP ===============================
 
@@ -60,25 +62,6 @@ document.getElementById('rest-btn').addEventListener('click',  () => {
   updateCatState();
 });
 // =============================== Button Event Listeners END ===============================
-
-// Functions to update stats with freeze checks
-function fullnessUpdate(amount) {
-  if (freezeFullness) return;
-  fullness += amount;
-  if (fullness < 0) fullness = 0;
-  if (fullness > 100) fullness = 100;
-}
-function energyUpdate(amount) {
-  if (freezeEnergy) return;
-  energy += amount;
-  if (energy < 0) energy = 0;
-  if (energy > 100) energy = 100;
-}
-function joyUpdate(amount) {
-  if (freezeJoy) return;
-  joy += amount;
-  if (joy < 0) joy = 0;
-}
 
 /* =================================== CatState START ===================================*/
 let catState = "neutral";
@@ -123,20 +106,19 @@ function updateCatState() {
 // Button cooldown utility function
 function buttonCooldown(button, cooldownMs, action) {
   if (button.disabled) return; // Prevent multiple clicks during cooldown
-
   action();
   button.disabled = true;
   setTimeout(() => {
     button.disabled = false;
   }, cooldownMs);
-}
+  }
 
-  function disableAllButtons() {
+function disableAllButtons() {
     feedBtn.disabled = true;
     playBtn.disabled = true;
     restBtn.disabled = true;
   }
-  function enableAllButtons() {
+function enableAllButtons() {
     feedBtn.disabled = false;
     playBtn.disabled = false;
     restBtn.disabled = false;
@@ -154,5 +136,6 @@ function updateLoveDisplay() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-updateGameState();  //initial call to set stats on page load 
+updateGameState();  //initial call to set stats on page load
+initializeShopInventory(); // initialize shop prices/sales and inventory on page load
 });

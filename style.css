@@ -535,6 +535,28 @@ border-radius: 10px;
   border-color: #ff5141;
   box-shadow: 0 0 8px rgba(255, 111, 97, 0.5);
 }
+/* ===== SHOP SLOT STYLES ===== */
+.shop-slot.rarity-common      { border-color:  #b8b8b8; }
+.shop-slot.rarity-uncommon    { border-color:  #3fbf3f; box-shadow: 0 0 6px rgba(63, 191, 63, 0.4); }
+.shop-slot.rarity-rare        { border-color:  #3399ff; box-shadow: 0 0 6px rgba(51, 153, 255, 0.4); }
+.shop-slot.rarity-epic        { border-color:  #b347ff; box-shadow: 0 0 6px rgba(179, 71, 255, 0.45); }
+.shop-slot.rarity-legendary   { border-color:  #ffb300; box-shadow: 0 0 8px rgba(255, 179, 0, 0.45); }
+.shop-slot.rarity-mythic      { border-color:  #ff5141; box-shadow: 0 0 8px rgba(255, 111, 97, 0.5); }
+
+.sale-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: #ff5252;
+  color: #fff;
+  font-size: 0.45em;
+  font-weight: bold;
+  padding: 1px 1px;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  pointer-events: none;
+  z-index: 2;
+}
 
 /* Emoji centered naturally */
 .item-emoji {
@@ -908,4 +930,85 @@ border-radius: 10px;
   font-weight: 600;
   color: #ff6f91;
   text-shadow: 0 0 6px rgba(255, 111, 145, 0.7);
+}
+
+#ctx-item-stats {
+  margin: 8px 0 0 0;
+  padding: 6px 0 0 0;
+  border-top: 1px solid #444;
+  font-size: 0.98em;
+}
+.item-stat {
+  display: flex;
+  justify-content: left;
+  margin: 2px 0;
+}
+.stat-name {
+  color: #ffe066;
+  font-weight: 500;
+}
+.stat-value {
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+/* Quest Pocket Row */
+#questPocketRow {
+  margin-top: 4px;
+  padding: 8px 0 0 0;
+  border-top: 2px solid #ffe066;
+  background: rgba(255, 249, 196, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(255, 224, 102, 0.08);
+}
+
+#questPocketGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  padding: 20px 0;
+}
+
+/* Quest Pocket Slots */
+#questPocketGrid .inv-slot {
+  aspect-ratio: 1;
+  background: linear-gradient(135deg, #fffbe6 25%, #ffe066 75%);
+  border: 2px solid #ffe066;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  user-select: none;
+}
+
+#questPocketGrid .inv-slot:hover {
+  background: linear-gradient(135deg, #fffbe6 80%, #ffe066 100%);
+  border-color: #ffd700;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 224, 102, 0.3);
+}
+
+#questPocketGrid .item-emoji {
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+#questPocketGrid .stack-count {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background: #ffe066;
+  color: #7a5c00;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 2px 6px;
+  box-shadow: 0 1px 2px rgba(255, 224, 102, 0.15);
 }

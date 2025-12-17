@@ -26,5 +26,7 @@ function checkJoyAchievement() {
     achTitle.textContent = 'Joyful Cat!';
     achDesc.textContent = 'It has only just begun...';
     joyAchievement = true;
+    addItemById(201); // battery
+    addItemById(204); // Drained Flashlight
   }
 }

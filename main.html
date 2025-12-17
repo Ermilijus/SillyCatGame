@@ -44,6 +44,10 @@ This controls ALL visual appearance of the page
         <button id="closeInvBtn" class="close-btn">✕</button>
       </div>
       <div id="invGrid"></div>
+        <div id="questPocketRow" style="display:none;">
+        <h4>Quest Items</h4>
+        <div id="questPocketGrid"></div>
+        </div>
     </div>
   </div>
 
@@ -52,6 +56,7 @@ This controls ALL visual appearance of the page
     <div class="ctx-item-info">
     <div class="ctx-item-title" id="ctxItemTitle"></div>
     <div class="ctx-item-desc" id="ctxItemDesc"></div>
+    <div class="ctx-item-stats" id="ctxItemStats"></div>
   </div>
   <div class="ctx-actions">
     <button class="ctx-buttons" id="ctxUseBtn">Use</button>
@@ -79,6 +84,7 @@ This controls ALL visual appearance of the page
   <div class="ctx-item-info">
     <div class="ctx-item-title" id="shopCtxItemTitle"></div>
     <div class="ctx-item-desc" id="shopCtxItemDesc"></div>
+    <div class="ctx-item-stats" id="shopCtxItemStats"></div>
     <div class="ctx-item-price" id="shopCtxItemPrice"></div>
   </div>
   <div class="ctx-actions">
@@ -175,7 +181,7 @@ DIALOGUE / TEXT AREA
 For story, emotions, and user prompts
 ============================= -->
 <section id="dialogue-area">
-<p id="dialogue-text">Welcome to this little virtual cat game!,</p>
+<p id="dialogue-text">Welcome to this little virtual cat game!</p>
 </section>
 
 
@@ -246,10 +252,6 @@ Buttons, stats, interactions
 
 </main>
 
-<div id="questPocketRow" style="display:none;">
-  <h4>Quest Pocket</h4>
-  <div id="questPocketGrid"></div>
-</div>
 
 <!-- =====================================================
 JAVASCRIPT FILES

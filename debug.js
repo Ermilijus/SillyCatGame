@@ -74,6 +74,25 @@ document.getElementById('reduceEnergyBtn').addEventListener('click', () => {
   updateGameState();
 });
 
+// Functions to update stats with freeze checks
+function fullnessUpdate(amount) {
+  if (freezeFullness) return;
+  fullness += amount;
+  if (fullness < 0) fullness = 0;
+  if (fullness > 100) fullness = 100;
+}
+function energyUpdate(amount) {
+  if (freezeEnergy) return;
+  energy += amount;
+  if (energy < 0) energy = 0;
+  if (energy > 100) energy = 100;
+}
+function joyUpdate(amount) {
+  if (freezeJoy) return;
+  joy += amount;
+  if (joy < 0) joy = 0;
+}
+
 // freeze stats toggle --------------------------------------
 let freezeFullness = false;
 let freezeEnergy = false;
