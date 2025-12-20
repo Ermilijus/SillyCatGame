@@ -459,7 +459,11 @@ function showShopContextMenu(slotIndex, event) {
   const item = shopInventory[slotIndex];
   const meta = item ? ITEM_DB[item.id] : null;
 
-  document.getElementById('shopCtxItemTitle').textContent = meta.name;
+const shopCtxItemTitle = document.getElementById('shopCtxItemTitle');
+shopCtxItemTitle.innerHTML = meta.name;
+if (meta.type === "Quest") {
+  shopCtxItemTitle.innerHTML += ' <span class="quest-marker" title="Quest Item">🧭</span>';
+}
   document.getElementById('shopCtxItemDesc').textContent = meta.description;
   document.getElementById('shopCtxItemPrice').textContent = `Price: ${item.price} coins`;
 
@@ -593,7 +597,11 @@ function showItemContextMenu(slotIndex, event) {
     combineBtn.disabled = true;
   }
 
-  document.getElementById('ctxItemTitle').textContent = meta.name;
+const ctxItemTitle = document.getElementById('ctxItemTitle');
+ctxItemTitle.innerHTML = meta.name;
+if (meta.type === "Quest") {
+  ctxItemTitle.innerHTML += ' <span class="quest-marker" title="Quest Item">🧭</span>';
+}
   document.getElementById('ctxItemDesc').textContent = meta.description;
 
 // Render stats if present

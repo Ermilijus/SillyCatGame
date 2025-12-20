@@ -10,11 +10,11 @@ const joyValue = document.getElementById('joy-value');
 const energyValue = document.getElementById('energy-value');
 const loveValue = document.getElementById('love-value');
 const catsNameInput = document.getElementById('catsName');
-let catsName = "Catoot";	//default name before user inputs their own name
 const feedBtn = document.getElementById('feed-btn');
 const playBtn = document.getElementById('play-btn');
 const restBtn = document.getElementById('rest-btn');
 
+let catsName = "Catoot";	//default name before user inputs their own name
 
 let love = 0;	//initial stat values
 let energy = 50;
@@ -22,6 +22,7 @@ let fullness = 50;
 let joy = 0;
 let coins = 10; //initial coins value
 let luck = 0; //initial luck stat value
+
 
 // =============================== Update all game state values and UI START ===============================
 function updateGameState() {
@@ -33,9 +34,16 @@ function updateGameState() {
   updateLoveDisplay(); // update love display
   achievmentTracker();  //calls the function from achievements.js to check for achievements
   updateCoinsDisplay(); // update coins display
+  updateTickCounters(); // update tick counters
 }
-// =============================== Update all game state values and UI STOP ===============================
 
+function updateTickCounters() { // +1 to counters for game tick tracking
+  ticksSinceStart++;
+  if (energy < 15) ticksWithLowEnergy++;
+  if (fullness < 15) ticksWithLowFullness++;
+}
+
+// =============================== Update all game state values and UI STOP ===============================
 
   //clamp values to their max/min
   function statsClamp() {

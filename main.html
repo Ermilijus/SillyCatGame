@@ -93,12 +93,35 @@ This controls ALL visual appearance of the page
 </div>
 
 
-<!-- =====================================================
-MAIN GAME CONTAINER
-This represents the "visible window" the user sees
-Soft modern card instead of harsh borders
-===================================================== -->
 <main id="game-container">
+
+  <!-- Info/Guidance Icon and Popup -->
+<div id="infoGuideContainer">
+  <div id="infoGuideIcon" tabindex="0" aria-label="Show game guide">
+    <span>?</span>
+  </div>
+  <div id="infoGuidePopup">
+    <h2>How to Play</h2>
+<p>
+    <strong><u>Stats</u></strong> <br>
+    • <strong>Feed</strong>, <strong>Play</strong>, and <strong>Rest </strong>your kitty using the buttons below <br>
+    • Try to maintain <strong>Fullness </strong>and <strong>energy, </strong>higher = better <br>
+    • <strong>Joy</strong> grows from <strong>Play, Events</strong> and some <strong>items</strong><br>
+    <br>
+    <strong><u>Inventory & Shop</u></strong> <br>
+    • <strong>Left click </strong>to instantly <strong>Use/buy </strong>an item from the <strong>inventory </strong>or <strong>shop</strong> <br>
+    • <strong>Right click</strong> an <strong>item </strong>to open a <strong>Context menu</strong> for more <strong>information</strong> <br>
+    • <strong>Prices </strong>and <strong>Discounts </strong>(-xx%) are Random within a given range <br>
+    • <strong>Sell </strong>items if you need inventory space, Not everything is useful <br>
+    • <strong>Quest items </strong>are marked with a <span class="quest-marker" title="Quest Item">🧭</span> make sure not to lose them<br>
+    <br>
+    <strong><u>Story & Events</u></strong> <br>
+    • <strong>Click </strong>anywhere to <strong>Skip </strong>dialogue animations <br>
+    • Each <strong>Action </strong>“<strong>Feed, Rest, Play</strong>” can start random <strong>Story Events</strong> <br>
+    • Depending on Event & <strong>outcomes</strong> you can <strong>gain Items</strong> and or <strong>consume Stats</strong> such as Energy, Fullness etc.. <br>
+</p>
+  </div>
+</div>
 
 <!----------------------- Debug START ---------------------------->
 <div class="debugButton">
@@ -159,11 +182,7 @@ Soft modern card instead of harsh borders
 </div>
 <!----------------------- Debug END ---------------------------->
 
-<!-- =============================
-VISUAL CAT DISPLAY AREA
-(Red box concept - now styled cleanly)
-Where the cat image + expressions will live
-============================= -->
+
 <section id="cat-visual-area">
 <div id="cat-frame">
 <!-- Placeholder image - you can later swap this -->
@@ -175,11 +194,6 @@ Where the cat image + expressions will live
 
 
 
-<!-- =============================
-DIALOGUE / TEXT AREA
-(Blue box concept - now modern pane)
-For story, emotions, and user prompts
-============================= -->
 <section id="dialogue-area">
 <p id="dialogue-text">Welcome to this little virtual cat game!</p>
 </section>
@@ -187,14 +201,8 @@ For story, emotions, and user prompts
 
 
 
-<!-- =============================
-CONTROL PANEL
-(Green box concept - now UI bar)
-Buttons, stats, interactions
-============================= -->
+
 <section id="control-panel">
-
-
 <!-- Example: put inside your control panel -->
 <div class="stat" data-stat="fullness">
   <div class="stat-label">Fullness <span class="stat-value" id="fullness-value">30</span></div>
@@ -216,16 +224,6 @@ Buttons, stats, interactions
     <div class="stat-fill" id="joyBar"></div>
   </div>
 </div>
-
-<!-- CAT STATS DISPLAY 
-<div id="stats">
-<div class="stat">Fullness: <span id="fullness-value">30</span></div>
-<div class="stat">Joy: <span id="joy-value">50</span></div>
-<div class="stat">Energy: <span id="energy-value">50</span></div>
-<div class="point">♥ <span id="love-value">0</span></div>
-</div>
--->
-
 
 
 <!-- ACTION BUTTONS -->
@@ -252,10 +250,24 @@ Buttons, stats, interactions
 
 </main>
 
+<!-- STORY/EVENT MASTER DIALOGUE OVERLAY -->
+<div id="storyOverlay" class="story-overlay" style="display:none;">
+  <div id="storyBtnTooltip" class="story-btn-tooltip" style="display:none;"></div>
+  <div id="storyBackdrop" class="story-backdrop"></div>
+<div class="story-dialogue-window">
+  <div id="storyMiniImg" class="story-mini-img" style="display:none;">
+    <img id="storyMiniImgTag" src="" alt="Story Scene" />
+  </div>
+  <div id="storyDialogueText" class="story-dialogue-text"></div>
+  <div id="storyOptions" class="story-options"></div>
+</div>
+</div>
+
+<div id="notification-area"></div>
+
 
 <!-- =====================================================
 JAVASCRIPT FILES
-Keep logic separated & organised
 ===================================================== -->
 
 
@@ -279,8 +291,7 @@ Keep logic separated & organised
 <!-- Handles Inventory system -->
 <script src="items.js"></script>
 
-<!-- Notification Area -->
-<div id="notification-area"></div>
+
 
 
 </body>

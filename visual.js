@@ -175,4 +175,28 @@ function showNotif(itemId, amount = '', action = '') {
     name: item.name,
     amount,
   });
+  console.log(`Notification: ${action} ${item.name} ${amount}`);
 }
+
+// Info/Guide popup logic
+const infoGuideIcon = document.getElementById('infoGuideIcon');
+const infoGuidePopup = document.getElementById('infoGuidePopup');
+const infoGuideCloseBtn = document.getElementById('infoGuideCloseBtn');
+
+infoGuideIcon.addEventListener('mouseenter', () => {
+  infoGuidePopup.classList.add('active');
+});
+infoGuideIcon.addEventListener('focus', () => {
+  infoGuidePopup.classList.add('active');
+});
+infoGuideIcon.addEventListener('mouseleave', () => {
+  infoGuidePopup.classList.remove('active');
+});
+infoGuideIcon.addEventListener('blur', () => {
+  infoGuidePopup.classList.remove('active');
+});
+infoGuidePopup.addEventListener('mouseleave', () => {
+  infoGuidePopup.classList.remove('active');
+});
+
+
