@@ -141,41 +141,45 @@ function updateJoyBar(joy) {
 
 // ========================= Notification System =========================
 const MAX_NOTIFICATIONS = 6;
-function showNotification({emoji = '', name = '', amount = ''}) {
+function showNotif(id, amount = '', extra = '') {
   const notifArea = document.getElementById('notification-area');
   if (!notifArea) return;
-
-  // Cull oldest if at max
+    // Cull oldest if at max
   while (notifArea.children.length >= MAX_NOTIFICATIONS) {
     notifArea.children[0].remove();
   }
 
+  const meta = ITEM_DB[id] || {};
   const notif = document.createElement('div');
   notif.className = 'notification';
 
-  notif.innerHTML = `
-    ${emoji ? `<span class="notif-emoji">${emoji}</span>` : ''}
-    <span class="notif-name">${name}</span>
-    ${amount ? `<span class="notif-amount">${amount > 0 ? '+' : ''}${amount}</span>` : ''}
-  `;
+  // Always show image or emoji
+  let iconHtml = '';
+  if (meta.image) {
+    iconHtml = `<img src="${meta.image}" class="item-img notif-img" alt="${meta.name}"/>`;
+  } else if (meta.emoji) {
+    iconHtml = `<span class="notif-emoji">${meta.emoji}</span>`;
+  }
 
+  // Compose main text
+  let mainText = '';
+  if (meta.name) {
+    mainText = `<span class="notif-text">${meta.name}</span>`;
+  }
+  // If extra message, append after name (with colon if both)
+  if (extra) {
+    mainText += `<span class="notif-extra">${meta.name ? ': ' : ''}${extra}</span>`;
+  }
+
+  // Amount badge (if numeric and not empty)
+  let amountHtml = '';
+  if (typeof amount === 'number' && amount !== 0) {
+    amountHtml = `<span class="notif-amount">${amount > 0 ? '+' : ''}${amount}</span>`;
+  }
+
+  notif.innerHTML = `${iconHtml}${mainText}${amountHtml}`;
   notifArea.appendChild(notif);
-
-  // Remove after animation
-  setTimeout(() => {
-    notif.remove();
-  }, 2500);
-}
-
-function showNotif(itemId, amount = '', action = '') {
-  const item = ITEM_DB[itemId];
-  if (!item) return;
-  showNotification({
-    emoji: item.emoji,
-    name: item.name,
-    amount,
-  });
-  console.log(`Notification: ${action} ${item.name} ${amount}`);
+  setTimeout(() => notif.remove(), 2500);
 }
 
 // Info/Guide popup logic

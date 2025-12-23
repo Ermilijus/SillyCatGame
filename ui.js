@@ -58,16 +58,19 @@ document.getElementById('feed-btn').addEventListener('click', () => {
   fullnessUpdate(20), energyUpdate(-6), joyUpdate(15);
   updateGameState();
   updateCatState();
+  totalFeeds += 1;
 });
 document.getElementById('play-btn').addEventListener('click',  () => {
   fullnessUpdate(-10), energyUpdate(-20), joyUpdate(25);
   updateGameState();
   updateCatState();
+  totalPlays += 1;
 });
 document.getElementById('rest-btn').addEventListener('click',  () => {
   energyUpdate(30), fullnessUpdate(-5), joyUpdate(10);
   updateGameState();
   updateCatState();
+  totalRests += 1;
 });
 // =============================== Button Event Listeners END ===============================
 

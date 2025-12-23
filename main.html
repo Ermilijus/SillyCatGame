@@ -113,7 +113,7 @@ This controls ALL visual appearance of the page
     • <strong>Right click</strong> an <strong>item </strong>to open a <strong>Context menu</strong> for more <strong>information</strong> <br>
     • <strong>Prices </strong>and <strong>Discounts </strong>(-xx%) are Random within a given range <br>
     • <strong>Sell </strong>items if you need inventory space, Not everything is useful <br>
-    • <strong>Quest items </strong>are marked with a <span class="quest-marker" title="Quest Item">🧭</span> make sure not to lose them<br>
+    • <strong>Quest items </strong>are marked with a <span class="quest-marker" title="Quest Item">⚜️</span> make sure not to lose them<br>
     <br>
     <strong><u>Story & Events</u></strong> <br>
     • <strong>Click </strong>anywhere to <strong>Skip </strong>dialogue animations <br>
@@ -128,6 +128,17 @@ This controls ALL visual appearance of the page
 <button id="debugBtn" style="display:none;">Toggle Debug</button></div>
 <div id="debugMenu" style="display:none;">
   <p>Debug Menu </p>
+
+<!-- Stat Info -->
+<div class="debug-section">
+  <button class="debug-section-toggle">Hidden Stats</button>
+  <div class="debug-section-content">
+    <button id="debug-getStatsBtn">Get Info (update on click)</button>
+    <div id="debug-statsOutput" style="font-size: 0.95em; padding: 8px 0;">
+      <!-- Stats will be populated here -->
+    </div>
+  </div>
+</div>
 
   <!-- Stats -->
   <div class="debug-section">

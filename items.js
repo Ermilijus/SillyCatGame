@@ -8,57 +8,58 @@ Handles Inventory system and items
 const ITEM_DB = { // Food, Toy, Quest, Misc, Powerup, Trophy, Valuable ===
 
     // Food items
-    1: {id: 1, name: "Baguette", emoji: "🥖", type: "Food", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: true, stats: { fullness: 3, joy: -1}, description: "its french bread"},
-    2: {id: 2, name: "Fish", emoji: "🐟", type: "Food", stackable: true, maxStack: 10, rarity: "Uncommon", price: 2, combinable: false, usable: true, stats: { fullness: 5, joy: 2}, description: "fiiiish"},
-    3: {id: 3, name: "Mouse", emoji: "🐀", type: "Food", stackable: true, maxStack: 10, rarity: "Uncommon", price: 2, combinable: false, usable: true, stats: {fullness: 4, joy: 3, energy: -5, love: 1}, description: "Its just a toy, right?"},
-    4: {id: 4, name: "Cherries", emoji: "🍒", type: "Food", stackable: true, maxStack: 10, rarity: "Uncommon", price: 5, combinable: false, usable: true, stats: {fullness: 2, joy: 4}, description: "Delicious Cherries."},
-    5: {id: 5, name: "Potato", emoji: "🥔", type: "Food", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: true, stats: {fullness: 2, joy: -1}, description: "Its a potato!"},
-    6: {id: 6, name: "Shrimp", emoji: "🍤", type: "Food", stackable: true, maxStack: 10, rarity: "Rare", price: 2, combinable: false, usable: true, stats: {fullness: 7, joy: 4, love: 2}, description: "A tasty treat for your cat."},
-    7: {id: 7, name: "Sushi", emoji: "🍣", type: "Food", stackable: true, maxStack: 10, rarity: "Legendary", price: 10, combinable: false, usable: true, stats: {fullness: 10, joy: 10, love: 5}, description: "A rare delicious fishy treat, your cat or any human will love it!"},
-    8: {id: 8, name: "Watermelon slice", emoji: "🍉", type: "Food", stackable: true, maxStack: 10, rarity: "Epic", price: 7, combinable: false, usable: true, stats: {fullness: 2, joy: 4, love: 2}, description: "A juicy mouth watering treat, perfect for hot days."},
+    1: {id: 1, name: "Bread", emoji: "🥖", image: "images/bread.png", type: "Food", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: true, stats: { fullness: 3, joy: -1}, description: "its crunchy fresh bread"},
+    2: {id: 2, name: "Fish", emoji: "🐟", image: "images/fish.png", type: "Food", stackable: true, maxStack: 10, rarity: "Uncommon", price: 2, combinable: false, usable: true, stats: { fullness: 5, joy: 2}, description: "fiiiish"},
+    3: {id: 3, name: "Mouse", emoji: "🐀", image: "images/mouse.png", type: "Food", stackable: true, maxStack: 10, rarity: "Uncommon", price: 2, combinable: false, usable: true, stats: {fullness: 4, joy: 3, energy: -5, love: 1}, description: "Its just a toy, right?"},
+    4: {id: 4, name: "Cherries", emoji: "🍒", image: "images/cherries.png", type: "Food", stackable: true, maxStack: 10, rarity: "Uncommon", price: 5, combinable: false, usable: true, stats: {fullness: 2, joy: 4}, description: "Delicious Cherries."},
+    5: {id: 5, name: "Potato", emoji: "🥔", image: "images/potato.png", type: "Food", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: true, stats: {fullness: 2, joy: -1}, description: "Its a potato!"},
+    6: {id: 6, name: "Shrimp", emoji: "🍤", image: "images/shrimp.png", type: "Food", stackable: true, maxStack: 10, rarity: "Rare", price: 2, combinable: false, usable: true, stats: {fullness: 7, joy: 4, love: 2}, description: "A tasty treat for your cat."},
+    7: {id: 7, name: "Sushi", emoji: "🍣", image: "images/sushi.png", type: "Food", stackable: true, maxStack: 10, rarity: "Legendary", price: 10, combinable: false, usable: true, stats: {fullness: 10, joy: 10, love: 5}, description: "A rare delicious fishy treat, your cat or any human will love it!"},
+    8: {id: 8, name: "Watermelon slice", emoji: "🍉", image: "images/watermelon.png", type: "Food", stackable: true, maxStack: 10, rarity: "Epic", price: 7, combinable: false, usable: true, stats: {fullness: 2, joy: 4, love: 2}, description: "A juicy mouth watering treat, perfect for hot days."},
 
     // Toy items
-    100: {id: 100, name: "Ball", emoji: "🔴", type: "Toy", stackable: true, maxStack: 3, rarity: "Uncommon", price: 20, combinable: false, usable: true, stats: {fullness: -2, joy: 4, energy: -3}, description: "small red ball"},
-    101: {id: 101, name: "Ball of yarn", emoji: "🧶", type: "Toy", stackable: true, maxStack: 3, rarity: "Epic", price: 2, combinable: false, usable: true, stats: {fullness: -4, joy: 7, energy: -5, love: 4}, description: "its a ball made of yarn, Cats love it!"},
-    102: {id: 102, name: "Quacker", emoji: "🦆", type: "Toy", stackable: true, maxStack: 999, rarity: "Common", price: 1, combinable: true, usable: true, stats: {love: 1}, description: "Quack!, Collect them all!"},
-    103: {id: 103, name: "Skateboard", emoji: "🛹", type: "Toy", stackable: false, maxStack: 1, rarity: "Rare", price: 5, combinable: false, usable: true, stats: {joy: 5, energy: -2}, description: "Its a skateboard, your kitty can do a kickflip, can you?"},
+    100: {id: 100, name: "Ball", emoji: "🔴", image: "images/ball.png", type: "Toy", stackable: true, maxStack: 3, rarity: "Uncommon", price: 20, combinable: false, usable: true, stats: {fullness: -2, joy: 4, energy: -3}, description: "small red ball"},
+    101: {id: 101, name: "Ball of yarn", emoji: "🧶", image: "images/yarnball.png", type: "Toy", stackable: true, maxStack: 3, rarity: "Epic", price: 2, combinable: false, usable: true, stats: {fullness: -4, joy: 7, energy: -5, love: 4}, description: "its a ball made of yarn, Cats love it!"},
+    102: {id: 102, name: "Quacker", emoji: "🦆", image: "images/quacker.png", type: "Toy", stackable: true, maxStack: 999, rarity: "Common", price: 1, combinable: true, usable: true, stats: {love: 1}, description: "Quack!, Collect them all!"},
+    103: {id: 103, name: "Skateboard", emoji: "🛹", image: "images/skateboard.png", type: "Toy", stackable: false, maxStack: 1, rarity: "Rare", price: 5, combinable: false, usable: true, stats: {joy: 5, energy: -2}, description: "Its a skateboard, your kitty can do a kickflip, can you?"},
 
     // Quest items
-    200: {id: 200, name: "Mysterious key", emoji: "🗝️", type: "Quest", stackable: false, maxStack: 1, rarity: "Epic", price: 7, combinable: false, usable: false, description: "A key to somewhere... hold on to this."},
-    201: {id: 201, name: "Battery", emoji: "🔋", type: "Quest", stackable: false, maxStack: 1, rarity: "Rare", price: 5, combinable: true, usable: false, description: "Its a brand new AA Battery, perhaps its needed for something"},
-    202: {id: 202, name: "A treasure map", emoji: "🗺️", type: "Quest", stackable: false, maxStack: 1, rarity: "Uncommon", price: 2, combinable: false, usable: true, description: "It's a treasure map, i wonder where it leads."},
-    203: {id: 203, name: "Raccoon", emoji: "🦝", type: "Quest", stackable: false, maxStack: 1, rarity: "Mythic", price: 1337, combinable: false, usable: false, description: "The one and ONLY!!!"},
-    204: {id: 204, name: "Drained Flashlight", emoji: "🔦", type: "Quest", stackable: false, maxStack: 1, rarity: "Uncommon", price: 7, combinable: true, usable: false, description: "A Flashlight missing a battery"},
-    205: {id: 205, name: "Flashlight", emoji: "🔦", type: "Quest", stackable: false, maxStack: 1, rarity: "Epic", price: 20, combinable: false, usable: false, description: "A fully charged flashlight."},
+    200: {id: 200, name: "Mysterious key", emoji: "🗝️", image: "images/mysterious_key.png", type: "Quest", stackable: false, maxStack: 1, rarity: "Epic", price: 7, combinable: false, usable: false, description: "A key to somewhere... hold on to this."},
+    201: {id: 201, name: "Battery", emoji: "🔋", image: "images/battery.png", type: "Quest", stackable: false, maxStack: 1, rarity: "Rare", price: 5, combinable: true, usable: false, description: "Its a brand new AA Battery, perhaps its needed for something"},
+    202: {id: 202, name: "A treasure map", emoji: "🗺️", image: "images/treasure_map.png", type: "Quest", stackable: false, maxStack: 1, rarity: "Uncommon", price: 2, combinable: false, usable: true, description: "It's a treasure map, i wonder where it leads."},
+    203: {id: 203, name: "Raccoon Mask", emoji: "🦝", image: "images/raccoon.png", type: "Quest", stackable: false, maxStack: 1, rarity: "Mythic", price: 100, combinable: false, usable: false, description: "The one and ONLY!!!"},
+    204: {id: 204, name: "Drained Flashlight", emoji: "🔦", image: "images/flashlight.png", type: "Quest", stackable: false, maxStack: 1, rarity: "Uncommon", price: 7, combinable: true, usable: false, description: "A Flashlight missing a battery"},
+    205: {id: 205, name: "Flashlight", emoji: "🔦", image: "images/flashlight.png", type: "Quest", stackable: false, maxStack: 1, rarity: "Epic", price: 20, combinable: false, usable: false, description: "A fully charged flashlight."},
+    206: {id: 206, name: "Wallet", emoji: "👝", image: "images/wallet.png", type: "Quest", stackable: false, maxStack: 1, rarity: "Epic", price: 10, combinable: false, usable: false, description: "A lost wallet, it must belong to someone"},
 
     // Misc items
-    300: {id: 300, name: "Old boot", emoji: "👢", type: "Misc", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: false, description: "An old boot, where is the other one?"},
-    301: {id: 301, name: "Dice", emoji: "🎲", type: "Misc", stackable: true, maxStack: 10, rarity: "Uncommon", price: 3, combinable: false, usable: false, description: "A single dice"},
-    302: {id: 302, name: "Paper clip", emoji: "🧷", type: "Misc", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: false, description: "Its a paper clip, not much use..."},
-    304: {id: 304, name: "Button", emoji: "🔘", type: "Misc", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: false, description: "A small button"},
-    305: {id: 305, name: "Evil eye", emoji: "🧿", type: "Misc", stackable: true, maxStack: 10, rarity: "Rare", price: 5, combinable: false, usable: false, description: "A protective talisman believed to ward off evil."},
-    306: {id: 306, name: "Soap", emoji: "🧼", type: "Misc", stackable: true, maxStack: 10, rarity: "Uncommon", price: 2, combinable: false, usable: false, description: "A bar of soap, smells nice and clean. Is kitty trying to tell you something?"},
+    300: {id: 300, name: "Old boot", emoji: "👢", image: "images/boot.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: false, description: "An old boot, where is the other one?"},
+    301: {id: 301, name: "Dice", emoji: "🎲", image: "images/dice.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Uncommon", price: 3, combinable: false, usable: false, description: "A single dice"},
+    302: {id: 302, name: "Paper clip", emoji: "🧷", image: "images/paper_clip.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: false, description: "Its a paper clip, not much use..."},
+    304: {id: 304, name: "Button", emoji: "🔘", image: "images/button.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: false, description: "A small button"},
+    305: {id: 305, name: "Feather", emoji: "🪶", image: "images/feather.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Rare", price: 5, combinable: false, usable: false, description: "A protective talisman believed to ward off evil."},
+    306: {id: 306, name: "Soap", emoji: "🧼", image: "images/soap.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Uncommon", price: 2, combinable: false, usable: false, description: "A bar of soap, smells nice and clean. Is kitty trying to tell you something?"},
+    307: {id: 307, name: "Seashell", emoji: "🪶", image: "images/seashell.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: false, description: "A soft seashell, not much use, but its pretty."},
 
     // Powerup items
-    400: {id: 400, name: "Energy drink", emoji: "🧃", type: "Powerup", stackable: true, maxStack: 3, rarity: "Uncommon", price: 2, combinable: false, usable: true, stats: {energy: +25}, description: "Boosts energy!, not for the cat i hope"},
-    401: {id: 401, name: "Star", emoji: "⭐️", type: "Powerup", stackable: true, maxStack: 3, rarity: "Mythic", price: 20, combinable: false, usable: true, stats: {fullness: 50, energy: 50, joy: 50, love: 50}, description: "THATS A STAR!!, How??"},
-    402: {id: 402, name: "Catnip", emoji: "🌿", type: "Powerup", stackable: true, maxStack: 3, rarity: "Rare", price: 5, combinable: false, usable: true, stats: {fullness: -10, joy: 15, energy: 15, love: +20}, description: "Makes cats go crazy!, dont overdo it."},
+    400: {id: 400, name: "Energy drink", emoji: "🧃", image: "images/energydrink.png", type: "Powerup", stackable: true, maxStack: 3, rarity: "Uncommon", price: 2, combinable: false, usable: true, stats: {energy: +25}, description: "Boosts energy!, not for the cat i hope"},
+    401: {id: 401, name: "Star", emoji: "⭐️", image: "images/star.png", type: "Powerup", stackable: true, maxStack: 3, rarity: "Mythic", price: 20, combinable: false, usable: true, stats: {fullness: 50, energy: 50, joy: 50, love: 50}, description: "THATS A STAR!!, How??"},
+    402: {id: 402, name: "Catnip", emoji: "🌿", image: "images/catnip.png", type: "Powerup", stackable: true, maxStack: 3, rarity: "Rare", price: 5, combinable: false, usable: true, stats: {fullness: -10, joy: 15, energy: 15, love: +20}, description: "Makes cats go crazy!, dont overdo it."},
 
     // Trophy items
-    500: {id: 500, name: "Three leaf clover", emoji: "☘️", type: "Trophy", stackable: false, maxStack: 1, rarity: "Rare", price: 5, combinable: true, usable: false, description: "A lucky clover?, perhaps you can combine it with something."},
-    501: {id: 501, name: "Four leaf clover", emoji: "🍀", type: "Trophy", stackable: false, maxStack: 1, rarity: "Legendary", price: 10, combinable: false, usable: true, stats: {luck: 5}, description: "A four leaf clover!, Lucky you!"},
-    502: {id: 502, name: "Gold medal", emoji: "🥇", type: "Trophy", stackable: false, maxStack: 1, rarity: "Legendary", price: 10, combinable: false, usable: false, description: "A Golden medal, what a spectacular kitty you have"},
-    503: {id: 503, name: "Silver medal", emoji: "🥈", type: "Trophy", stackable: false, maxStack: 1, rarity: "Epic", price: 7, combinable: false, usable: false, description: "A Silver medal, your kitty is getting better!"},
-    504: {id: 504, name: "Bronze medal", emoji: "🥉", type: "Trophy", stackable: false, maxStack: 1, rarity: "Rare", price: 5, combinable: false, usable: false, description: "A Bronze medal, your kitty is doing good!"},
-    505: {id: 505, name: "Golden disc", emoji: "💽", type: "Trophy", stackable: false, maxStack: 1, rarity: "Mythic", price: 20, combinable: false, usable: false, description: "A Goden music disc, its got your kitty's name on it, is your kitty a DJ by night?"},
-    506: {id: 506, name: "Golden bell", emoji: "🔔", type: "Trophy", stackable: false, maxStack: 1, rarity: "Mythic", price: 100, combinable: false, usable: true, description: "A shiny Golden bell, used for summoning a Duck!"},
-
+    500: {id: 500, name: "Three leaf clover", emoji: "☘️", image: "images/threeleafclover.png", type: "Trophy", stackable: false, maxStack: 1, rarity: "Rare", price: 5, combinable: true, usable: false, description: "A lucky clover?, perhaps you can combine it with something."},
+    501: {id: 501, name: "Four leaf clover", emoji: "🍀", image: "images/fourleafclover.png", type: "Trophy", stackable: false, maxStack: 1, rarity: "Legendary", price: 10, combinable: false, usable: true, stats: {luck: 5}, description: "A four leaf clover!, Lucky you!"},
+    502: {id: 502, name: "Gold trophy", emoji: "🥇", image: "images/goldtrophy.png", type: "Trophy", stackable: false, maxStack: 1, rarity: "Legendary", price: 10, combinable: false, usable: false, description: "A Golden trophy, what a spectacular kitty you have"},
+    503: {id: 503, name: "Silver trophy", emoji: "🥈", image: "images/silvertrophy.png", type: "Trophy", stackable: false, maxStack: 1, rarity: "Epic", price: 7, combinable: false, usable: false, description: "A Silver trophy, your kitty is getting better!"},
+    504: {id: 504, name: "Bronze trophy", emoji: "🥉", image: "images/bronzetrophy.png", type: "Trophy", stackable: false, maxStack: 1, rarity: "Rare", price: 5, combinable: false, usable: false, description: "A Bronze trophy, your kitty is doing good!"},
+    505: {id: 505, name: "Golden disc", emoji: "💽", image: "images/goldendisc.png", type: "Trophy", stackable: false, maxStack: 1, rarity: "Mythic", price: 20, combinable: false, usable: false, description: "A Goden music disc, its got your kitty's name on it, is your kitty a DJ by night?"},
+    506: {id: 506, name: "Golden bell", emoji: "🔔", image: "images/goldenbell.png", type: "Trophy", stackable: false, maxStack: 1, rarity: "Mythic", price: 100, combinable: false, usable: true, description: "A shiny Golden bell, used for summoning a Duck!"},
     // Valuable items
-    600: {id: 600, name: "Crown", emoji: "👑", type: "Valuable", stackable: false, maxStack: 1, rarity: "Legendary", price: 10, combinable: false, usable: true, stats: {luck: 10}, description: "Its a gilded crown!"},
-    601: {id: 601, name: "Purse", emoji: "👛", type: "Valuable", stackable: false, maxStack: 1, rarity: "Rare", price: 5, combinable: false, usable: true, description: "A purse?!, who does it belong to?"},
-    602: {id: 602, name: "Diamond", emoji: "💎", type: "Valuable", stackable: true, maxStack: 1, rarity: "Epic", price: 7, combinable: false, usable: true, stats: {luck: 5}, description: "A shiny diamond, what if you combine it with another?"},
-    603: {id: 603, name: "Present", emoji: "🎁", type: "Valuable", stackable: false, maxStack: 1, rarity: "Epic", price: 7, combinable: false, usable: true, description: "A gift from your Kitty, I wonder whats inside."},
-    604: {id: 604, name: "Cash", emoji: "💵", type: "Valuable", stackable: true, maxStack: 5, rarity: "Rare", price: 5, combinable: false, usable: true, description: "A stack of Cash :O"},
+    600: {id: 600, name: "Crown", emoji: "👑", image: "images/crown.png", type: "Valuable", stackable: false, maxStack: 1, rarity: "Legendary", price: 10, combinable: false, usable: true, stats: {luck: 10}, description: "Its a gilded crown!"},
+    601: {id: 601, name: "Purse", emoji: "👛", image: "images/purse.png", type: "Valuable", stackable: false, maxStack: 1, rarity: "Rare", price: 5, combinable: false, usable: true, description: "A purse?!, who does it belong to?"},
+    602: {id: 602, name: "Diamond", emoji: "💎", image: "images/diamond.png", type: "Valuable", stackable: true, maxStack: 1, rarity: "Epic", price: 7, combinable: false, usable: true, stats: {luck: 5}, description: "A shiny diamond, what if you combine it with another?"},
+    603: {id: 603, name: "Present", emoji: "🎁", image: "images/present.png", type: "Valuable", stackable: false, maxStack: 1, rarity: "Epic", price: 7, combinable: false, usable: true, description: "A gift from your Kitty, I wonder whats inside."},
+    604: {id: 604, name: "Cash", emoji: "💵", image: "images/cash.png", type: "Valuable", stackable: true, maxStack: 5, rarity: "Rare", price: 5, combinable: false, usable: true, description: "A stack of Cash :O"},
     
     // Notifications
     995: {id: 995, name: "Used", emoji: "", type: "Notif", stackable: false, maxStack: 1, rarity: "Special", combinable: false, usable: false, description: "Item used successfully."},
@@ -71,8 +72,8 @@ const ITEM_DB = { // Food, Toy, Quest, Misc, Powerup, Trophy, Valuable ===
 
 // Inventory data storage
 let inventoryItems = [
-  null,
-  null,
+  {id: 506}, // Golden bell for testing
+  {id: 206},
   null,
   null,
   null,
@@ -120,7 +121,9 @@ function initializeInventory() {
         slot.classList.add('rarity-' + meta.rarity.toLowerCase());
       }
       slot.innerHTML = `
-        <span class="item-emoji">${meta?.emoji ?? '❓'}</span>
+        ${meta?.image 
+          ? `<img src="${meta.image}" class="item-img" alt="${meta.name}"/>`
+          : `<span class="item-emoji">${meta?.emoji ?? '❓'}</span>`}
         ${item.qty > 1 ? `<span class="stack-count">${item.qty}</span>` : ''}
       `;
       slot.title = `${meta.name}\n${meta.description}`;
@@ -265,10 +268,12 @@ function updateQuestPocketDisplay() {
     const meta = ITEM_DB[item.id];
     const slot = document.createElement('div');
     slot.className = 'inv-slot';
-    slot.innerHTML = `
-      <span class="item-emoji">${meta?.emoji ?? '❓'}</span>
-      ${item.qty > 1 ? `<span class="stack-count">${item.qty}</span>` : ''}
-    `;
+      slot.innerHTML = `
+       ${meta?.image 
+         ? `<img src="${meta.image}" class="item-img" alt="${meta.name}"/>`
+         : `<span class="item-emoji">${meta?.emoji ?? '❓'}</span>`}
+       ${item.qty > 1 ? `<span class="stack-count">${item.qty}</span>` : ''}
+      `;
     slot.title = `${meta.name}\n${meta.description}`;
 
     // Left click: show context menu (or use item)
@@ -392,8 +397,10 @@ function initializeShop() {
         slot.classList.add('rarity-' + meta.rarity.toLowerCase());
       }
       slot.innerHTML = `
-        <span class="item-emoji">${meta?.emoji ?? '❓'}</span>
-        <span class="price-badge">${item.price}💰</span>
+        ${meta?.image 
+          ? `<img src="${meta.image}" class="item-img" alt="${meta.name}"/>`
+          : `<span class="item-emoji">${meta?.emoji ?? '❓'}</span>`}
+          <span class="price-badge">${item.price}💰</span>
         ${item.sale && item.sale > 0 ? `<span class="sale-badge">-${item.sale}%</span>` : ''}
       `;
       slot.title = `${meta.name}\n${meta.description}\nPrice: ${item.price} coins${item.sale && item.sale > 0 ? ` (On Sale: -${item.sale}%)` : ''}`;
@@ -429,6 +436,7 @@ function handleShopSlotClick(index, button, event) {
         updateCoinsDisplay();
         showNotif(item.id, +1);
         showNotif(997, -item.price); // Show coins spent notification
+        totalShopPurchases++;
       } else {
         showNotif(999); // Inventory full notification
       }
@@ -462,7 +470,7 @@ function showShopContextMenu(slotIndex, event) {
 const shopCtxItemTitle = document.getElementById('shopCtxItemTitle');
 shopCtxItemTitle.innerHTML = meta.name;
 if (meta.type === "Quest") {
-  shopCtxItemTitle.innerHTML += ' <span class="quest-marker" title="Quest Item">🧭</span>';
+  shopCtxItemTitle.innerHTML += ' <span class="quest-marker" title="Quest Item">⚜️</span>';
 }
   document.getElementById('shopCtxItemDesc').textContent = meta.description;
   document.getElementById('shopCtxItemPrice').textContent = `Price: ${item.price} coins`;
@@ -563,6 +571,10 @@ function giveLoot(poolName) {
     const added = addItemById(itemId, 1);
     if (added) {
       showNotif(itemId, +1);
+      const meta = ITEM_DB[itemId];
+      if (meta.type === "Trophy") {
+        trophiesEarned += 1;
+      }
     }
     // If not added, addItemById already shows the "Inventory Full" notification
     return itemId;
@@ -600,7 +612,7 @@ function showItemContextMenu(slotIndex, event) {
 const ctxItemTitle = document.getElementById('ctxItemTitle');
 ctxItemTitle.innerHTML = meta.name;
 if (meta.type === "Quest") {
-  ctxItemTitle.innerHTML += ' <span class="quest-marker" title="Quest Item">🧭</span>';
+  ctxItemTitle.innerHTML += ' <span class="quest-marker" title="Quest Item">⚜️</span>';
 }
   document.getElementById('ctxItemDesc').textContent = meta.description;
 
@@ -712,11 +724,19 @@ function useItem(index) {
     showNotif(102, 1, "A Quacker appeared!");
     const audio = new Audio('sounds/quack.mp3');
     audio.play();
+    quackersGiven += 1;
     }  
     if (item.id === 501) { // Special case for Four leaf clover
     luckyRollsRemaining += 3;
     showNotif(501, "Fortune smiles upon you! +3 Lucky Rolls");
     }
+    if (item.id === 100 || item.id === 101 || item.id === 102 || item.id === 103) { // Special case for toys
+    toysPlayedWith += 1;
+    }
+    if (item.id === 400 || item.id === 401 || item.id === 402 || item.id === 403) { // Special case for powerups
+    powerupsUsed += 1;
+    }
+
 
  if (item.id !== 506) {  
   item.qty -= 1;
@@ -745,7 +765,7 @@ function combineItem(index) {
       }
     },
     {
-      check: () => item.id === 504 && countItemsById(504) >= 2,
+      check: () => item.id === 504 && countItemsById(504) >= 2, // two Bronze trophies -> one Silver trophy
       combine: () => {
         removeItemsById(504, 2);
         addItemById(503, 1);
@@ -753,7 +773,7 @@ function combineItem(index) {
       }
     },
     {
-      check: () => item.id === 503 && countItemsById(503) >= 2,
+      check: () => item.id === 503 && countItemsById(503) >= 2, // two Silver trophies -> one Gold trophy
       combine: () => {
         removeItemsById(503, 2);
         addItemById(502, 1);
@@ -761,15 +781,16 @@ function combineItem(index) {
       }
     },
     {
-      check: () => item.id === 102 && countItemsById(102) >= 10,
+      check: () => item.id === 102 && countItemsById(102) >= 10, // ten Quackers -> one Golden bell
       combine: () => {
         removeItemsById(102, 10);
         addItemById(506, 1);
         showNotif(506, 1, "Combined!");
+        trophiesEarned += 1;
       }
     },
     {
-      check: () => item.id === 201 && countItemsById(201) >= 1 && countItemsById(204) >=1,
+      check: () => item.id === 201 && countItemsById(201) >= 1 && countItemsById(204) >=1, // battery + drained flashlight -> flashlight
       combine: () => {
         removeItemsById(201, 1);
         removeItemsById(204, 1);
@@ -778,7 +799,7 @@ function combineItem(index) {
       }
     },
     {
-      check: () => item.id === 204 && countItemsById(204) >= 1 && countItemsById(201) >=1,
+      check: () => item.id === 204 && countItemsById(204) >= 1 && countItemsById(201) >=1, // drained flashlight + battery -> flashlight
       combine: () => {
         removeItemsById(204, 1);
         removeItemsById(201, 1);
@@ -838,6 +859,8 @@ function sellItem(index) {
   moveQuestPocketToInventory();
   showNotif(item.id, -item.qty);
   updateCoinsDisplay();
+  totalCoinsEarned += totalValue;
+  totalShopSales += item.qty;
 
 }
 
@@ -849,3 +872,13 @@ function updateCoinsDisplay() {
   }
 }
 
+function questRewardItem(id, qty, msg) {
+  const added = addItemById(id, qty);
+  if (added) {
+    achDisplay.style.display = 'block';
+    achTitle.innerHTML = `${ITEM_DB[id].image 
+      ? `<img src="${ITEM_DB[id].image}" class="item-img" style="height:1.5em;vertical-align:middle;">`
+      : ITEM_DB[id].emoji || ''} x${qty}`; // Show image if available, else emoji
+    achDesc.textContent = msg;
+  }
+}

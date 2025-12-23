@@ -26,6 +26,7 @@ let ticksSinceStart = 0;
 let ticksWithLowEnergy = 0;
 let ticksWithLowFullness = 0;
 
+let quackersGiven = 0;
 
 
 // Achievement display elements

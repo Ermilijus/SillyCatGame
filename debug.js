@@ -42,6 +42,34 @@ document.querySelectorAll(".debug-section-toggle").forEach(toggleBtn => {
   });
 });
 
+document.getElementById('debug-getStatsBtn').addEventListener('click', function() {
+  const stats = [
+    { label: 'Total Coins Earned', value: totalCoinsEarned },
+    { label: 'Total Coins Spent', value: totalCoinsSpent },
+    { label: 'Total Shop Purchases', value: totalShopPurchases },
+    { label: 'Total Shop Sales', value: totalShopSales },
+    { label: 'Total Plays', value: totalPlays },
+    { label: 'Total Feeds', value: totalFeeds },
+    { label: 'Total Rests', value: totalRests },
+    { label: 'Power Ups Used', value: powerUpsUsed },
+    { label: 'Toys Played With', value: toysPlayedWith },
+    { label: 'Trophies Earned', value: trophiesEarned },
+    { label: 'Ticks Since Start', value: ticksSinceStart },
+    { label: 'Ticks With Low Energy', value: ticksWithLowEnergy },
+    { label: 'Ticks With Low Fullness', value: ticksWithLowFullness },
+    { label: 'Quackers Given', value: quackersGiven },
+    showStoryOverlay(getStoryId("raccoon4"))
+  ];
+
+  let html = '<ul style="list-style:none; padding:0; margin:0;">';
+  stats.forEach(stat => {
+    html += `<li><strong>${stat.label}:</strong> ${stat.value}</li>`;
+  });
+  html += '</ul>';
+
+  document.getElementById('debug-statsOutput').innerHTML = html;
+});
+
 // modify stats directly from debug menu --------------------------------------
 document.getElementById('resetStats').addEventListener('click', () => {
   fullness = 50;
