@@ -548,7 +548,7 @@ function rollLoot(poolIds) {
   return pick?.id;
 }
 
-const EXCLUDED_LOOT_TYPES = ["Quest", "Notif"]; // Excluded types from loot pools
+const EXCLUDED_LOOT_TYPES = ["Quest", "Notif", "Trophy"]; // Excluded types from loot pools
 
 // Build loot pools by item type
 const LOOT_POOLS = {};
@@ -576,7 +576,6 @@ function giveLoot(poolName) {
         trophiesEarned += 1;
       }
     }
-    // If not added, addItemById already shows the "Inventory Full" notification
     return itemId;
   }
   return false;

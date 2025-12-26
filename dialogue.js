@@ -70,25 +70,40 @@ function formatDialogue(text) {
 });
 
 document.getElementById('play-btn').addEventListener('click', async () => {
-	await typeText(dialogueText, `${catsName} pounces around ¬excitedly!¬`);
-    showStoryOverlay(getRandomEventBeat());
+	await showStoryOverlay(getStoryId("Hub"));
 });
 
 document.getElementById('rest-btn').addEventListener('click', async () => {
 	await typeText(dialogueText, `${catsName} curls up and takes a nap. Zzz...`);
 });
 
-let raccoonFed = false;
-let raccoon3Complete = false;
-let raccoonDisapointed = false;
-let raccoonComplete = false;
+let RaccoonFed = false;
+let Raccoon3Complete = false;
+let RaccoonDisapointed = false;
+let RaccoonComplete = false;
+let CatMeet = false;
+let StrayFed = false;
+let Stray3 = false;
 
 /* ------------------------- Story/Event Overlay ------------------------- */
-// Define story beats, type: main, continuation side, event, filler.
+// Define story beats, type: main, continuation, event, filler.
 const storyBeats = [
+  {
+  id: "Hub",
+  type: "event",
+  backdrop: "images/Backdrops/apartment.png",
+  miniImg: "images/house.png",
+  dialogue: "What would you like to do today?",
+  question: "Choose your next adventure:",
+  get options() {
+    return getRandomHubOptions();
+  }
+  },  // Hub
+
   { // -------------------------- vvvv Beach Storyline vvvv ------------------------
-    id: "beach1",
+    id: "Beach1",
     type: "event",
+    location: "Beach",
     backdrop: "images/Backdrops/beach.png",
     miniImg: "images/palmtree.png",
     dialogue: "You arrive at the beach. The waves are gentle and the sun is warm.",
@@ -133,9 +148,10 @@ const storyBeats = [
   },  // -------------------------- ^^^^ Beach Storyline ^^^^ ------------------------
 
   {  // ------------------------- vvvv Raccoon Storyline vvvv ------------------------
-    id: "raccoon1",
+    id: "RaccoonStart",
     type: "story",
-    requirement: () => !raccoonFed && !raccoonDisapointed,
+    location: "Forest",
+    requirement: () => !RaccoonFed && !RaccoonDisapointed,
     backdrop: "images/Backdrops/forest.png",
     miniImg: "images/raccoon.png",
     dialogue: [
@@ -149,10 +165,10 @@ const storyBeats = [
         description: "offer the Raccoon some watermelon from your inventory.",
         action: () => {
           if (inventoryItems.some(item => item && item.id === 8 && item.qty > 0)) {
-            showStoryOverlay(getStoryId("raccoon2"));
-            removeItemById(8, 1); // Remove one watermelon
+            showStoryOverlay(getStoryId("Raccoon2"));
+            removeItemsById(8, 1); // Remove one watermelon
             showNotif(8, -1);
-            raccoonFed = true;
+            RaccoonFed = true;
           } else {
             showNotif(8, 0, "You don't have any watermelon to offer."); // No watermelon notification"
           }
@@ -166,48 +182,83 @@ const storyBeats = [
     ]
   },
   {
-    id: "raccoon2",
-    type: "continuation",
+    id: "Raccoon2",
+    type: "side",
     backdrop: "images/Backdrops/forest.png",
-    miniImg: "images/raccoon1.png",
-    dialogue: "The raccoon has lost its wallet! it looks at you hopefully.",
+    miniImg: "images/raccoon.png",
+    dialogue: [
+      `The raccoon gleefully accepts the watermelon and munches on it happily.`,
+      `After finishing the food, it looks up at you with worried eyes, after a back and forth with ${catsName},`,
+      "Apparently the raccoon has lost its wallet! it looks at you hopefully.",
+    ],
     question: "Will you help the raccoon find its wallet?",
     options: [ 
       {
           title: "Help the raccoon",
           description: "Ask the raccoon where it last saw its wallet.",
           action: () => { 
-            showStoryOverlay(getStoryId("raccoon3"));
+            showStoryOverlay(getStoryId("Raccoon3"));
 
           }
       }, 
       {
           title: "Dont help the raccoon",
-          description: "Leave the raccoon alone and go back home.",
-          action: () => { raccoonDisapointed = true; hideStoryOverlay(); }
+          description: "Appolagise to the raccoon, maybe next time.",
+          action: () => { RaccoonDisapointed = true; hideStoryOverlay(); }
       }
    ]
   },
   {
-    id: "raccoon3",
+    id: "Raccoon3",
     type: "continuation",
     backdrop: "images/Backdrops/forest.png",
     miniImg: "images/raccoon2.png",
-    dialogue: "The raccoon tells you it last saw its wallet near the big oak tree by the river.",
+    dialogue: [
+      `The raccoon tells ${catsName} where it last saw its wallet,`,
+      `With all the cute little gestures and expressions, you kind of understand it's near the big oak tree by the river.`,
+      ],
     question: "Keep an eye out for a big oak tree next time you visit the forest?",
-    options: {
+    options: [
+          {
           title: "Go home",
-          description: "you will keep an eye out next time, but for now you must go home.",
+          description: "make your way home for now.",
           action: () => { 
-            raccoon3Complete = true;
+            Raccoon3Complete = true;
             hideStoryOverlay(); 
           }
-    }
+        }
+      ]
+  },
+
+  {
+    id: "LookForWallet",
+    type: "event",
+    location: "Forest",
+    requirement: () => RaccoonFed && !RaccoonComplete && Raccoon3Complete,
+    backdrop: "images/Backdrops/forestoak.png",
+    miniImg: "images/oak.png",
+    dialogue: "As you explore the forest, you spot a big oak tree by the river.",
+    question: "Do you investigate further?",
+    options: [
+      {
+        title: "Yes",
+        description: "You decide to check it out.",
+        action: () => {
+          showStoryOverlay(getStoryId("Raccoon4"));
+        }
+      },
+      {
+        title: "No",
+        description: "You decide to leave continue on the walk then head back home.",
+        action: () => {
+          hideStoryOverlay();
+        }
+      }
+    ]
   },
   {
-    id: "raccoon4",
-    type: "side",
-    requirement: () => !raccoonComplete,
+    id: "Raccoon4",
+    type: "continuation",
     backdrop: "images/Backdrops/forestoak.png",
     miniImg: "images/wallet.png",
     dialogue: "You find the raccoon's wallet near the oak tree.",
@@ -215,17 +266,17 @@ const storyBeats = [
     options: [
       {
         title: "Visit the raccoon",
-        description: "You go visit the raccoon right away",
+        description: "You visit the raccoon on your way back home.",
         action: () => {
           addItemById(206); // wallet
           showNotif(206, 1);
-          showStoryOverlay(getStoryId("raccoon5"));
+          showStoryOverlay(getStoryId("Raccoon5"));
         }
       }
     ]
   },
   {
-    id: "raccoon5",
+    id: "Raccoon5",
     type: "continuation",
     backdrop: "images/Backdrops/forest.png",
     miniImg: "images/raccoon2.png",
@@ -241,17 +292,289 @@ const storyBeats = [
           action: () => { 
             hideStoryOverlay(); 
             questRewardItem(203, 1, "You received a Raccoon Mask for helping the raccoon!"); // Raccoon Mask reward
-            raccoonComplete = true;
+            RaccoonComplete = true;
           }
         }
-     ]  
-  }
+     ] 
+      
+  },
+// ------------------------- ^^^^ Raccoon Storyline ^^^^ ------------------------  
+// ------------------------- vvvv Playground/Stray Storyline vvvv ------------------------
+  {
+    id: "PlaygroundStart",
+    type: "event",
+    location: "park",
+    backdrop: "images/Backdrops/playground.png",
+    miniImg: "images/slide.png",
+    dialogue: [
+      "You arrive at the park. you see a playground with a slide and swings.",
+      `You notice a stray cat sitting alone on a bench, it's looking right at you and ${catsName}.`
+    ],
+    question: "What would you like to do?",
+    options: [
+      {
+          title: "Approach the cat",
+          description: "Go over and see if the cat is friendly.",
+          requirement: () => CatMeet,
+          action: () => { showStoryOverlay(getStoryId("Stray")); }
+      },
+      {
+          title: `Play with ${catsName}`,
+          description: `Go and play with ${catsName} by the picnic table.`,
+          action: () => { showStoryOverlay(getStoryId("Playground2")); }
+      },
+      {
+          title: "Take a walk" ,
+          description: "Take a nice relaxing stroll around the park and enjoy the scenery.",
+          action: () => { hideStoryOverlay(); }
+      }
+    ],
+  },
 
-// ------------------------- ^^^^ Raccoon Storyline ^^^^ ------------------------
+  {
+    id: "Playground2",
+    type: "continuation",
+    backdrop: "images/Backdrops/picnictable.png",
+    miniImg: "images/cattoy.png",
+    dialogue: [
+      `You and ${catsName} move over to the picnic table, on the way you spot a tall grass stalk with a fluffy top.`,
+      `${catsName} seems very interested in it, so you grab it and use it to play with ${catsName}.`,
+      `${catsName} pounces and bats at the fluffy top, clearly enjoying the hunt, after some time in the sun, ${catsName} seems content and happy.`
+    ],
+    question: "After some time, you decide to head home.",
+    options: [
+      {
+        title: "Go home",
+        description: "Return home after a fun day at the park.",
+        action: () => { hideStoryOverlay(); }
+      }
+    ],
+  },
+
+  {
+    id: "Stray",
+    type: "continuation",
+    backdrop: "images/Backdrops/playground.png",
+    miniImg: "images/straycat.png",
+    dialogue: [
+      `You approach the stray cat cautiously. It seems wary but once it notices ${catsName} it relaxes.`,
+      `The stray cat seems to greet ${catsName} and bows slightly.`,
+      "you notice this stray looks similar to one you saw earlier in the alleyway."
+    ],
+    question: "Do you want to share some food with the stray cat?",
+    options: [
+      {
+          title: "Share fish",
+          description: "Offer some fish from your inventory to the stray cat.",
+          action: () => {
+            if (inventoryItems.some(item => item && item.id === 2 && item.qty > 0)) {    
+              removeItemsById(2, 1);
+              showNotif(2, -1);
+              if (CatMeet) {
+                showStoryOverlay(getStoryId("Stray3"));
+                StrayFed = true;
+              } else {
+                showStoryOverlay(getStoryId("Stray2"));
+                StrayFed = true;
+              }
+            } else {
+              showNotif(2, 0, "You don't have any fish"); // No fish notification
+            }
+        }
+      },
+      {
+          title: "Maybe next time",
+          description: "pet the cat and leave.",
+          action: () => { hideStoryOverlay(); }
+      }
+    ],
+  },
+  {
+    id: "Stray2",
+    type: "continuation",
+    backdrop: "images/Backdrops/playground.png",
+    miniImg: "images/straycathappy.png",
+    dialogue: [
+      " the stray cat eagerly eats the fish you offered. It seems very grateful.",
+      "After finishing the fish, the stray cat rubs against your leg and purrs loudly."
+    ],
+    question: "feeling happy about that and decide to head home.",
+    options: [
+        {
+          title: "Go home",
+          description: "Return home after a rewarding encounter.",
+          action: () => { hideStoryOverlay();  }
+        }
+    ]
+  },
+  {
+    id: "Stray3",
+    type: "continuation",
+    backdrop: "images/Backdrops/playground.png",
+    miniImg: "images/straycat.png",
+    dialogue: [
+      "The stray cat eagerly eats the fish you offered. It seems very grateful.",
+      `After finishing the fish, the stray looks at ${catsName} and they seem to have a conversation.`,
+      "after some time the stray cat seems to nod with a final Meow and walks off into the park."
+    ],
+    question: "You wonder to yourself what that was all about.",
+    options: [
+        {
+          title: "Go home",
+          description: "Return home after a rewarding encounter.",
+          action: () => { hideStoryOverlay(), Stray3 = true; }
+        }
+    ]
+  },
+// ------------------------- ^^^^ Playground/Stray Storyline ^^^^ ------------------------
+
+{
+  id: "ShoppingFiller",
+  type: "filler",
+  location: "Shop",
+  backdrop: "images/Backdrops/Bazaar.png",
+  miniImg: "images/shopping.png",
+  dialogue: [
+    "Arriving, you browse through the various shops, admiring the colorful displays and delicious aromas.",
+    `After some browsing you notice ${catsName} is watching two cats walk around the corner into an alleyway.`
+  ],
+  question: "After some browsing what do you want to do?",
+  options: [
+    {
+      title: "Go back home",
+      description: "Finish shopping and return to your cozy house.",
+      action: () => { 
+        giveLoot("Food", Math.floor(Math.random() * 3) + 1); // 1-3 random food items
+        showNotif(null, null, `You got some food while browsing!`);
+        updateGameState();
+        hideStoryOverlay();
+      }
+    },
+    {
+      title: "Follow the cats",
+      description: "Curious about where the cats went, you decide to follow them into the alleyway.",
+      requirement: () => !CatMeet,
+      action: () => { showStoryOverlay(getStoryId("CatMeet")); }
+    }
+  ]
+},
+{
+    id: "CatMeet",
+    type: "continuation",
+    backdrop: "images/Backdrops/alley.png",
+    miniImg: "images/straycats.png",
+    dialogue: [
+      `You decide to follow the cats into the alleyway. As you turn the corner, you see 4 cats sitting together.`,
+      `They seem to be having a Meeting with a destinct air of importance. One of the cats looks up and meets your gaze.`,
+      `For just a moment, everything stills — then, as if practiced, the cats scatter in different directions, leaving the alley empty`
+    ],
+    question: "You wonder what that was all about.",
+    options: [
+        {
+          title: "Go back to shopping",
+          description: "Return back to the main street.",
+          action: () => { 
+            giveLoot("Food", Math.floor(Math.random() * 3) + 1); // 1-3 random food items
+            showNotif(null, null, `You got some food while browsing!`);
+            updateGameState();
+            hideStoryOverlay();
+            CatMeet = true;
+          }
+        },
+        {
+          title: "Go home",
+          description: "Return home after a curious encounter.",
+          action: () => { 
+            hideStoryOverlay();
+            CatMeet = true;
+          }
+        }
+    ]
+},
+// -------------------------- ^^^^ Cat Meeting Storyline ^^^^ ------------------------
 
 ]; // End of storyBeats array
 
 // ========================= Story Overlay System =========================
+
+function getRandomHubOptions() {
+  // Define all possible hub options
+  const allOptions = [
+    {
+    title: "Visit the Park",
+    description: "Take a stroll in the park.",
+    action: () => {
+    const parkBeat = getRandomStoryBeatByLocation("Park");
+    if (parkBeat) {
+      showStoryOverlay(parkBeat);
+        }
+      }
+    },
+    {
+      title: "Visit the Forest",
+      description: "Explore the mysterious forest.",
+      action: () => {
+      const forestBeat = getRandomStoryBeatByLocation("Forest");
+      if (forestBeat) {
+      showStoryOverlay(forestBeat);
+        }
+      }
+    },
+    {
+      title: "Go Shopping",
+      description: "Check out the local shops.",
+      action: () => {
+      const shopBeat = getRandomStoryBeatByLocation("Shop");
+      if (shopBeat) {
+      showStoryOverlay(shopBeat);
+        }
+      }
+    },
+    {
+      title: "Play with the Cat",
+      description: "Spend time playing with your cat.",
+      action: () => {
+      const catPlayBeat = getRandomStoryBeatByLocation("CatPlay");
+      if (catPlayBeat) {
+      showStoryOverlay(catPlayBeat);
+        }
+      }
+    },
+    {
+      title: "Freelance Work",
+      description: "Get some freelance work done.",
+      action: () => {
+      const freelanceBeat = getRandomStoryBeatByLocation("Freelance");
+      if (freelanceBeat) {
+      showStoryOverlay(freelanceBeat);
+        }
+      }
+    },
+    {
+      title: "Visit the Beach",
+      description: "Relax by the seaside.",
+      action: () => {
+      const beachBeat = getRandomStoryBeatByLocation("Beach");
+      if (beachBeat) {
+      showStoryOverlay(beachBeat);
+        }
+      }
+    }
+    // Add more options as needed
+  ];
+  const shuffled = allOptions.sort(() => Math.random() - 0.5);
+  const count = Math.floor(Math.random() * 4) + 3; // 3 to 6 options
+  return shuffled.slice(0, count);
+}
+
+function getRandomStoryBeatByLocation(location) {
+  const beats = storyBeats.filter(beat =>
+    beat.location === location &&
+    (typeof beat.requirement !== "function" || beat.requirement())
+  );
+  if (beats.length === 0) return null;
+  return beats[Math.floor(Math.random() * beats.length)];
+}
 
 const storyBeatRarity = [
   {type: "side", weight: 4},
@@ -352,8 +675,10 @@ if (Array.isArray(storyBeat.dialogue)) {
   }
 
   // Set options/buttons after dialogue and question
-  optionsBox.innerHTML = "";
-  storyBeat.options.forEach((opt, idx) => {
+optionsBox.innerHTML = "";
+storyBeat.options
+  .filter(opt => !opt.requirement || opt.requirement())
+  .forEach((opt, idx) => {
     const btn = document.createElement('button');
     btn.className = 'story-option-btn';
     btn.textContent = opt.title;
@@ -376,34 +701,29 @@ function hideStoryOverlay() {
   setTimeout(() => { overlay.style.display = "none"; }, 400);
 }
 
-// Example usage:
-// showStoryOverlay(getStoryId("beach_intro"));
-// To close: hideStoryOverlay();
-
-
 const tooltip = document.getElementById('storyBtnTooltip');
 
-// Delegate tooltip logic to all story-option-btns
-document.addEventListener('mouseover', function(e) {
-  if (e.target.classList.contains('story-option-btn')) {
-    const desc = e.target.dataset.description;
-    if (desc) {
-      tooltip.textContent = desc;
-      tooltip.style.display = "block";
-      tooltip.classList.add('active');
+  // Delegate tooltip logic to all story-option-btns
+  document.addEventListener('mouseover', function(e) {
+    if (e.target.classList.contains('story-option-btn')) {
+      const desc = e.target.dataset.description;
+      if (desc) {
+        tooltip.textContent = desc;
+        tooltip.style.display = "block";
+        tooltip.classList.add('active');
+      }
     }
-  }
-});
-document.addEventListener('mousemove', function(e) {
-  if (tooltip.style.display === "block") {
-    // Offset so it doesn't cover the cursor
-    tooltip.style.left = (e.clientX + 18) + "px";
-    tooltip.style.top = (e.clientY + 12) + "px";
-  }
-});
-document.addEventListener('mouseout', function(e) {
-  if (e.target.classList.contains('story-option-btn')) {
-    tooltip.style.display = "none";
-    tooltip.classList.remove('active');
-  }
-});
+  });
+  document.addEventListener('mousemove', function(e) {
+    if (tooltip.style.display === "block") {
+      // Offset so it doesn't cover the cursor
+      tooltip.style.left = (e.clientX + 18) + "px";
+      tooltip.style.top = (e.clientY + 12) + "px";
+    }
+  });
+  document.addEventListener('mouseout', function(e) {
+    if (e.target.classList.contains('story-option-btn')) {
+      tooltip.style.display = "none";
+      tooltip.classList.remove('active');
+    }
+  })

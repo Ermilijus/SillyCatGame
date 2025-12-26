@@ -42,6 +42,13 @@ document.querySelectorAll(".debug-section-toggle").forEach(toggleBtn => {
   });
 });
 
+document.getElementById("storyRandom").addEventListener("click", () => {
+  const allStories = storyBeats.filter(story => story.type === "main" || story.type === "continuation" || story.type === "event" || story.type === "filler");
+  const randomStory = allStories[Math.floor(Math.random() * allStories.length)];
+  showStoryOverlay(randomStory.id);
+});
+
+// Display current stats in debug menu --------------------------------------
 document.getElementById('debug-getStatsBtn').addEventListener('click', function() {
   const stats = [
     { label: 'Total Coins Earned', value: totalCoinsEarned },
@@ -57,8 +64,7 @@ document.getElementById('debug-getStatsBtn').addEventListener('click', function(
     { label: 'Ticks Since Start', value: ticksSinceStart },
     { label: 'Ticks With Low Energy', value: ticksWithLowEnergy },
     { label: 'Ticks With Low Fullness', value: ticksWithLowFullness },
-    { label: 'Quackers Given', value: quackersGiven },
-    showStoryOverlay(getStoryId("raccoon4"))
+    { label: 'Quackers Given', value: quackersGiven }
   ];
 
   let html = '<ul style="list-style:none; padding:0; margin:0;">';

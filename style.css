@@ -1130,8 +1130,9 @@ border-radius: 10px;
 .story-dialogue-window {
   position: relative;
   z-index: 2;
-  width: 600px;
-  max-width: 92vw;
+  width: auto;
+  max-width: 35vw;
+  min-width: 35vw;
   min-height: 320px;
   background: rgba(36, 41, 54, 0.82);
   border-radius: 22px;
@@ -1180,6 +1181,9 @@ border-radius: 10px;
   line-height: 1.5;
   text-shadow: 0 1px 4px rgba(30,30,40,0.18);
   font-family: 'Segoe UI', system-ui, sans-serif;
+  user-select: none;
+  -webkit-user-select: none; /* For Safari */
+  -ms-user-select: none;
 }
 
 /* Question styling with fade-in */
@@ -1192,6 +1196,9 @@ border-radius: 10px;
   letter-spacing: 0.02em;
   opacity: 0;
   animation: fadeInQuestion 0.7s 0.1s forwards;
+  user-select: none;
+  -webkit-user-select: none; /* For Safari */
+  -ms-user-select: none;
 }
 
 @keyframes fadeInQuestion {
@@ -1202,6 +1209,7 @@ border-radius: 10px;
 /* Modular options/buttons area */
 .story-options {
   width: 100%;
+  max-width: 900px;
   display: flex;
   justify-content: center;
   gap: 18px;
@@ -1210,14 +1218,17 @@ border-radius: 10px;
   opacity: 1;
   pointer-events: auto;
   transition: none;
+  user-select: none;
+  -webkit-user-select: none; /* For Safari */
+  -ms-user-select: none;
 }
 
 .story-option-btn {
-  flex: 1 1 0;
-  min-width: 90px;
-  max-width: 160px;
-  padding: 12px 0;
-  margin: 0 2px;
+  flex: 1 1 180px;
+  min-width: 140px;
+  max-width: 320px;
+  padding: 12px 10px;
+  margin: 0 4px 10px 4px;
   background: linear-gradient(135deg, #ffe066 60%, #fffbe6 100%);
   color: #7a5c00;
   font-size: 1.08em;
@@ -1227,7 +1238,28 @@ border-radius: 10px;
   box-shadow: 0 2px 8px rgba(255,224,102,0.12);
   cursor: pointer;
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  white-space: normal;
+  word-break: break-word;
+  user-select: none;
+  -webkit-user-select: none; /* For Safari */
+  -ms-user-select: none;
 }
+/* Responsive: for smaller screens, stack buttons vertically */
+@media (max-width: 700px) {
+  .story-options {
+    max-width: 98vw;
+    gap: 10px;
+  }
+  .story-option-btn {
+    min-width: 90vw;
+    max-width: 98vw;
+    font-size: 1em;
+    padding: 12px 6px;
+    margin: 0 0 10px 0;
+  }
+}
+
+
 .story-option-btn:hover {
   background: linear-gradient(135deg, #fffbe6 80%, #ffe066 100%);
   transform: translateY(-2px) scale(1.04);
@@ -1261,6 +1293,9 @@ border-radius: 10px;
     width: 98vw;
     min-height: 220px;
     padding: 18px 4vw 18px 4vw;
+    user-select: none;
+    -webkit-user-select: none; /* For Safari */
+    -ms-user-select: none;
   }
   .story-mini-img {
     width: 70px;
@@ -1271,6 +1306,9 @@ border-radius: 10px;
     font-size: 1em;
     min-height: 50px;
     margin-bottom: 16px;
+    user-select: none;
+    -webkit-user-select: none; /* For Safari */
+    -ms-user-select: none;
   }
 .story-options {
   width: 100%;

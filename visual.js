@@ -163,12 +163,10 @@ function showNotif(id, amount = '', extra = '') {
 
   // Compose main text
   let mainText = '';
-  if (meta.name) {
-    mainText = `<span class="notif-text">${meta.name}</span>`;
-  }
-  // If extra message, append after name (with colon if both)
   if (extra) {
-    mainText += `<span class="notif-extra">${meta.name ? ': ' : ''}${extra}</span>`;
+    mainText = `<span class="notif-extra">${extra}</span>`;
+  } else if (meta.name) {
+    mainText = `<span class="notif-text">${meta.name}</span>`;
   }
 
   // Amount badge (if numeric and not empty)
