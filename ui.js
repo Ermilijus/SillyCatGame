@@ -27,10 +27,10 @@ let luck = 0; //initial luck stat value
 // =============================== Update all game state values and UI START ===============================
 function updateGameState() {
   statsClamp();  //calls the function to clamp values within their min/max
-  
   updateStatBar('fullness', fullness);// update stat meters
   updateStatBar('energy', energy);
   updateJoyBar(joy); // joy bar remains custom
+  
   updateLoveDisplay(); // update love display
   achievmentTracker();  //calls the function from achievements.js to check for achievements
   updateCoinsDisplay(); // update coins display
@@ -55,19 +55,19 @@ function updateTickCounters() { // +1 to counters for game tick tracking
 
 // =============================== Button Event Listeners START ===============================
 document.getElementById('feed-btn').addEventListener('click', () => {
-  fullnessUpdate(20), energyUpdate(-6), joyUpdate(15);
+  fullnessUpdate(10), energyUpdate(-8), joyUpdate(3);
   updateGameState();
   updateCatState();
   totalFeeds += 1;
 });
 document.getElementById('play-btn').addEventListener('click',  () => {
-  fullnessUpdate(-10), energyUpdate(-20), joyUpdate(25);
+  fullnessUpdate(-8), energyUpdate(-13), joyUpdate(5);
   updateGameState();
   updateCatState();
   totalPlays += 1;
 });
 document.getElementById('rest-btn').addEventListener('click',  () => {
-  energyUpdate(30), fullnessUpdate(-5), joyUpdate(10);
+  energyUpdate(20), fullnessUpdate(-6), joyUpdate(2);
   updateGameState();
   updateCatState();
   totalRests += 1;

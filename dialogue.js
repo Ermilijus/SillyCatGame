@@ -85,6 +85,10 @@ let CatMeet = false;
 let StrayFed = false;
 let Stray3 = false;
 
+function hasItem(id, qty = 1) {
+  return Array.isArray(inventoryItems) && inventoryItems.some(item => item && item.id === id && item.qty >= qty);
+}
+
 /* ------------------------- Story/Event Overlay ------------------------- */
 // Define story beats, type: main, continuation, event, filler.
 const storyBeats = [
@@ -100,9 +104,9 @@ const storyBeats = [
   }
   },  // Hub
 
-  { // -------------------------- vvvv Beach Storyline vvvv ------------------------
+  { // -------------------------- vvvv Beach filler vvvv ------------------------
     id: "Beach1",
-    type: "event",
+    type: "filler",
     location: "Beach",
     backdrop: "images/Backdrops/beach.png",
     miniImg: "images/palmtree.png",
@@ -145,7 +149,7 @@ const storyBeats = [
         action: () => { hideStoryOverlay(); }
       }
     ]
-  },  // -------------------------- ^^^^ Beach Storyline ^^^^ ------------------------
+  },  // -------------------------- ^^^^ Beach filler ^^^^ ------------------------
 
   {  // ------------------------- vvvv Raccoon Storyline vvvv ------------------------
     id: "RaccoonStart",
@@ -299,11 +303,12 @@ const storyBeats = [
       
   },
 // ------------------------- ^^^^ Raccoon Storyline ^^^^ ------------------------  
-// ------------------------- vvvv Playground/Stray Storyline vvvv ------------------------
+
+// ------------------------- vvvv Playground/Stray event vvvv ------------------------
   {
     id: "PlaygroundStart",
     type: "event",
-    location: "park",
+    location: "Park",
     backdrop: "images/Backdrops/playground.png",
     miniImg: "images/slide.png",
     dialogue: [
@@ -428,9 +433,11 @@ const storyBeats = [
   },
 // ------------------------- ^^^^ Playground/Stray Storyline ^^^^ ------------------------
 
+// -------------------------- vvvv shopping event vvvv ------------------------
 {
-  id: "ShoppingFiller",
-  type: "filler",
+  id: "ShoppingEvent",
+  type: "event",
+  requirement: () => !CatMeet,
   location: "Shop",
   backdrop: "images/Backdrops/Bazaar.png",
   miniImg: "images/shopping.png",
@@ -454,7 +461,7 @@ const storyBeats = [
       title: "Follow the cats",
       description: "Curious about where the cats went, you decide to follow them into the alleyway.",
       requirement: () => !CatMeet,
-      action: () => { showStoryOverlay(getStoryId("CatMeet")); }
+      action: () => { showStoryOverlay(getStoryId("CatMeet"));  }
     }
   ]
 },
@@ -491,7 +498,308 @@ const storyBeats = [
         }
     ]
 },
-// -------------------------- ^^^^ Cat Meeting Storyline ^^^^ ------------------------
+
+
+{
+  id: "ShoppingFiller",
+  type: "filler",
+  location: "Shop",
+  backdrop: "images/Backdrops/Bazaar.png",
+  miniImg: "images/shoppingbag.png",
+  dialogue: [
+    `You do some grocery shopping, picking up some essentials and treats for yourself and ${catsName}.`,
+  ],
+  question: "You make your purchases and head back home.",
+  options: [
+    {
+      title: "Go home",
+      description: "Finish shopping and return to your cozy house.",
+      action: () => { 
+        hideStoryOverlay(); 
+        giveLoot("Food", Math.floor(Math.random() * 3) + 1); // 1-3 random food items
+        giveLoot("Toys", Math.floor(Math.random() * 2) + 1); // 1-2 random toy items
+        showNotif(null, null, `You got some food and toys while shopping!`);
+        updateGameState();
+      }
+    },
+    {
+      title: "Long way home",
+      description: "Take a longer route home, enjoying the sights along the way.",
+      action: () => {
+        hideStoryOverlay();
+        giveLoot("Food", Math.floor(Math.random() * 3) + 1); // 1-3 random food items
+        giveLoot("Toys", Math.floor(Math.random() * 2) + 1); // 1-2 random toy items
+        showNotif(null, null, `You got some food and toys while shopping!`);
+        giveLootChance("Valuable", 85); // 15% chance to get a trophy
+        updateGameState();
+        }
+    }
+  ]
+},
+
+{
+  id: "Shopping",
+  type: "event",
+  location: "Shop",
+  backdrop: "images/Backdrops/Bazaar2.png",
+  miniImg: "images/shopping.png",
+  dialogue: [
+    "while doing your shopping, you encounter a great deal on some cat toys.",
+  ],
+  question: "Do you want to buy some toys for your cat?",
+  options: [
+    { 
+      title: "Yes -10 coins",
+      description: "Buy some toys to keep your cat entertained.",
+      action: () => { 
+        if (coins >= 10) {
+          coins -= 10;
+          giveLoot("Toys", 3); // Give 3 toys
+        } else {
+          showNotif(998, null, null); // Not enough coins notification
+        }
+        updateGameState();
+        hideStoryOverlay();
+      }
+    },
+    { 
+      title: "No",
+      description: "Decide to save your coins for now.",
+      action: () => { 
+        hideStoryOverlay();
+        giveLootChance("Food", 50); // 50% chance to get a Food item
+        giveLootChance("Toys", 30); // 70% chance to get a Toy item
+        updateGameState();
+      }
+    }
+  ]
+},
+// -------------------------- ^^^^ shopping filler ^^^^ ------------------------
+
+
+// -------------------------- vvvv Freelance filler vvvv ------------------------
+{
+  id: "FreelanceWorkFiller",
+  type: "filler",
+  location: "Freelance", 
+  backdrop: "images/Backdrops/Laptop.png",
+  miniImg: "images/laptop.png",
+  dialogue: [
+    "You set up your laptop and start working on some freelance projects.",
+  ],
+  question: "After a productive session, what do you want to do next?",
+  options: [
+    {
+      title: "Finish for the day",
+      description: "Shut down your laptop and relax for the rest of the day.",
+      action: () => { 
+        const earnings = Math.floor(Math.random() * 31) + 20; // Earn between $20 and $50
+        coins += earnings;
+        showNotif(604, earnings, `You earned some pay from your freelance work!`);
+        updateGameState();
+        hideStoryOverlay();
+      }
+    }
+  ]
+},
+
+{
+  id: "FreelanceBreak",
+  type: "filler",
+  location: "Freelance",
+  backdrop: "images/Backdrops/Laptop.png",
+  miniImg: "images/coffee.png",
+  dialogue: [
+    "You work away for some time, making good progress on your tasks.",
+    "You decide to take a break from your freelance work to enjoy a cup of coffee.",
+    `As you sip your coffee, ${catsName} hops onto the desk clearly seeking attention.`,
+  ],
+  question: "Spend your break how?",
+  options: [
+    {
+      title: "Continue working",
+      description: "Finish your coffee quickly and get back to work.",
+      action: () => { 
+        hideStoryOverlay();
+        joy -= 5;
+        const earnings = Math.floor(Math.random() * 31) + 20; // Earn between $20 and $50
+        coins += earnings;
+        showNotif(604, earnings, `You earned some pay from your freelance work!`);
+        updateGameState();
+        hideStoryOverlay();
+       }
+    },
+    {
+      title: `Play with ${catsName}`,
+      description: `Take some time to play with ${catsName} during your break.`,
+      action: () => { 
+        hideStoryOverlay(); 
+        joy += 10;
+        love += 3;
+        const earnings = Math.floor(Math.random() * 31) + 20; // Earn between $20 and $50
+        coins += earnings;
+        showNotif(604, earnings, `You earned some pay from your freelance work!`);
+        updateGameState();
+        hideStoryOverlay();
+      }
+    }
+  ]
+},
+
+{
+  id: "FreelanceSmallJob",
+  type: "filler",
+  location: "Freelance",
+  backdrop: "images/Backdrops/Laptop.png",
+  miniImg: "images/document.png",
+  dialogue: [
+    "You receive a small freelance job that needs to be completed quickly.",
+  ],
+  question: "Get to to it or refuse?",
+  options: [
+    {
+      title: "Accept the job",
+      description: "Complete the small job for some quick pay.",
+      action: () => {
+        const earnings = Math.floor(Math.random() * 16) + 10; // Earn between $10 and $25
+        coins += earnings;
+        showNotif(604, earnings, `You earned some pay from your freelance work!`);
+        updateGameState();
+        hideStoryOverlay();
+      }
+    },
+    {
+      title: "Refuse the job",
+      description: "Turn down the small job and take a break instead.",
+      action: () => {
+        hideStoryOverlay();
+      }
+    }
+  ]
+},
+// -------------------------- ^^^^ Freelance filler ^^^^ ------------------------
+
+// -------------------------- vvvv stay home beats vvvv -------------------------
+{
+  id: "catPlay",
+  type: "filler",
+  location: "CatPlay",
+  backdrop: "images/Backdrops/livingroom.png",
+  miniImg: "images/cattoy.png",
+  dialogue: [ 
+    `You decide to stay home and have a relaxing day indoor with ${catsName}.`,
+    `You take out some of ${catsName}'s favorite toys and throughout the day you both have a great time playing together.`,
+    `By evening, ${catsName} is all tuckered out and happy napping on your lap as you watch a movie.`
+  ],
+  question: "After a relaxing day indoors, you go to bed",
+  options: [
+    {
+      title: "Go to bed",
+      description: "End the day and head to bed.",
+      action: () => { hideStoryOverlay(); }
+    }
+  ]
+},
+
+{
+  id: "catPlay2",
+  type: "event",
+  requirement: () => hasItem(402, 1), // Requires catnip in inventory
+  location: "CatPlay",
+  backdrop: "images/Backdrops/livingroom.png",
+  miniImg: "images/catnip.png",
+  dialogue: [
+    `You decide to stay home and have a relaxing day indoor with ${catsName}.`,
+    `You take out some catnip from your inventory and sprinkle it on ${catsName}'s favorite toy.`,
+    `${catsName} goes wild with excitement, pouncing and rolling around in the catnip-infused toy!`
+  ],
+  question: "After a fun-filled day with catnip, you go to bed",
+  options: [
+    {
+      title: "Go to bed",
+      description: "End the day and head to bed.",
+      action: () => { 
+        hideStoryOverlay(); 
+        removeItemsById(402, 1); // Use one catnip
+        showNotif(402, -1);
+        joy += 15;
+        love += 5;
+        energy -= 10;
+        fullness -= 15;
+      }
+    }
+  ],
+},
+
+{
+  id: "catPlay3",
+  type: "filler",
+  location: "CatPlay",
+  backdrop: "images/Backdrops/livingroom.png",
+  miniImg: "images/cattoy3.png",
+  dialogue: [
+    `You decide to stay home and have a relaxing day indoor with ${catsName}.`,
+    `You set up a little obstacle course using household items for ${catsName} to navigate through.`,
+    `${catsName} eagerly takes on the challenge, jumping over cushions and weaving through boxes with impressive agility!`
+  ],
+  question: "After a fun-filled day indoors, what would you like to do?",
+  options: [
+    {
+      title: "Go to bed",
+      description: "End the day and head to bed.",
+      action: () => { 
+       hideStoryOverlay();
+       joy += 5;
+       energy -= 10;
+       fullness -= 10;
+       love += 2;
+       }
+    },
+    {
+      title: "Go out for a walk",
+      description: `Go out for an evening walk with ${catsName}.`,
+      action: () => {
+        showStoryOverlay(getRandomEventBeat());
+        joy += 10;
+        energy -= 15;
+        fullness -= 10;
+        love += 3;
+       }
+    }
+  ]
+},
+
+{
+  id: "catPlay4",
+  type: "filler",
+  location: "CatPlay",
+  backdrop: "images/Backdrops/livingroom.png",
+  miniImg: "images/laserpointer.png",
+  dialogue: [
+    `You decide to stay home and have a relaxing day indoor with ${catsName}.`,
+    `You grab a laser pointer and start moving the red dot around the room.`,
+  ],
+  question: "After a fun-filled day indoors, what would you like to do?",
+  options: [
+    {
+      title: "Go to bed",
+      description: "End the day and head to bed.",
+      action: () => { 
+        hideStoryOverlay();
+        let random = Math.random() * 11;
+        joy += random;
+        random = Math.random() * 16;
+        energy -= random;
+        random = Math.random() * 16;
+        fullness -= random;
+        random = Math.random() * 6;
+        love += random;
+       }
+    }
+  ]
+},
+// -------------------------- ^^^^ stay home beats ^^^^ -------------------------
+
 
 ]; // End of storyBeats array
 
@@ -531,8 +839,8 @@ function getRandomHubOptions() {
       }
     },
     {
-      title: "Play with the Cat",
-      description: "Spend time playing with your cat.",
+      title: "Stay Home and Play",
+      description: "Spend time playing with your cat, from the comfort of your home.",
       action: () => {
       const catPlayBeat = getRandomStoryBeatByLocation("CatPlay");
       if (catPlayBeat) {

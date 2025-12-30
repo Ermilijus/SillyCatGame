@@ -72,8 +72,8 @@ const ITEM_DB = { // Food, Toy, Quest, Misc, Powerup, Trophy, Valuable ===
 
 // Inventory data storage
 let inventoryItems = [
-  {id: 506}, // Golden bell for testing
-  {id: 206},
+  {id: 2, qty: 3}, // Golden bell for testing
+  {id: 100, qty: 1},
   null,
   null,
   null,
@@ -326,8 +326,8 @@ let shopInventory = [
   {id: 1},
   {id: 2},
   {id: 6},
+  {id: 8},
   {id: 7},
-  null,
   {id: 100},
   {id: 101},
   null,
@@ -342,7 +342,7 @@ let shopInventory = [
   {id: 201},
   {id: 200},
   {id: 602},
-  null
+  null,
 ];
 
 // shop data storage
@@ -351,14 +351,14 @@ const shopOverlay = document.getElementById('shopOverlay');
 const closeShopBtn = document.getElementById('closeShopBtn');
 const shopGrid = document.getElementById('shopGrid');
 let shopContextMenuSlot = null;
-const SHOP_SALES = [0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 10, 10, 25, 50]; // sale percentages
+const SHOP_SALES = [0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 10, 10, 25, 50]; // sale percentages
 const SHOP_PRICE_RANGES = {
-  Common: [2, 7],
-  Uncommon: [5, 13],
-  Rare: [10, 30],
-  Epic: [25, 70],
-  Legendary: [50, 80],
-  Mythic: [100, 200]
+  Common: [2, 10],
+  Uncommon: [5, 20],
+  Rare: [10, 45],
+  Epic: [25, 85],
+  Legendary: [50, 110],
+  Mythic: [100, 220]
 }
 
 // Generate random shop prices within a range and apply sale discounts
@@ -548,7 +548,7 @@ function rollLoot(poolIds) {
   return pick?.id;
 }
 
-const EXCLUDED_LOOT_TYPES = ["Quest", "Notif", "Trophy"]; // Excluded types from loot pools
+const EXCLUDED_LOOT_TYPES = ["Quest", "Notif"]; // Excluded types from loot pools
 
 // Build loot pools by item type
 const LOOT_POOLS = {};
@@ -880,4 +880,15 @@ function questRewardItem(id, qty, msg) {
       : ITEM_DB[id].emoji || ''} x${qty}`; // Show image if available, else emoji
     achDesc.textContent = msg;
   }
+}
+
+function giveLootChance(pool, minRoll) {
+  const roll = Math.random() * 100;
+  console.log(`rolled ${roll}, need < ${minRoll}, for ${pool}`);
+  if (roll > minRoll) {
+    const itemId = giveLoot(pool);
+    return { win: true, roll, itemId };
+  }
+  return { win: false, roll, itemId: null };
+
 }
