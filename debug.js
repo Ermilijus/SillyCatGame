@@ -43,8 +43,15 @@ document.querySelectorAll(".debug-section-toggle").forEach(toggleBtn => {
 });
 
 document.getElementById("storyRandom").addEventListener("click", () => {
-  const allStories = storyBeats.filter(story => story.type === "main" || story.type === "continuation" || story.type === "event" || story.type === "filler");
-  const randomStory = allStories[Math.floor(Math.random() * allStories.length)];
+  const stories = [
+    { id: getRandomStoryBeatByLocation("Park") },
+    { id: getRandomStoryBeatByLocation("Forest") },
+    { id: getRandomStoryBeatByLocation("Shop") },
+    { id: getRandomStoryBeatByLocation("CatPlay") },
+    { id: getRandomStoryBeatByLocation("Freelance") },
+    { id: getRandomStoryBeatByLocation("Beach") }
+  ];
+  const randomStory = stories[Math.floor(Math.random() * stories.length)];
   showStoryOverlay(randomStory.id);
 });
 
@@ -64,7 +71,9 @@ document.getElementById('debug-getStatsBtn').addEventListener('click', function(
     { label: 'Ticks Since Start', value: ticksSinceStart },
     { label: 'Ticks With Low Energy', value: ticksWithLowEnergy },
     { label: 'Ticks With Low Fullness', value: ticksWithLowFullness },
-    { label: 'Quackers Given', value: quackersGiven }
+    { label: 'Quackers Given', value: quackersGiven },
+    { label: 'Story Beats Started', value: storyBeatsStarted },
+    
   ];
 
   let html = '<ul style="list-style:none; padding:0; margin:0;">';

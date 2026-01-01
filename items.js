@@ -26,7 +26,7 @@ const ITEM_DB = { // Food, Toy, Quest, Misc, Powerup, Trophy, Valuable ===
     // Quest items
     200: {id: 200, name: "Mysterious key", emoji: "🗝️", image: "images/mysterious_key.png", type: "Quest", stackable: false, maxStack: 1, rarity: "Epic", price: 7, combinable: false, usable: false, description: "A key to somewhere... hold on to this."},
     201: {id: 201, name: "Battery", emoji: "🔋", image: "images/battery.png", type: "Quest", stackable: false, maxStack: 1, rarity: "Rare", price: 5, combinable: true, usable: false, description: "Its a brand new AA Battery, perhaps its needed for something"},
-    202: {id: 202, name: "A treasure map", emoji: "🗺️", image: "images/treasure_map.png", type: "Quest", stackable: false, maxStack: 1, rarity: "Uncommon", price: 2, combinable: false, usable: true, description: "It's a treasure map, i wonder where it leads."},
+    202: {id: 202, name: "A treasure map", emoji: "🗺️", image: "images/treasuremap.png", type: "Quest", stackable: false, maxStack: 1, rarity: "Uncommon", price: 2, combinable: false, usable: false, description: "It's a treasure map, i wonder where it leads."},
     203: {id: 203, name: "Raccoon Mask", emoji: "🦝", image: "images/raccoon.png", type: "Quest", stackable: false, maxStack: 1, rarity: "Mythic", price: 100, combinable: false, usable: false, description: "The one and ONLY!!!"},
     204: {id: 204, name: "Drained Flashlight", emoji: "🔦", image: "images/flashlight.png", type: "Quest", stackable: false, maxStack: 1, rarity: "Uncommon", price: 7, combinable: true, usable: false, description: "A Flashlight missing a battery"},
     205: {id: 205, name: "Flashlight", emoji: "🔦", image: "images/flashlight.png", type: "Quest", stackable: false, maxStack: 1, rarity: "Epic", price: 20, combinable: false, usable: false, description: "A fully charged flashlight."},
@@ -39,7 +39,7 @@ const ITEM_DB = { // Food, Toy, Quest, Misc, Powerup, Trophy, Valuable ===
     304: {id: 304, name: "Button", emoji: "🔘", image: "images/button.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: false, description: "A small button"},
     305: {id: 305, name: "Feather", emoji: "🪶", image: "images/feather.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Rare", price: 5, combinable: false, usable: false, description: "A protective talisman believed to ward off evil."},
     306: {id: 306, name: "Soap", emoji: "🧼", image: "images/soap.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Uncommon", price: 2, combinable: false, usable: false, description: "A bar of soap, smells nice and clean. Is kitty trying to tell you something?"},
-    307: {id: 307, name: "Seashell", emoji: "🪶", image: "images/seashell.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: false, description: "A soft seashell, not much use, but its pretty."},
+    307: {id: 307, name: "Seashell", emoji: "🪶", image: "images/seashell.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: false, description: "A seashell, not much use, but its pretty."},
 
     // Powerup items
     400: {id: 400, name: "Energy drink", emoji: "🧃", image: "images/energydrink.png", type: "Powerup", stackable: true, maxStack: 3, rarity: "Uncommon", price: 2, combinable: false, usable: true, stats: {energy: +25}, description: "Boosts energy!, not for the cat i hope"},
@@ -340,7 +340,7 @@ let shopInventory = [
   null,
   {id: 500},
   {id: 201},
-  {id: 200},
+  null,
   {id: 602},
   null,
 ];
@@ -786,6 +786,7 @@ function combineItem(index) {
         addItemById(506, 1);
         showNotif(506, 1, "Combined!");
         trophiesEarned += 1;
+        goldenBell = true;
       }
     },
     {

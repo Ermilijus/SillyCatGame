@@ -55,19 +55,23 @@ function updateTickCounters() { // +1 to counters for game tick tracking
 
 // =============================== Button Event Listeners START ===============================
 document.getElementById('feed-btn').addEventListener('click', () => {
-  fullnessUpdate(10), energyUpdate(-8), joyUpdate(3);
+  fullnessUpdate(10), energyUpdate(-8), joyUpdate(1);
   updateGameState();
   updateCatState();
   totalFeeds += 1;
 });
 document.getElementById('play-btn').addEventListener('click',  () => {
-  fullnessUpdate(-8), energyUpdate(-13), joyUpdate(5);
+   if (energy <= 25 || fullness <= 25) {
+    return; // Prevent playing if energy or fullness is too low
+  } else {
+  fullnessUpdate(-8), energyUpdate(-13), joyUpdate(2);
   updateGameState();
   updateCatState();
   totalPlays += 1;
+  }
 });
 document.getElementById('rest-btn').addEventListener('click',  () => {
-  energyUpdate(20), fullnessUpdate(-6), joyUpdate(2);
+  energyUpdate(20), fullnessUpdate(-6), joyUpdate(1);
   updateGameState();
   updateCatState();
   totalRests += 1;
@@ -89,25 +93,25 @@ function updateCatState() {
 }
 
  function moodPlayful() {
-    displayImage.src = "images/Cat-Playful.png";
+    displayImage.src = "images/Cat-Playful.jpg";
     catState = "playful";
     moodDisplay.textContent = "Playful";
 }
 
   function moodSleepy() {
-    displayImage.src = "images/Cat-Sleepy.png";
+    displayImage.src = "images/Cat-Sleepy.jpg";
     catState = "sleepy";
     moodDisplay.textContent = "Sleepy";
 }
 
   function moodGrumpy() {
-    displayImage.src = "images/Cat-Grumpy.png";
+    displayImage.src = "images/Cat-Grumpy.jpg";
     catState = "grumpy";
     moodDisplay.textContent = "Grumpy";
 }
 
   function moodNeutral() {
-    displayImage.src = "images/Cat-Neutral.png";
+    displayImage.src = "images/Cat-Neutral.jpg";
     catState = "neutral";
     moodDisplay.textContent = "Neutral";
 }

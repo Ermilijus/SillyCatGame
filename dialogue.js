@@ -11,7 +11,7 @@ function showDialogue(text) {
 
 let isTyping = false;
 function typeText(element, text, options = {}) {
-    let speed = options.speed || 35; // Default speed per character (lower is faster)
+    let speed = options.speed || 35; // speed per character (lower is faster)
 
 
     return new Promise((resolve) => {
@@ -66,11 +66,16 @@ function formatDialogue(text) {
 // Or in your typeText function, use formatDialogue before rendering each chunk
 
  document.getElementById('feed-btn').addEventListener('click', async () => {
-	await typeText(dialogueText, `${catsName} ~happily~ munches the food. Meow, nom nom!, what a good kitty! isn't that right?, isn't it ~delicious~?, purr..., would you like more? Yaaaaaaaaaa...`);
+	await typeText(dialogueText, `${catsName} ¬happily¬ munches on some basic cat food.`);
 });
 
 document.getElementById('play-btn').addEventListener('click', async () => {
+  if (energy <= 25 || fullness <= 25) {
+    await typeText(dialogueText, `${catsName} looks too ¬tired¬ or ¬hungry¬ to ¬play¬ right now...`);
+    return; // Prevent playing if energy or fullness is too low
+  } else {
 	await showStoryOverlay(getStoryId("Hub"));
+  }
 });
 
 document.getElementById('rest-btn').addEventListener('click', async () => {
@@ -84,6 +89,7 @@ let RaccoonComplete = false;
 let CatMeet = false;
 let StrayFed = false;
 let Stray3 = false;
+let TreasureFound = false;
 
 function hasItem(id, qty = 1) {
   return Array.isArray(inventoryItems) && inventoryItems.some(item => item && item.id === id && item.qty >= qty);
@@ -95,7 +101,7 @@ const storyBeats = [
   {
   id: "Hub",
   type: "event",
-  backdrop: "images/Backdrops/apartment.png",
+  backdrop: "images/Backdrops/livingroom.png",
   miniImg: "images/house.png",
   dialogue: "What would you like to do today?",
   question: "Choose your next adventure:",
@@ -149,7 +155,38 @@ const storyBeats = [
         action: () => { hideStoryOverlay(); }
       }
     ]
-  },  // -------------------------- ^^^^ Beach filler ^^^^ ------------------------
+  }, 
+  {
+    id: "BeachFiller",
+    type: "filler",
+    location: "Beach",
+    backdrop: "images/Backdrops/beach3.png",
+    miniImg: "images/surfboard.png",
+    dialogue: [
+    "You spend some relaxing time at the beach, soaking up the sun and listening to the waves.",
+    `In the shade of some trees, you sit with ${catsName} and watch the surfers in the distance.`
+    ],
+    question: "After a while, you decide to head back home.",
+    options: [
+      { 
+        title: "Go home",
+        description: "Return to your cozy house.",
+        action: () => { 
+          hideStoryOverlay();
+          giveLoot("Misc", 2);
+          let random = Math.floor(Math.random() * 6);
+          joy += random;
+          random = Math.floor(Math.random() * 11);
+          energy += random;
+          random = Math.floor(Math.random() * 16);
+          fullness -= random;
+          random = Math.floor(Math.random() * 11);
+          love += random;
+       }
+      }
+    ]
+  },
+  // -------------------------- ^^^^ Beach filler ^^^^ ------------------------
 
   {  // ------------------------- vvvv Raccoon Storyline vvvv ------------------------
     id: "RaccoonStart",
@@ -295,13 +332,197 @@ const storyBeats = [
           description: "Return home with your new gift.",
           action: () => { 
             hideStoryOverlay(); 
-            questRewardItem(203, 1, "You received a Raccoon Mask for helping the raccoon!"); // Raccoon Mask reward
+            questRewardItem(603, 1, "you received a gift!"); // Raccoon Gift reward
+            questRewardItem(200, 1, "you also received a Mysterious Key!"); // Mysterious Key reward
+            removeItemsById(206, 1); // remove wallet from inventory
             RaccoonComplete = true;
           }
         }
      ] 
       
   },
+
+  {
+    id: "ForestFiller",
+    type: "filler",
+    location: "Forest",
+    backdrop: "images/Backdrops/forest2.png",
+    miniImg: "images/flower.png",
+    dialogue: [
+      "You take a peaceful walk through the forest, enjoying the sights and sounds of nature.",
+      `${catsName} sniffs the flowers and chases after butterflies as you stroll along the path.`
+    ],
+    question: "After some time, you decide what to do next.",
+    options: [
+      {
+        title: "Go directly home",
+        description: "Return to your cozy house right away.",
+        action: () => { hideStoryOverlay(); }
+      },
+      {
+        title: "Explore a new path",
+        description: "Take a different route and see where it leads on the way home.",
+        action: () => { showStoryOverlay(getStoryId("ForestFiller2")); }
+      }
+    ]
+  },
+
+  {
+    id: "ForestFiller2",
+    type: "continuation",
+    backdrop: "images/Backdrops/forest3.png",
+    miniImg: "images/treasuremap.png",
+    dialogue: [
+      "You venture down a new path and discover a small clearing with a sparkling stream.",
+      `You and ${catsName} take a moment to relax by the water before ${catsName} starts scratching at the ground.`,
+      `After some digging, ${catsName} uncovers a small buried box! Inside, you find what looks like a treasure map!.`
+    ],
+    question: "Excited about the find, you decide to head back home.",
+    options: [
+      {
+        title: "Go home",
+        description: "Return home with the treasure map.",
+        action: () => {
+          const random = Math.floor(Math.random() * 6);
+          if (random < 3) {
+            addItemById(202, 1); // Treasure Map
+          }
+          hideStoryOverlay();
+          joy += 5;
+          energy -= 5;
+          fullness -= 7;
+        }
+      } 
+    ]
+  },
+
+  {
+    id: "TreasureMap",
+    type: "event",
+    location: "Forest",
+    requirement: () => hasItem(202) && !TreasureFound,
+    backdrop: "images/Backdrops/forest4.png",
+    miniImg: "images/treasurechest.png",
+    dialogue: [
+      "Using the treasure map you found earlier, you set out to find the treasure.",
+      `With ${catsName}'s help, you navigate through the forest to the marked spot.`,
+      "After some digging, you uncover a small treasure chest buried beneath the leaves!"
+    ],
+    question: "do you open the treasure chest?",
+    options: [
+      {
+        title: "Open the chest",
+        description: "Open the treasure chest to see what's inside.",
+        requirement: () => hasItem(200), // Requires Mysterious Key
+        action: () => { 
+          showStoryOverlay(getStoryId("TreasureFound"));
+          TreasureFound = true;
+        }
+      },
+      {
+        title: "Leave it be",
+        description: "Decide not to open the chest and leave it buried, for someone else to find.",
+        action: () => { hideStoryOverlay(); }
+      }
+    ]
+  },
+  {
+    id: "TreasureFound",
+    type: "continuation",
+    backdrop: "images/Backdrops/forest4.png",
+    miniImg: "images/treasurechest.png",
+    dialogue: [
+      "You open the treasure chest to find it filled with glittering coins and precious Valuables!",
+      `You and ${catsName} celebrate your successful treasure hunt. What an adventure!`
+    ],
+    question: "What would you like to do next?",
+    options: [
+      {
+        title: "Go home",
+        description: "Return home with your newfound treasure.",
+        action: () => { 
+          hideStoryOverlay(); 
+          coins += 100;
+          showNotif(997, 100, "You found 100 coins!");
+          giveLoot("Epic", 2);
+          giveLoot("Valuable", 1);
+          giveLoot("Valuable", 1);
+          addItemById(203, 1); // raccoon mask
+          giveLoot("Powerup", 1);
+          removeItemsById(202, 1); // Remove Treasure Map
+          updateGameState();
+          joy += 15;
+          energy -= 8;
+          fullness -= 8;
+        }
+      }
+    ]
+  },
+
+  {
+    id: "ForestFiller3",
+    type: "Event",
+    location: "Forest",
+    backdrop: "images/Backdrops/forest.png",
+    miniImg: "images/cherries.png",
+    dialogue: [
+      "You wander through the forest and come a clearing, you spot a cherry tree!.",
+      `${catsName} seems interested in some bright red cherries dangling from the branches.`,
+    ],
+    question: "Do you pick some cherries for a snack?",
+    options: [
+      {
+        title: "Pick cherries",
+        description: "You pick some cherries from the tree.",
+        action: () => {
+          const cherriesPicked = Math.floor(Math.random() * 8) + 1;
+          addItemById(4, cherriesPicked); // 1 to 8 cherries
+          hideStoryOverlay();
+          joy += 3;
+          energy -= 2;
+          fullness -= 4;
+        }
+      },
+      {
+        title: "Leave them be",
+        description: "Decide not to pick any cherries and continue your walk.",
+        action: () => { hideStoryOverlay(); }
+      }
+    ]
+  },
+
+  {
+    id: "ForestFiller4",
+    type: "filler",
+    location: "Forest",
+    backdrop: "images/Backdrops/forest2.png",
+    miniImg: "images/dice.png",
+    dialogue: [
+      "You take a peaceful walk through the forest, enjoying the sights and sounds of nature.",
+      `${catsName} seems playful and energetic, darting between the trees and chasing after leaves.`
+    ],
+    question: "After some time, you decide to head home.",
+    options: [ 
+      {
+        title: "Go home",
+        description: "Return to your cozy house.",
+        action: () => { 
+          hideStoryOverlay();
+          giveLoot("Common", 2);
+          addItemById(301, 1); // Forest Dice item
+          let random = Math.floor(Math.random() * 6);
+          joy += random;
+          random = Math.floor(Math.random() * 11);
+          energy -= random;
+          random = Math.floor(Math.random() * 16);
+          fullness -= random;
+          random = Math.floor(Math.random() * 4);
+          love += random;
+        }
+      }
+    ]
+  },
+
 // ------------------------- ^^^^ Raccoon Storyline ^^^^ ------------------------  
 
 // ------------------------- vvvv Playground/Stray event vvvv ------------------------
@@ -340,18 +561,18 @@ const storyBeats = [
     id: "Playground2",
     type: "continuation",
     backdrop: "images/Backdrops/picnictable.png",
-    miniImg: "images/cattoy.png",
+    miniImg: "images/feather.png",
     dialogue: [
-      `You and ${catsName} move over to the picnic table, on the way you spot a tall grass stalk with a fluffy top.`,
+      `You and ${catsName} move over to the picnic table, on the way you spot a long feather with a fluffy top.`,
       `${catsName} seems very interested in it, so you grab it and use it to play with ${catsName}.`,
-      `${catsName} pounces and bats at the fluffy top, clearly enjoying the hunt, after some time in the sun, ${catsName} seems content and happy.`
+      `${catsName} pounces and bats at the fluffy feather, clearly enjoying the hunt, after some time in the sun, ${catsName} seems content and happy.`
     ],
     question: "After some time, you decide to head home.",
     options: [
       {
         title: "Go home",
         description: "Return home after a fun day at the park.",
-        action: () => { hideStoryOverlay(); }
+        action: () => { hideStoryOverlay(); addItemById(305, 1); } // Feather Toy item
       }
     ],
   },
@@ -360,7 +581,7 @@ const storyBeats = [
     id: "Stray",
     type: "continuation",
     backdrop: "images/Backdrops/playground.png",
-    miniImg: "images/straycat.png",
+    miniImg: "images/stray.png",
     dialogue: [
       `You approach the stray cat cautiously. It seems wary but once it notices ${catsName} it relaxes.`,
       `The stray cat seems to greet ${catsName} and bows slightly.`,
@@ -398,7 +619,7 @@ const storyBeats = [
     id: "Stray2",
     type: "continuation",
     backdrop: "images/Backdrops/playground.png",
-    miniImg: "images/straycathappy.png",
+    miniImg: "images/stray.png",
     dialogue: [
       " the stray cat eagerly eats the fish you offered. It seems very grateful.",
       "After finishing the fish, the stray cat rubs against your leg and purrs loudly."
@@ -416,7 +637,7 @@ const storyBeats = [
     id: "Stray3",
     type: "continuation",
     backdrop: "images/Backdrops/playground.png",
-    miniImg: "images/straycat.png",
+    miniImg: "images/stray.png",
     dialogue: [
       "The stray cat eagerly eats the fish you offered. It seems very grateful.",
       `After finishing the fish, the stray looks at ${catsName} and they seem to have a conversation.`,
@@ -431,6 +652,36 @@ const storyBeats = [
         }
     ]
   },
+
+  {
+    id: "ParkSpecialEvent",
+    type: "event",
+    location: "Park",
+    backdrop: "images/Backdrops/playground.png",
+    miniImg: "images/stray.png",
+    requirement: () => Stray3,
+    dialogue: [
+      "As you explore the park, you notice a familiar stray cat sitting by the playground.",
+      `It seems to be waiting for you and ${catsName}, as you approach`,
+      `The Stray goes behind the bench and comes back with a small box, it drops it at your feet then wanders off.`
+    ],
+    question: "Do you take the gift?",
+    options: [
+      {
+          title: "Take the gift",
+          description: "You graciously accept the gift.",
+          action: () => { 
+            questRewardItem(603, 1, "You received a gift from the stray cat!");
+            hideStoryOverlay();
+          }
+      },
+      {
+          title: "Leave it be",
+          description: "You decide not to take the gift and leave it there.",
+          action: () => { hideStoryOverlay(); }
+      }
+    ]
+  },
 // ------------------------- ^^^^ Playground/Stray Storyline ^^^^ ------------------------
 
 // -------------------------- vvvv shopping event vvvv ------------------------
@@ -439,8 +690,8 @@ const storyBeats = [
   type: "event",
   requirement: () => !CatMeet,
   location: "Shop",
-  backdrop: "images/Backdrops/Bazaar.png",
-  miniImg: "images/shopping.png",
+  backdrop: "images/Backdrops/bazaar.png",
+  miniImg: "images/shoppingbag.png",
   dialogue: [
     "Arriving, you browse through the various shops, admiring the colorful displays and delicious aromas.",
     `After some browsing you notice ${catsName} is watching two cats walk around the corner into an alleyway.`
@@ -469,7 +720,7 @@ const storyBeats = [
     id: "CatMeet",
     type: "continuation",
     backdrop: "images/Backdrops/alley.png",
-    miniImg: "images/straycats.png",
+    miniImg: "images/stray.png",
     dialogue: [
       `You decide to follow the cats into the alleyway. As you turn the corner, you see 4 cats sitting together.`,
       `They seem to be having a Meeting with a destinct air of importance. One of the cats looks up and meets your gaze.`,
@@ -541,7 +792,7 @@ const storyBeats = [
   id: "Shopping",
   type: "event",
   location: "Shop",
-  backdrop: "images/Backdrops/Bazaar2.png",
+  backdrop: "images/Backdrops/bazaar2.png",
   miniImg: "images/shopping.png",
   dialogue: [
     "while doing your shopping, you encounter a great deal on some cat toys.",
@@ -574,6 +825,93 @@ const storyBeats = [
     }
   ]
 },
+
+{
+  id: "ShoppingSpecialOffer",
+  type: "event",
+  location: "Shop",
+  backdrop: "images/Backdrops/bazaar.png",
+  miniImg: "images/fourleafclover.png",
+  dialogue: [
+    "While browsing the shops, you come across a special offer",
+    "several items are bundled together at a discounted price."
+  ],
+  question: "Do you want to take advantage of the special offer?",
+  options: [
+    { 
+      title: "Food Bundle",
+      description: "Special bundle of food items for only 20 coins!.",
+      action: () => { 
+        if (coins >= 20) {
+          coins -= 20;
+          giveLoot("Food", Math.floor(Math.random() * 3) + 1); // Give 1-3 food items
+          giveLoot("Food", Math.floor(Math.random() * 3) + 1); // Give 1-3 food items
+          giveLoot("Food", Math.floor(Math.random() * 3) + 1); // Give 1-3 food items
+          updateGameState();
+          hideStoryOverlay();
+        } else {
+          showNotif(998, null, null); // Not enough coins notification
+        }
+      }
+    },
+    { 
+      title: "Toy Bundle",
+      description: "Special bundle of cat toys for only 25 coins!.",
+      action: () => { 
+        if (coins >= 25) {
+          coins -= 25;
+          giveLoot("Toys", Math.floor(Math.random() * 2) + 1); // Give 1-2 toy items
+          giveLoot("Toys", Math.floor(Math.random() * 2) + 1); // Give 1-2 toy items
+          giveLoot("Toys", Math.floor(Math.random() * 2) + 1); // Give 1-2 toy items
+          updateGameState();
+          hideStoryOverlay();
+        } else {
+          showNotif(998, null, null); // Not enough coins notification
+        }
+      }
+    },
+    {
+      title: "Powerup Bundle",
+      description: "Special bundle of powerup items for only 30 coins!.",
+      action: () => { 
+        if (coins >= 30) {
+          coins -= 30;
+          giveLoot("Powerup", Math.floor(Math.random() * 2) + 1); // Give 1-2 powerup items
+          giveLoot("Powerup", Math.floor(Math.random() * 2) + 1);
+          updateGameState();
+          hideStoryOverlay();
+        } else {
+          showNotif(998, null, null); // Not enough coins notification
+        }
+      }
+    },
+    {
+      title: "Super Duper MEGA Bundle",
+      description: "Get a mix of food, toys, and powerups for only 60 coins!.",
+      action: () => {
+        if (coins >= 60) {
+          coins -= 60;
+          giveLoot("Food", Math.floor(Math.random() * 3) + 1); // Give 1-3 food items
+          giveLoot("Food", Math.floor(Math.random() * 3) + 1);
+          giveLoot("Toys", Math.floor(Math.random() * 2) + 1); // Give 1-2 toy items
+          giveLoot("Toys", Math.floor(Math.random() * 2) + 1);
+          giveLoot("Powerup", Math.floor(Math.random() * 2) + 1);
+          giveLoot("Powerup", Math.floor(Math.random() * 2) + 1);
+        }
+        else {
+          showNotif(998, null, null); // Not enough coins notification
+        }
+      }
+    },
+    {
+      title: "No thanks",
+      description: "Decide not to take advantage of the special offer.",
+      action: () => { 
+        hideStoryOverlay();
+      }
+    }
+  ]
+},
 // -------------------------- ^^^^ shopping filler ^^^^ ------------------------
 
 
@@ -582,7 +920,7 @@ const storyBeats = [
   id: "FreelanceWorkFiller",
   type: "filler",
   location: "Freelance", 
-  backdrop: "images/Backdrops/Laptop.png",
+  backdrop: "images/Backdrops/livingroom.png",
   miniImg: "images/laptop.png",
   dialogue: [
     "You set up your laptop and start working on some freelance projects.",
@@ -607,7 +945,7 @@ const storyBeats = [
   id: "FreelanceBreak",
   type: "filler",
   location: "Freelance",
-  backdrop: "images/Backdrops/Laptop.png",
+  backdrop: "images/Backdrops/livingroom.png",
   miniImg: "images/coffee.png",
   dialogue: [
     "You work away for some time, making good progress on your tasks.",
@@ -650,7 +988,7 @@ const storyBeats = [
   id: "FreelanceSmallJob",
   type: "filler",
   location: "Freelance",
-  backdrop: "images/Backdrops/Laptop.png",
+  backdrop: "images/Backdrops/livingroom.png",
   miniImg: "images/document.png",
   dialogue: [
     "You receive a small freelance job that needs to be completed quickly.",
@@ -677,6 +1015,37 @@ const storyBeats = [
     }
   ]
 },
+
+{
+  id: "FreelanceItemFind",
+  type: "event",
+  location: "Freelance",
+  backdrop: "images/Backdrops/livingroom.png",
+  miniImg: "images/Cat-Playful.jpg",
+  dialogue: [
+    "While working on your freelance tasks, you realise time flew by.",
+    `realising its been way too peaceful all day, wondering what ${catsName} has been up to`,
+    `As you wonder ${catsName} waddled in and left you something in the center of the room.`,
+  ],
+  question: `You pick up the item ${catsName} brought back.`,
+  options: [
+    {
+      title: "Inspect the item",
+      description: `You take a closer look at what ${catsName} has brought back.`,
+      action: () => {
+        const earnings = Math.floor(Math.random() * 16) + 10; // Earn between $10 and $25
+        coins += earnings;
+        showNotif(604, earnings, `You earned some pay from your freelance work!`);
+        giveLoot("Misc", 2); // Give 2 Misc items
+        giveLoot("Food", 1); // Give 1 Food item
+        giveLootChance("Toys", 70); // 30% chance to get a Toy item
+        giveLootChance("Valuable", 90); // 10% chance to get a Valuable item
+        updateGameState();
+        hideStoryOverlay();
+      }
+    }
+  ]
+},
 // -------------------------- ^^^^ Freelance filler ^^^^ ------------------------
 
 // -------------------------- vvvv stay home beats vvvv -------------------------
@@ -685,7 +1054,7 @@ const storyBeats = [
   type: "filler",
   location: "CatPlay",
   backdrop: "images/Backdrops/livingroom.png",
-  miniImg: "images/cattoy.png",
+  miniImg: "images/yarnball.png",
   dialogue: [ 
     `You decide to stay home and have a relaxing day indoor with ${catsName}.`,
     `You take out some of ${catsName}'s favorite toys and throughout the day you both have a great time playing together.`,
@@ -736,7 +1105,7 @@ const storyBeats = [
   type: "filler",
   location: "CatPlay",
   backdrop: "images/Backdrops/livingroom.png",
-  miniImg: "images/cattoy3.png",
+  miniImg: "images/house.png",
   dialogue: [
     `You decide to stay home and have a relaxing day indoor with ${catsName}.`,
     `You set up a little obstacle course using household items for ${catsName} to navigate through.`,
@@ -786,14 +1155,40 @@ const storyBeats = [
       description: "End the day and head to bed.",
       action: () => { 
         hideStoryOverlay();
-        let random = Math.random() * 11;
+        let random = Math.floor(Math.random() * 11);
         joy += random;
-        random = Math.random() * 16;
+        random = Math.floor(Math.random() * 16);
         energy -= random;
-        random = Math.random() * 16;
+        random = Math.floor(Math.random() * 16);
         fullness -= random;
-        random = Math.random() * 6;
+        random = Math.floor(Math.random() * 6);
         love += random;
+       }
+    }
+  ]
+},
+{
+  id: "catPlayItemFind",
+  type: "event",
+  location: "CatPlay",
+  backdrop: "images/Backdrops/livingroom.png",
+  miniImg: "images/Cat-Neutral.jpg",
+  dialogue: [
+    `You decide to stay home and have a relaxing day indoors However ${catsName} decides to go out for a solo adventure.`,
+  ],
+  question: `After some time, ${catsName} returns with something in its mouth.`,
+  options: [
+    {
+      title: "Inspect the item",
+      description: `You take a closer look at what ${catsName} has brought back.`,
+      action: () => { 
+        giveLoot("Misc", 3); // Give 3 Misc items
+        giveLootChance("Valuable", 80); // 20% chance to get a Valuable item
+        giveLootChance("Toys", 50); // 50% chance to get a Toy item
+        updateGameState();
+        hideStoryOverlay(); 
+        energy -= 7;
+        fullness -= 6;
        }
     }
   ]
@@ -815,6 +1210,7 @@ function getRandomHubOptions() {
     const parkBeat = getRandomStoryBeatByLocation("Park");
     if (parkBeat) {
       showStoryOverlay(parkBeat);
+      storyBeatsStarted += 1;
         }
       }
     },
@@ -825,6 +1221,7 @@ function getRandomHubOptions() {
       const forestBeat = getRandomStoryBeatByLocation("Forest");
       if (forestBeat) {
       showStoryOverlay(forestBeat);
+      storyBeatsStarted += 1;
         }
       }
     },
@@ -835,6 +1232,7 @@ function getRandomHubOptions() {
       const shopBeat = getRandomStoryBeatByLocation("Shop");
       if (shopBeat) {
       showStoryOverlay(shopBeat);
+      storyBeatsStarted += 1;
         }
       }
     },
@@ -845,6 +1243,7 @@ function getRandomHubOptions() {
       const catPlayBeat = getRandomStoryBeatByLocation("CatPlay");
       if (catPlayBeat) {
       showStoryOverlay(catPlayBeat);
+      storyBeatsStarted += 1;
         }
       }
     },
@@ -855,6 +1254,7 @@ function getRandomHubOptions() {
       const freelanceBeat = getRandomStoryBeatByLocation("Freelance");
       if (freelanceBeat) {
       showStoryOverlay(freelanceBeat);
+      storyBeatsStarted += 1;
         }
       }
     },
@@ -865,6 +1265,7 @@ function getRandomHubOptions() {
       const beachBeat = getRandomStoryBeatByLocation("Beach");
       if (beachBeat) {
       showStoryOverlay(beachBeat);
+      storyBeatsStarted += 1;
         }
       }
     }
@@ -966,7 +1367,7 @@ if (Array.isArray(storyBeat.dialogue)) {
 }
 
   // Show question after dialogue
-  let questionFadeTime = 700; // match your .story-question animation
+  let questionFadeTime = 700;
   let questionElements = [];
   if (storyBeat.question) {
     if (Array.isArray(storyBeat.question)) {

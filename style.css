@@ -1167,6 +1167,9 @@ border-radius: 10px;
   border-radius: 16px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.12);
   background: rgba(255,255,255,0.13);
+  user-select: none;
+  -webkit-user-select: none; /* For Safari */
+  -ms-user-select: none;
 }
 
 /* Dialogue text */
@@ -1301,6 +1304,9 @@ border-radius: 10px;
     width: 70px;
     height: 70px;
     margin-bottom: 10px;
+    user-select: none;
+    -webkit-user-select: none; /* For Safari */
+    -ms-user-select: none;
   }
   .story-dialogue-text {
     font-size: 1em;
