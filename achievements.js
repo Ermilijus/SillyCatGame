@@ -63,7 +63,11 @@ achievementBtn.addEventListener('click', () => {
 let joyAchievement = false;
 let joyAchievement2 = false;
 let joyAchievement3 = false;
+let goldenBellAchievement = false;
 let quackersAchievement = false;
+let quackersAchievement2 = false;
+let quackersAchievement3 = false;
+let quackersAchievement4 = false;
 let goldenBell = false;
 let loveAchievement = false;
 let loveAchievement2 = false;
@@ -80,6 +84,8 @@ let totalToysPlayedWithAchievement = false;
 let trophiesEarnedAchievement = false;
 let trophiesEarnedAchievement2 = false;
 let trophiesEarnedAchievement3 = false;
+let storyBeatsAchievement = false;
+
 
 
 // Joy Achievement condition check
@@ -112,7 +118,7 @@ function checkJoyAchievement3() {
 
 // ----------- Quackers Achievement condition check -----------
 function checkQuackersAchievement() {
-  if (goldenBell && !quackersAchievement) {
+  if (goldenBell && !goldenBellAchievement) {
     achDisplay.style.display = 'block';
     achTitle.textContent = 'Quackers Galore!!!';
     achDesc.textContent = `With this bell, ${catsName} shall manifest all quackers!, unlocking infinite quackers!`;
@@ -121,7 +127,7 @@ function checkQuackersAchievement() {
 }
 
 function checkQuackersSpawned() {
-  if (quackersGiven >= 50) {
+  if (quackersGiven >= 50 && !quackersAchievement) {
     achDisplay.style.display = 'block';
     achTitle.textContent = '50 Quackers!!!';
     achDesc.textContent = `${catsName} has Manifested 50 Quackers!`;
@@ -129,7 +135,7 @@ function checkQuackersSpawned() {
 }
 
 function checkQuackersSpawned2() {
-  if (quackersGiven >= 200) {
+  if (quackersGiven >= 200 && !quackersAchievement2) {
     achDisplay.style.display = 'block';
     achTitle.textContent = '200 Quackers!!!';
     achDesc.textContent = `${catsName} has Manifested 200 Quackers!`;
@@ -137,7 +143,7 @@ function checkQuackersSpawned2() {
 }
 
 function checkQuackersSpawned3() {
-  if (quackersGiven >= 500) {
+  if (quackersGiven >= 500 && !quackersAchievement3) {
     achDisplay.style.display = 'block';
     achTitle.textContent = '500 Quackers!!!';
     achDesc.textContent = `${catsName} has Manifested 500 Quackers!`;
@@ -145,7 +151,7 @@ function checkQuackersSpawned3() {
 }
 
 function checkQuackersSpawned4() {
-  if (quackersGiven >= 1000) {
+  if (quackersGiven >= 1000 && !quackersAchievement4) {
     achDisplay.style.display = 'block';
     achTitle.textContent = '1000 Quackers!!!';
     achDesc.textContent = `${catsName} has Manifested 1000 Quackers!`;
@@ -171,11 +177,21 @@ function loveAchievementCheck2() {
 }
 
 function storyBeatsStartedCheck() {
-  if (storyBeatsStarted === 10 || storyBeatsStarted === 25 || storyBeatsStarted === 50) {
+  if (storyBeatsStarted >= 10 && !storyBeatsAchievement) {
     achDisplay.style.display = 'block';
     achTitle.textContent = 'Storyteller Kitty!';
     achDesc.textContent = `Enough time has passed for the shop to refresh`;
     initializeShop();
+    storyBeatsAchievement = true;
+  }
+}
+
+function storyBeatsStartedCheck2() {
+  if (storyBeatsStarted >= 25 && !storyBeatsAchievement) {
+    achDisplay.style.display = 'block';
+    achTitle.textContent = 'Master Storyteller Kitty!';
+    achDesc.textContent = `You have experienced 25 story beats!`;
+    storyBeatsAchievement2 = true;
   }
 }
 

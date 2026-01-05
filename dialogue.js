@@ -164,7 +164,7 @@ const storyBeats = [
     miniImg: "images/surfboard.png",
     dialogue: [
     "You spend some relaxing time at the beach, soaking up the sun and listening to the waves.",
-    `In the shade of some trees, you sit with ${catsName} and watch the surfers in the distance.`
+    () => `In the shade of some trees, you sit with ${catsName} and watch the surfers in the distance.`
     ],
     question: "After a while, you decide to head back home.",
     options: [
@@ -229,7 +229,7 @@ const storyBeats = [
     miniImg: "images/raccoon.png",
     dialogue: [
       `The raccoon gleefully accepts the watermelon and munches on it happily.`,
-      `After finishing the food, it looks up at you with worried eyes, after a back and forth with ${catsName},`,
+      () => `After finishing the food, it looks up at you with worried eyes, after a back and forth with ${catsName},`,
       "Apparently the raccoon has lost its wallet! it looks at you hopefully.",
     ],
     question: "Will you help the raccoon find its wallet?",
@@ -255,7 +255,7 @@ const storyBeats = [
     backdrop: "images/Backdrops/forest.png",
     miniImg: "images/raccoon2.png",
     dialogue: [
-      `The raccoon tells ${catsName} where it last saw its wallet,`,
+      () => `The raccoon tells ${catsName} where it last saw its wallet,`,
       `With all the cute little gestures and expressions, you kind of understand it's near the big oak tree by the river.`,
       ],
     question: "Keep an eye out for a big oak tree next time you visit the forest?",
@@ -350,7 +350,7 @@ const storyBeats = [
     miniImg: "images/flower.png",
     dialogue: [
       "You take a peaceful walk through the forest, enjoying the sights and sounds of nature.",
-      `${catsName} sniffs the flowers and chases after butterflies as you stroll along the path.`
+      () => `${catsName} sniffs the flowers and chases after butterflies as you stroll along the path.`
     ],
     question: "After some time, you decide what to do next.",
     options: [
@@ -374,8 +374,8 @@ const storyBeats = [
     miniImg: "images/treasuremap.png",
     dialogue: [
       "You venture down a new path and discover a small clearing with a sparkling stream.",
-      `You and ${catsName} take a moment to relax by the water before ${catsName} starts scratching at the ground.`,
-      `After some digging, ${catsName} uncovers a small buried box! Inside, you find what looks like a treasure map!.`
+      () => `You and ${catsName} take a moment to relax by the water before ${catsName} starts scratching at the ground.`,
+      () => `After some digging, ${catsName} uncovers a small buried box! Inside, you find what looks like a treasure map!.`
     ],
     question: "Excited about the find, you decide to head back home.",
     options: [
@@ -383,10 +383,7 @@ const storyBeats = [
         title: "Go home",
         description: "Return home with the treasure map.",
         action: () => {
-          const random = Math.floor(Math.random() * 6);
-          if (random < 3) {
-            addItemById(202, 1); // Treasure Map
-          }
+          addItemById(202, 1); // Treasure Map
           hideStoryOverlay();
           joy += 5;
           energy -= 5;
@@ -405,7 +402,7 @@ const storyBeats = [
     miniImg: "images/treasurechest.png",
     dialogue: [
       "Using the treasure map you found earlier, you set out to find the treasure.",
-      `With ${catsName}'s help, you navigate through the forest to the marked spot.`,
+      () => `With ${catsName}'s help, you navigate through the forest to the marked spot.`,
       "After some digging, you uncover a small treasure chest buried beneath the leaves!"
     ],
     question: "do you open the treasure chest?",
@@ -433,7 +430,7 @@ const storyBeats = [
     miniImg: "images/treasurechest.png",
     dialogue: [
       "You open the treasure chest to find it filled with glittering coins and precious Valuables!",
-      `You and ${catsName} celebrate your successful treasure hunt. What an adventure!`
+      () => `You and ${catsName} celebrate your successful treasure hunt. What an adventure!`
     ],
     question: "What would you like to do next?",
     options: [
@@ -466,8 +463,8 @@ const storyBeats = [
     backdrop: "images/Backdrops/forest.png",
     miniImg: "images/cherries.png",
     dialogue: [
-      "You wander through the forest and come a clearing, you spot a cherry tree!.",
-      `${catsName} seems interested in some bright red cherries dangling from the branches.`,
+      "You wander through the forest and come a clearing, you spot a cherry tree!",
+      () => `${catsName} seems interested in some bright red cherries dangling from the branches.`,
     ],
     question: "Do you pick some cherries for a snack?",
     options: [
@@ -477,6 +474,7 @@ const storyBeats = [
         action: () => {
           const cherriesPicked = Math.floor(Math.random() * 8) + 1;
           addItemById(4, cherriesPicked); // 1 to 8 cherries
+          showNotif(4, cherriesPicked);
           hideStoryOverlay();
           joy += 3;
           energy -= 2;
@@ -499,7 +497,7 @@ const storyBeats = [
     miniImg: "images/dice.png",
     dialogue: [
       "You take a peaceful walk through the forest, enjoying the sights and sounds of nature.",
-      `${catsName} seems playful and energetic, darting between the trees and chasing after leaves.`
+      () => `${catsName} seems playful and energetic, darting between the trees and chasing after leaves.`
     ],
     question: "After some time, you decide to head home.",
     options: [ 
@@ -534,7 +532,7 @@ const storyBeats = [
     miniImg: "images/slide.png",
     dialogue: [
       "You arrive at the park. you see a playground with a slide and swings.",
-      `You notice a stray cat sitting alone on a bench, it's looking right at you and ${catsName}.`
+      () => `You notice a stray cat sitting alone on a bench, it's looking right at you and ${catsName}.`
     ],
     question: "What would you like to do?",
     options: [
@@ -545,8 +543,8 @@ const storyBeats = [
           action: () => { showStoryOverlay(getStoryId("Stray")); }
       },
       {
-          title: `Play with ${catsName}`,
-          description: `Go and play with ${catsName} by the picnic table.`,
+          title: () => `Play with ${catsName}`,
+          description: () => `Go and play with ${catsName} by the picnic table.`,
           action: () => { showStoryOverlay(getStoryId("Playground2")); }
       },
       {
@@ -563,9 +561,9 @@ const storyBeats = [
     backdrop: "images/Backdrops/picnictable.png",
     miniImg: "images/feather.png",
     dialogue: [
-      `You and ${catsName} move over to the picnic table, on the way you spot a long feather with a fluffy top.`,
-      `${catsName} seems very interested in it, so you grab it and use it to play with ${catsName}.`,
-      `${catsName} pounces and bats at the fluffy feather, clearly enjoying the hunt, after some time in the sun, ${catsName} seems content and happy.`
+      () => `You and ${catsName} move over to the picnic table, on the way you spot a long feather with a fluffy top.`,
+      () => `${catsName} seems very interested in it, so you grab it and use it to play with ${catsName}.`,
+      () => `${catsName} pounces and bats at the fluffy feather, clearly enjoying the hunt, after some time in the sun, ${catsName} seems content and happy.`
     ],
     question: "After some time, you decide to head home.",
     options: [
@@ -583,8 +581,8 @@ const storyBeats = [
     backdrop: "images/Backdrops/playground.png",
     miniImg: "images/stray.png",
     dialogue: [
-      `You approach the stray cat cautiously. It seems wary but once it notices ${catsName} it relaxes.`,
-      `The stray cat seems to greet ${catsName} and bows slightly.`,
+      () => `You approach the stray cat cautiously. It seems wary but once it notices ${catsName} it relaxes.`,
+      () => `The stray cat seems to greet ${catsName} and bows slightly.`,
       "you notice this stray looks similar to one you saw earlier in the alleyway."
     ],
     question: "Do you want to share some food with the stray cat?",
@@ -640,7 +638,7 @@ const storyBeats = [
     miniImg: "images/stray.png",
     dialogue: [
       "The stray cat eagerly eats the fish you offered. It seems very grateful.",
-      `After finishing the fish, the stray looks at ${catsName} and they seem to have a conversation.`,
+      () => `After finishing the fish, the stray looks at ${catsName} and they seem to have a conversation.`,
       "after some time the stray cat seems to nod with a final Meow and walks off into the park."
     ],
     question: "You wonder to yourself what that was all about.",
@@ -662,7 +660,7 @@ const storyBeats = [
     requirement: () => Stray3,
     dialogue: [
       "As you explore the park, you notice a familiar stray cat sitting by the playground.",
-      `It seems to be waiting for you and ${catsName}, as you approach`,
+      () => `It seems to be waiting for you and ${catsName}, as you approach`,
       `The Stray goes behind the bench and comes back with a small box, it drops it at your feet then wanders off.`
     ],
     question: "Do you take the gift?",
@@ -694,7 +692,7 @@ const storyBeats = [
   miniImg: "images/shoppingbag.png",
   dialogue: [
     "Arriving, you browse through the various shops, admiring the colorful displays and delicious aromas.",
-    `After some browsing you notice ${catsName} is watching two cats walk around the corner into an alleyway.`
+    () => `After some browsing you notice ${catsName} is watching two cats walk around the corner into an alleyway.`
   ],
   question: "After some browsing what do you want to do?",
   options: [
@@ -758,7 +756,7 @@ const storyBeats = [
   backdrop: "images/Backdrops/Bazaar.png",
   miniImg: "images/shoppingbag.png",
   dialogue: [
-    `You do some grocery shopping, picking up some essentials and treats for yourself and ${catsName}.`,
+    () => `You do some grocery shopping, picking up some essentials and treats for yourself and ${catsName}.`,
   ],
   question: "You make your purchases and head back home.",
   options: [
@@ -848,6 +846,7 @@ const storyBeats = [
           giveLoot("Food", Math.floor(Math.random() * 3) + 1); // Give 1-3 food items
           giveLoot("Food", Math.floor(Math.random() * 3) + 1); // Give 1-3 food items
           updateGameState();
+          updateCoinsDisplay();
           hideStoryOverlay();
         } else {
           showNotif(998, null, null); // Not enough coins notification
@@ -864,6 +863,7 @@ const storyBeats = [
           giveLoot("Toys", Math.floor(Math.random() * 2) + 1); // Give 1-2 toy items
           giveLoot("Toys", Math.floor(Math.random() * 2) + 1); // Give 1-2 toy items
           updateGameState();
+          updateCoinsDisplay();
           hideStoryOverlay();
         } else {
           showNotif(998, null, null); // Not enough coins notification
@@ -879,6 +879,7 @@ const storyBeats = [
           giveLoot("Powerup", Math.floor(Math.random() * 2) + 1); // Give 1-2 powerup items
           giveLoot("Powerup", Math.floor(Math.random() * 2) + 1);
           updateGameState();
+          updateCoinsDisplay();
           hideStoryOverlay();
         } else {
           showNotif(998, null, null); // Not enough coins notification
@@ -897,6 +898,9 @@ const storyBeats = [
           giveLoot("Toys", Math.floor(Math.random() * 2) + 1);
           giveLoot("Powerup", Math.floor(Math.random() * 2) + 1);
           giveLoot("Powerup", Math.floor(Math.random() * 2) + 1);
+          updateGameState();
+          updateCoinsDisplay();
+          hideStoryOverlay();
         }
         else {
           showNotif(998, null, null); // Not enough coins notification
@@ -950,7 +954,7 @@ const storyBeats = [
   dialogue: [
     "You work away for some time, making good progress on your tasks.",
     "You decide to take a break from your freelance work to enjoy a cup of coffee.",
-    `As you sip your coffee, ${catsName} hops onto the desk clearly seeking attention.`,
+    () => `As you sip your coffee, ${catsName} hops onto the desk clearly seeking attention.`,
   ],
   question: "Spend your break how?",
   options: [
@@ -968,8 +972,8 @@ const storyBeats = [
        }
     },
     {
-      title: `Play with ${catsName}`,
-      description: `Take some time to play with ${catsName} during your break.`,
+      title: () => `Play with ${catsName}`,
+      description: () => `Take some time to play with ${catsName} during your break.`,
       action: () => { 
         hideStoryOverlay(); 
         joy += 10;
@@ -1024,14 +1028,14 @@ const storyBeats = [
   miniImg: "images/Cat-Playful.jpg",
   dialogue: [
     "While working on your freelance tasks, you realise time flew by.",
-    `realising its been way too peaceful all day, wondering what ${catsName} has been up to`,
-    `As you wonder ${catsName} waddled in and left you something in the center of the room.`,
+    () => `realising its been way too peaceful all day, wondering what ${catsName} has been up to`,
+    () => `As you wonder ${catsName} waddled in and left you something in the center of the room.`,
   ],
-  question: `You pick up the item ${catsName} brought back.`,
+  question: () => () => `You pick up the item ${catsName} brought back.`,
   options: [
     {
       title: "Inspect the item",
-      description: `You take a closer look at what ${catsName} has brought back.`,
+      description: () => `You take a closer look at what ${catsName} has brought back.`,
       action: () => {
         const earnings = Math.floor(Math.random() * 16) + 10; // Earn between $10 and $25
         coins += earnings;
@@ -1056,9 +1060,9 @@ const storyBeats = [
   backdrop: "images/Backdrops/livingroom.png",
   miniImg: "images/yarnball.png",
   dialogue: [ 
-    `You decide to stay home and have a relaxing day indoor with ${catsName}.`,
-    `You take out some of ${catsName}'s favorite toys and throughout the day you both have a great time playing together.`,
-    `By evening, ${catsName} is all tuckered out and happy napping on your lap as you watch a movie.`
+    () => `You decide to stay home and have a relaxing day indoor with ${catsName}.`,
+    () => `You take out some of ${catsName}'s favorite toys and throughout the day you both have a great time playing together.`,
+    () => `By evening, ${catsName} is all tuckered out and happy napping on your lap as you watch a movie.`
   ],
   question: "After a relaxing day indoors, you go to bed",
   options: [
@@ -1078,9 +1082,9 @@ const storyBeats = [
   backdrop: "images/Backdrops/livingroom.png",
   miniImg: "images/catnip.png",
   dialogue: [
-    `You decide to stay home and have a relaxing day indoor with ${catsName}.`,
-    `You take out some catnip from your inventory and sprinkle it on ${catsName}'s favorite toy.`,
-    `${catsName} goes wild with excitement, pouncing and rolling around in the catnip-infused toy!`
+    () => `You decide to stay home and have a relaxing day indoor with ${catsName}.`,
+    () => `You take out some catnip from your inventory and sprinkle it on ${catsName}'s favorite toy.`,
+    () => `${catsName} goes wild with excitement, pouncing and rolling around in the catnip-infused toy!`
   ],
   question: "After a fun-filled day with catnip, you go to bed",
   options: [
@@ -1107,9 +1111,9 @@ const storyBeats = [
   backdrop: "images/Backdrops/livingroom.png",
   miniImg: "images/house.png",
   dialogue: [
-    `You decide to stay home and have a relaxing day indoor with ${catsName}.`,
-    `You set up a little obstacle course using household items for ${catsName} to navigate through.`,
-    `${catsName} eagerly takes on the challenge, jumping over cushions and weaving through boxes with impressive agility!`
+    () => `You decide to stay home and have a relaxing day indoor with ${catsName}.`,
+    () => `You set up a little obstacle course using household items for ${catsName} to navigate through.`,
+    () => `${catsName} eagerly takes on the challenge, jumping over cushions and weaving through boxes with impressive agility!`
   ],
   question: "After a fun-filled day indoors, what would you like to do?",
   options: [
@@ -1126,7 +1130,7 @@ const storyBeats = [
     },
     {
       title: "Go out for a walk",
-      description: `Go out for an evening walk with ${catsName}.`,
+      description: () => `Go out for an evening walk with ${catsName}.`,
       action: () => {
         showStoryOverlay(getRandomEventBeat());
         joy += 10;
@@ -1145,7 +1149,7 @@ const storyBeats = [
   backdrop: "images/Backdrops/livingroom.png",
   miniImg: "images/laserpointer.png",
   dialogue: [
-    `You decide to stay home and have a relaxing day indoor with ${catsName}.`,
+    () => `You decide to stay home and have a relaxing day indoor with ${catsName}.`,
     `You grab a laser pointer and start moving the red dot around the room.`,
   ],
   question: "After a fun-filled day indoors, what would you like to do?",
@@ -1174,13 +1178,13 @@ const storyBeats = [
   backdrop: "images/Backdrops/livingroom.png",
   miniImg: "images/Cat-Neutral.jpg",
   dialogue: [
-    `You decide to stay home and have a relaxing day indoors However ${catsName} decides to go out for a solo adventure.`,
+    () => `You decide to stay home and have a relaxing day indoors However ${catsName} decides to go out for a solo adventure.`,
   ],
-  question: `After some time, ${catsName} returns with something in its mouth.`,
+  question: () => `After some time, ${catsName} returns with something in its mouth.`,
   options: [
     {
       title: "Inspect the item",
-      description: `You take a closer look at what ${catsName} has brought back.`,
+      description: () => `You take a closer look at what ${catsName} has brought back.`,
       action: () => { 
         giveLoot("Misc", 3); // Give 3 Misc items
         giveLootChance("Valuable", 80); // 20% chance to get a Valuable item
@@ -1358,42 +1362,46 @@ function waitForUserClick() {
 
 if (Array.isArray(storyBeat.dialogue)) {
   for (const line of storyBeat.dialogue) {
-    await typeText(dialogueText, line);
+    const text = typeof line === "function" ? line() : line;
+    await typeText(dialogueText, text);
     await waitForUserClick(); // Wait for user to click before next line
   }
 } else {
-  await typeText(dialogueText, storyBeat.dialogue);
+  const text = typeof storyBeat.dialogue === "function" ? storyBeat.dialogue() : storyBeat.dialogue;
+  await typeText(dialogueText, text);
   await waitForUserClick();
 }
 
   // Show question after dialogue
   let questionFadeTime = 700;
-  let questionElements = [];
-  if (storyBeat.question) {
-    if (Array.isArray(storyBeat.question)) {
-      for (const q of storyBeat.question) {
-        dialogueText.innerHTML += `<br><span class="story-question">${q}</span>`;
-      }
-      questionElements = Array.from(dialogueText.querySelectorAll('.story-question'));
-    } else {
-      dialogueText.innerHTML += `<br><span class="story-question">${storyBeat.question}</span>`;
-      questionElements = [dialogueText.querySelector('.story-question')];
+let questionElements = [];
+if (storyBeat.question) {
+  if (Array.isArray(storyBeat.question)) {
+    for (const q of storyBeat.question) {
+      const text = typeof q === "function" ? q() : q;
+      dialogueText.innerHTML += `<br><span class="story-question">${text}</span>`;
     }
+    questionElements = Array.from(dialogueText.querySelectorAll('.story-question'));
   } else {
-    questionFadeTime = 0;
+    const text = typeof storyBeat.question === "function" ? storyBeat.question() : storyBeat.question;
+    dialogueText.innerHTML += `<br><span class="story-question">${text}</span>`;
+    questionElements = [dialogueText.querySelector('.story-question')];
   }
+} else {
+  questionFadeTime = 0;
+}
 
-  // Set options/buttons after dialogue and question
+// Set options/buttons after dialogue and question
 optionsBox.innerHTML = "";
 storyBeat.options
   .filter(opt => !opt.requirement || opt.requirement())
   .forEach((opt, idx) => {
     const btn = document.createElement('button');
     btn.className = 'story-option-btn';
-    btn.textContent = opt.title;
+    btn.textContent = typeof opt.title === "function" ? opt.title() : opt.title;
     btn.type = "button";
     btn.tabIndex = 0;
-    btn.dataset.description = opt.description || "";
+    btn.dataset.description = typeof opt.description === "function" ? opt.description() : opt.description || "";
     btn.addEventListener('click', () => {
       if (typeof opt.action === "function") opt.action();
     });

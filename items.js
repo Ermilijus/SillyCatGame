@@ -8,7 +8,7 @@ Handles Inventory system and items
 const ITEM_DB = { // Food, Toy, Quest, Misc, Powerup, Trophy, Valuable ===
 
     // Food items
-    1: {id: 1, name: "Bread", emoji: "🥖", image: "images/bread.png", type: "Food", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: true, stats: { fullness: 3, joy: -1}, description: "its crunchy fresh bread"},
+    1: {id: 1, name: "Bread", emoji: "🥖", image: "images/bread.png", type: "Food", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: true, stats: { fullness: 3, joy: -1}, description: "It's crunchy fresh bread"},
     2: {id: 2, name: "Fish", emoji: "🐟", image: "images/fish.png", type: "Food", stackable: true, maxStack: 10, rarity: "Uncommon", price: 2, combinable: false, usable: true, stats: { fullness: 5, joy: 2}, description: "fiiiish"},
     3: {id: 3, name: "Mouse", emoji: "🐀", image: "images/mouse.png", type: "Food", stackable: true, maxStack: 10, rarity: "Uncommon", price: 2, combinable: false, usable: true, stats: {fullness: 4, joy: 3, energy: -5, love: 1}, description: "Its just a toy, right?"},
     4: {id: 4, name: "Cherries", emoji: "🍒", image: "images/cherries.png", type: "Food", stackable: true, maxStack: 10, rarity: "Uncommon", price: 5, combinable: false, usable: true, stats: {fullness: 2, joy: 4}, description: "Delicious Cherries."},
@@ -18,7 +18,7 @@ const ITEM_DB = { // Food, Toy, Quest, Misc, Powerup, Trophy, Valuable ===
     8: {id: 8, name: "Watermelon slice", emoji: "🍉", image: "images/watermelon.png", type: "Food", stackable: true, maxStack: 10, rarity: "Epic", price: 7, combinable: false, usable: true, stats: {fullness: 2, joy: 4, love: 2}, description: "A juicy mouth watering treat, perfect for hot days."},
 
     // Toy items
-    100: {id: 100, name: "Ball", emoji: "🔴", image: "images/ball.png", type: "Toy", stackable: true, maxStack: 3, rarity: "Uncommon", price: 20, combinable: false, usable: true, stats: {fullness: -2, joy: 4, energy: -3}, description: "small red ball"},
+    100: {id: 100, name: "Ball", emoji: "🔴", image: "images/ball.png", type: "Toy", stackable: true, maxStack: 3, rarity: "Uncommon", price: 20, combinable: false, usable: true, stats: {fullness: -2, joy: 4, energy: -3}, description: "small toy ball"},
     101: {id: 101, name: "Ball of yarn", emoji: "🧶", image: "images/yarnball.png", type: "Toy", stackable: true, maxStack: 3, rarity: "Epic", price: 2, combinable: false, usable: true, stats: {fullness: -4, joy: 7, energy: -5, love: 4}, description: "its a ball made of yarn, Cats love it!"},
     102: {id: 102, name: "Quacker", emoji: "🦆", image: "images/quacker.png", type: "Toy", stackable: true, maxStack: 999, rarity: "Common", price: 1, combinable: true, usable: true, stats: {love: 1}, description: "Quack!, Collect them all!"},
     103: {id: 103, name: "Skateboard", emoji: "🛹", image: "images/skateboard.png", type: "Toy", stackable: false, maxStack: 1, rarity: "Rare", price: 5, combinable: false, usable: true, stats: {joy: 5, energy: -2}, description: "Its a skateboard, your kitty can do a kickflip, can you?"},
@@ -37,7 +37,7 @@ const ITEM_DB = { // Food, Toy, Quest, Misc, Powerup, Trophy, Valuable ===
     301: {id: 301, name: "Dice", emoji: "🎲", image: "images/dice.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Uncommon", price: 3, combinable: false, usable: false, description: "A single dice"},
     302: {id: 302, name: "Paper clip", emoji: "🧷", image: "images/paper_clip.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: false, description: "Its a paper clip, not much use..."},
     304: {id: 304, name: "Button", emoji: "🔘", image: "images/button.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: false, description: "A small button"},
-    305: {id: 305, name: "Feather", emoji: "🪶", image: "images/feather.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Rare", price: 5, combinable: false, usable: false, description: "A protective talisman believed to ward off evil."},
+    305: {id: 305, name: "Feather", emoji: "🪶", image: "images/feather.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Rare", price: 5, combinable: false, usable: false, description: "A feather."},
     306: {id: 306, name: "Soap", emoji: "🧼", image: "images/soap.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Uncommon", price: 2, combinable: false, usable: false, description: "A bar of soap, smells nice and clean. Is kitty trying to tell you something?"},
     307: {id: 307, name: "Seashell", emoji: "🪶", image: "images/seashell.png", type: "Misc", stackable: true, maxStack: 10, rarity: "Common", price: 1, combinable: false, usable: false, description: "A seashell, not much use, but its pretty."},
 
@@ -58,7 +58,7 @@ const ITEM_DB = { // Food, Toy, Quest, Misc, Powerup, Trophy, Valuable ===
     600: {id: 600, name: "Crown", emoji: "👑", image: "images/crown.png", type: "Valuable", stackable: false, maxStack: 1, rarity: "Legendary", price: 10, combinable: false, usable: true, stats: {luck: 10}, description: "Its a gilded crown!"},
     601: {id: 601, name: "Purse", emoji: "👛", image: "images/purse.png", type: "Valuable", stackable: false, maxStack: 1, rarity: "Rare", price: 5, combinable: false, usable: true, description: "A purse?!, who does it belong to?"},
     602: {id: 602, name: "Diamond", emoji: "💎", image: "images/diamond.png", type: "Valuable", stackable: true, maxStack: 1, rarity: "Epic", price: 7, combinable: false, usable: true, stats: {luck: 5}, description: "A shiny diamond, what if you combine it with another?"},
-    603: {id: 603, name: "Present", emoji: "🎁", image: "images/present.png", type: "Valuable", stackable: false, maxStack: 1, rarity: "Epic", price: 7, combinable: false, usable: true, description: "A gift from your Kitty, I wonder whats inside."},
+    603: {id: 603, name: "Present", emoji: "🎁", image: "images/present.png", type: "Valuable", stackable: false, maxStack: 1, rarity: "Epic", price: 7, combinable: false, usable: true, description: "A gift, I wonder whats inside."},
     604: {id: 604, name: "Cash", emoji: "💵", image: "images/cash.png", type: "Valuable", stackable: true, maxStack: 5, rarity: "Rare", price: 5, combinable: false, usable: true, description: "A stack of Cash :O"},
     
     // Notifications
@@ -72,7 +72,7 @@ const ITEM_DB = { // Food, Toy, Quest, Misc, Powerup, Trophy, Valuable ===
 
 // Inventory data storage
 let inventoryItems = [
-  {id: 2, qty: 3}, // Golden bell for testing
+  {id: 2, qty: 3},
   {id: 100, qty: 1},
   null,
   null,
@@ -732,17 +732,17 @@ function useItem(index) {
     if (item.id === 100 || item.id === 101 || item.id === 102 || item.id === 103) { // Special case for toys
     toysPlayedWith += 1;
     }
-    if (item.id === 400 || item.id === 401 || item.id === 402 || item.id === 403) { // Special case for powerups
-    powerupsUsed += 1;
+    if (item.id === 400 || item.id === 401 || item.id === 402) { // Special case for powerups
+    powerUpsUsed += 1;
     }
 
 
- if (item.id !== 506) {  
+if (item.id !== 506) {  
   item.qty -= 1;
   if (item.qty <= 0) inventoryItems[index] = null;
   initializeInventory();
   showNotif(item.id, -1);
-  }
+}
   initializeInventory();
   moveQuestPocketToInventory();
 }
