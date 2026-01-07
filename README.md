@@ -1,6 +1,15 @@
 # 🐾 [SillyCatGame]
 
 A small narrative-driven virtual pet game built in JavaScript, featuring stat management, inventory systems, branching story events, and some hidden worldbuilding.
+<details>
+<summary>Images</summary>
+<img width="696" height="669" alt="image" src="https://github.com/user-attachments/assets/7ad822b0-1279-4dad-9852-62d1e68a8d00" />
+<img width="634" height="626" alt="image" src="https://github.com/user-attachments/assets/b552a76f-4e23-4d98-89ae-cfb571119f27" />
+<img width="1062" height="1162" alt="image" src="https://github.com/user-attachments/assets/30a0ce58-b9b4-44b9-941f-2ba911db7bbb" />
+  
+https://github.com/user-attachments/assets/5038396e-78fa-4806-9683-705aa62e5c63
+
+</details>
 
 ## Overview
 
