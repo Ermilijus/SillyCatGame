@@ -117,42 +117,6 @@ document.getElementById('reduceEnergyBtn').addEventListener('click', () => {
   updateGameState();
 });
 
-// Functions to update stats with freeze checks
-function fullnessUpdate(amount) {
-  if (freezeFullness) return;
-  fullness += amount;
-  if (fullness < 0) fullness = 0;
-  if (fullness > 100) fullness = 100;
-}
-function energyUpdate(amount) {
-  if (freezeEnergy) return;
-  energy += amount;
-  if (energy < 0) energy = 0;
-  if (energy > 100) energy = 100;
-}
-function joyUpdate(amount) {
-  if (freezeJoy) return;
-  joy += amount;
-  if (joy < 0) joy = 0;
-}
-
-// freeze stats toggle --------------------------------------
-let freezeFullness = false;
-let freezeEnergy = false;
-let freezeJoy = false;
-
-document.getElementById('freezeFullnessBtn').addEventListener('click', () => {
-  freezeFullness = !freezeFullness;
-  document.getElementById('freezeFullnessBtn').textContent = freezeFullness ? "Unfreeze Fullness" : "Freeze Fullness";
-});
-document.getElementById('freezeEnergyBtn').addEventListener('click', () => {
-  freezeEnergy = !freezeEnergy;
-  document.getElementById('freezeEnergyBtn').textContent = freezeEnergy ? "Unfreeze Energy" : "Freeze Energy";
-});
-document.getElementById('freezeJoyBtn').addEventListener('click', () => {
-  freezeJoy = !freezeJoy;
-  document.getElementById('freezeJoyBtn').textContent = freezeJoy ? "Unfreeze Joy" : "Freeze Joy";
-});
 
 // set cat mood directly from debug menu --------------------------------------
 document.getElementById('setPlayfulBtn').addEventListener('click', () => {
@@ -205,6 +169,17 @@ document.getElementById('addValuableBtn').addEventListener('click', () => {
   giveLoot("Valuable");
   initializeInventory();
 });
+
+// ----------------------- Helper Function for Automation Tests -----------------------
+// Skip intro if URL has ?testMode=1
+function testMode() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('testMode') === '1') { // Hide intro and start the game directly
+        introOverlay.style.display = "none";
+        updateGameState();
+    }
+}
+
 
 /* Initialize debug visibility on load */
 applyDebugVisibility();

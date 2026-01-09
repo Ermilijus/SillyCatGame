@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Virtual Cat Companion</title>
+<title>SillyCatGame</title>
 
 
 <!-- ============================
@@ -162,16 +162,6 @@ This controls ALL visual appearance of the page
     </div>
   </div>
 
-  <!-- Freeze Stats-->
-  <div class="debug-section">
-    <button class="debug-section-toggle">Freeze Stats</button>
-    <div class="debug-section-content">
-      <button id="freezeFullnessBtn">Freeze Fullness</button>
-      <button id="freezeEnergyBtn">Freeze Energy</button>
-      <button id="freezeJoyBtn">Freeze Joy</button>
-    </div>
-  </div>
-
 <!-- Mood -->
  <div class="debug-section">
     <button class="debug-section-toggle">Mood</button>
@@ -222,10 +212,9 @@ This controls ALL visual appearance of the page
 
 
 <section id="control-panel">
-<!-- Example: put inside your control panel -->
 <div class="stat" data-stat="fullness">
-  <div class="stat-label">Fullness <span class="stat-value" id="fullness-value">30</span></div>
-  <div class="stat-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="30">
+  <div class="stat-label">Fullness <span class="stat-value" id="fullness-value">50</span></div>
+  <div class="stat-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
     <div class="stat-fill" id="fullnessBar"></div>
   </div>
 </div>
@@ -238,8 +227,8 @@ This controls ALL visual appearance of the page
 </div>
 
 <div class="stat" data-stat="joy">
-  <div class="stat-label">Joy <span class="stat-value" id="joy-value">50</span></div>
-  <div class="stat-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100000" aria-valuenow="50">
+  <div class="stat-label">Joy <span class="stat-value" id="joy-value">0</span></div>
+  <div class="stat-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100000" aria-valuenow="0">
     <div class="stat-fill" id="joyBar"></div>
   </div>
 </div>

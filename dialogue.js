@@ -175,11 +175,11 @@ const storyBeats = [
           hideStoryOverlay();
           giveLoot("Misc", 2);
           let random = Math.floor(Math.random() * 6);
-          joy += random;
+          joyUpdate(random);
           random = Math.floor(Math.random() * 11);
-          energy += random;
+          energyUpdate(-random);
           random = Math.floor(Math.random() * 16);
-          fullness -= random;
+          fullnessUpdate(-random);
           random = Math.floor(Math.random() * 11);
           love += random;
        }
@@ -385,9 +385,9 @@ const storyBeats = [
         action: () => {
           addItemById(202, 1); // Treasure Map
           hideStoryOverlay();
-          joy += 5;
-          energy -= 5;
-          fullness -= 7;
+          joyUpdate(5);
+          energyUpdate(-5);
+          fullnessUpdate(-7);
         }
       } 
     ]
@@ -448,9 +448,9 @@ const storyBeats = [
           giveLoot("Powerup", 1);
           removeItemsById(202, 1); // Remove Treasure Map
           updateGameState();
-          joy += 15;
-          energy -= 8;
-          fullness -= 8;
+          joyUpdate(15);
+          energyUpdate(-8);
+          fullnessUpdate(-8);
         }
       }
     ]
@@ -476,9 +476,9 @@ const storyBeats = [
           addItemById(4, cherriesPicked); // 1 to 8 cherries
           showNotif(4, cherriesPicked);
           hideStoryOverlay();
-          joy += 3;
-          energy -= 2;
-          fullness -= 4;
+          joyUpdate(3);
+          energyUpdate(-2);
+          fullnessUpdate(-4);
         }
       },
       {
@@ -509,11 +509,11 @@ const storyBeats = [
           giveLoot("Common", 2);
           addItemById(301, 1); // Forest Dice item
           let random = Math.floor(Math.random() * 6);
-          joy += random;
+          joyUpdate(random);
           random = Math.floor(Math.random() * 11);
-          energy -= random;
+          energyUpdate(-random);
           random = Math.floor(Math.random() * 16);
-          fullness -= random;
+          fullnessUpdate(-random);
           random = Math.floor(Math.random() * 4);
           love += random;
         }
@@ -963,7 +963,7 @@ const storyBeats = [
       description: "Finish your coffee quickly and get back to work.",
       action: () => { 
         hideStoryOverlay();
-        joy -= 5;
+        joyUpdate(-5);
         const earnings = Math.floor(Math.random() * 31) + 20; // Earn between $20 and $50
         coins += earnings;
         showNotif(604, earnings, `You earned some pay from your freelance work!`);
@@ -976,7 +976,7 @@ const storyBeats = [
       description: () => `Take some time to play with ${catsName} during your break.`,
       action: () => { 
         hideStoryOverlay(); 
-        joy += 10;
+        joyUpdate(10);
         love += 3;
         const earnings = Math.floor(Math.random() * 31) + 20; // Earn between $20 and $50
         coins += earnings;
@@ -1095,10 +1095,10 @@ const storyBeats = [
         hideStoryOverlay(); 
         removeItemsById(402, 1); // Use one catnip
         showNotif(402, -1);
-        joy += 15;
+        joyUpdate(15);
         love += 5;
-        energy -= 10;
-        fullness -= 15;
+        energyUpdate(-10);
+        fullnessUpdate(-15);
       }
     }
   ],
@@ -1122,9 +1122,9 @@ const storyBeats = [
       description: "End the day and head to bed.",
       action: () => { 
        hideStoryOverlay();
-       joy += 5;
-       energy -= 10;
-       fullness -= 10;
+       joyUpdate(5);
+       energyUpdate(-10);
+       fullnessUpdate(-10);
        love += 2;
        }
     },
@@ -1133,9 +1133,9 @@ const storyBeats = [
       description: () => `Go out for an evening walk with ${catsName}.`,
       action: () => {
         showStoryOverlay(getRandomEventBeat());
-        joy += 10;
-        energy -= 15;
-        fullness -= 10;
+        joyUpdate(10);
+        energyUpdate(-15);
+        fullnessUpdate(-10);
         love += 3;
        }
     }
@@ -1160,11 +1160,11 @@ const storyBeats = [
       action: () => { 
         hideStoryOverlay();
         let random = Math.floor(Math.random() * 11);
-        joy += random;
+        joyUpdate(random);
         random = Math.floor(Math.random() * 16);
-        energy -= random;
+        energyUpdate(-random);
         random = Math.floor(Math.random() * 16);
-        fullness -= random;
+        fullnessUpdate(-random);
         random = Math.floor(Math.random() * 6);
         love += random;
        }
@@ -1191,8 +1191,8 @@ const storyBeats = [
         giveLootChance("Toys", 50); // 50% chance to get a Toy item
         updateGameState();
         hideStoryOverlay(); 
-        energy -= 7;
-        fullness -= 6;
+        energyUpdate(-5);
+        fullnessUpdate(-6);
        }
     }
   ]

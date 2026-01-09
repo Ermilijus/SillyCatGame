@@ -16,6 +16,7 @@ const fullnessValueEl = document.getElementById('fullness-value');
 const energyValueEl = document.getElementById('energy-value');
 const joyValueEl    = document.getElementById('joy-value');
 
+
 // When Start button is clicked
 startBtn.addEventListener("click", () => {
   introOverlay.style.display = "none"; // Hide intro screen
@@ -29,8 +30,6 @@ startBtn.addEventListener("click", () => {
 const STAT_CONFIG = {
   fullness: { min: 0, max: 100, barEl: document.getElementById('fullnessBar'), valueEl: document.getElementById('fullness-value') },
   energy: { min: 0, max: 100, barEl: document.getElementById('energyBar'), valueEl: document.getElementById('energy-value') },
-  // Add more stats here as needed, e.g.:
-  // love:   { min: 0, max: 1000, barEl: document.getElementById('loveBar'), valueEl: document.getElementById('love-value') },
 };
 
 // Update any stat bar by name

@@ -144,7 +144,21 @@ function updateLoveDisplay() {
   if (loveValue) loveValue.textContent = `♥ ${love}`;
 }
 
-
+// Functions to update stats
+function fullnessUpdate(amount) {
+  fullness += amount;
+  if (fullness < 0) fullness = 0;
+  if (fullness > 100) fullness = 100;
+}
+function energyUpdate(amount) {
+  energy += amount;
+  if (energy < 0) energy = 0;
+  if (energy > 100) energy = 100;
+}
+function joyUpdate(amount) {
+  joy += amount;
+  if (joy < 0) joy = 0;
+}
 
 
 
@@ -153,4 +167,5 @@ function updateLoveDisplay() {
 document.addEventListener('DOMContentLoaded', () => {
 updateGameState();  //initial call to set stats on page load
 initializeShopInventory(); // initialize shop prices/sales and inventory on page load
+testMode(); // initialize test mode if enabled
 });

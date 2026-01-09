@@ -1,0 +1,15 @@
+{
+  "name": "katogachi",
+  "version": "1.0.0",
+  "description": "A small narrative-driven virtual pet game built in JavaScript, featuring stat management, inventory systems, branching story events, and some hidden worldbuilding.",
+  "main": "achievements.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0"
+  }
+}

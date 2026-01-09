@@ -1,0 +1,9 @@
+# Node / Playwright
+node_modules/
+.playwright/
+playwright-report/
+test-results/
+
+# OS / Editor junk
+.DS_Store
+.vscode/
