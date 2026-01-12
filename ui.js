@@ -167,5 +167,8 @@ function joyUpdate(amount) {
 document.addEventListener('DOMContentLoaded', () => {
 updateGameState();  //initial call to set stats on page load
 initializeShopInventory(); // initialize shop prices/sales and inventory on page load
+
+window.addItemById = window.addItemById || addItemById;
+window.updateCoinsDisplay = window.updateCoinsDisplay || updateCoinsDisplay;
 testMode(); // initialize test mode if enabled
 });

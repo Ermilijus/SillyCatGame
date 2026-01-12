@@ -127,6 +127,7 @@ function initializeInventory() {
         ${item.qty > 1 ? `<span class="stack-count">${item.qty}</span>` : ''}
       `;
       slot.title = `${meta.name}\n${meta.description}`;
+      slot.dataset.itemId = item.id;
     }
     slot.addEventListener('click', (e) => {
       e.preventDefault();

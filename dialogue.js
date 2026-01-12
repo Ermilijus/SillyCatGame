@@ -13,15 +13,23 @@ let isTyping = false;
 function typeText(element, text, options = {}) {
     let speed = options.speed || 35; // speed per character (lower is faster)
 
+    // --- TEST MODE SKIP ---
+    if (window.TEST_MODE) {
+        element.innerHTML = formatDialogue(text);
+        enableAllButtons();
+        isTyping = false;
+        return Promise.resolve();
+    }
+    // --- END TEST MODE SKIP ---
 
     return new Promise((resolve) => {
         let index = 0;
         let skipped = false;
 
-		if (isTyping) return Promise.resolve(); // Prevent overlapping typing and resolve immediately
-		isTyping = true;
+        if (isTyping) return Promise.resolve(); // Prevent overlapping typing and resolve immediately
+        isTyping = true;
         element.textContent = "";
-		disableAllButtons();
+        disableAllButtons();
 
         function skip() {
             skipped = true;
@@ -31,24 +39,23 @@ function typeText(element, text, options = {}) {
             isTyping = false;
             resolve();
         }
-	setTimeout(() => {
-    	document.addEventListener("click", skip);
-	}, 0);
+        setTimeout(() => {
+            document.addEventListener("click", skip);
+        }, 0);
 
         function typeFrame() {
             if (skipped) return;
-			element.innerHTML = formatDialogue(text.slice(0, index));
-			if (index < text.length) {
-			index++;
-
-			setTimeout(typeFrame, speed);
-        	}	else {
-			document.removeEventListener("click", skip);
-			enableAllButtons();
-			isTyping = false;
-			resolve();
-			}
-		}
+            element.innerHTML = formatDialogue(text.slice(0, index));
+            if (index < text.length) {
+                index++;
+                setTimeout(typeFrame, speed);
+            } else {
+                document.removeEventListener("click", skip);
+                enableAllButtons();
+                isTyping = false;
+                resolve();
+            }
+        }
 
         typeFrame();
     });
