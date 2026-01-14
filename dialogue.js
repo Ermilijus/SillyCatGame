@@ -20,7 +20,6 @@ function typeText(element, text, options = {}) {
         isTyping = false;
         return Promise.resolve();
     }
-    // --- END TEST MODE SKIP ---
 
     return new Promise((resolve) => {
         let index = 0;

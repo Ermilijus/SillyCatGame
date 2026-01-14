@@ -5,7 +5,7 @@ declare global {
     testHelpers: {
       addCoins: (amount: number) => void;
       giveItem: (itemId: number, quantity: number) => void;
-      
+      startQuest: (id: string) => void;
     };
   }
 }

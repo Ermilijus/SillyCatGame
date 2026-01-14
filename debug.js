@@ -197,6 +197,9 @@ function testMode() {
         }
         initializeInventory();
       },
+      startQuest(id) {
+        showStoryOverlay(getStoryId(id));
+      }
     };
   }
 }
