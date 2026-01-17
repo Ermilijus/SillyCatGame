@@ -469,7 +469,7 @@ const storyBeats = [
     backdrop: "images/Backdrops/forest.png",
     miniImg: "images/cherries.png",
     dialogue: [
-      "You wander through the forest and come a clearing, you spot a cherry tree!",
+      "You wander through the forest and come to a clearing, you spot a cherry tree!",
       () => `${catsName} seems interested in some bright red cherries dangling from the branches.`,
     ],
     question: "Do you pick some cherries for a snack?",
@@ -1037,7 +1037,7 @@ const storyBeats = [
     () => `realising its been way too peaceful all day, wondering what ${catsName} has been up to`,
     () => `As you wonder ${catsName} waddled in and left you something in the center of the room.`,
   ],
-  question: () => () => `You pick up the item ${catsName} brought back.`,
+  question: () =>`You pick up the item ${catsName} brought back.`,
   options: [
     {
       title: "Inspect the item",

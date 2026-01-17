@@ -25,7 +25,17 @@ test.describe('Inventory Functionality', () => {
             await page.click('#invBtn'); // Open inventory
             await expect(page.locator('.inv-slot[data-item-id="307"]')).toBeVisible(); // Check if item appears in inventory
         });
-
     });
 
+test.describe ('Item usage', () => {
+        test(`Using item from inventory applies its effect`, async ({ page }) => {
+            await page.evaluate(() => window.testHelpers.giveItem(400, 3)); // Give 3 energy drinks (item ID 400)
+            await page.click('#invBtn'); // Open inventory
+            await page.click('.inv-slot.filled[data-item-id="400"]'); // Click on energy drink
+            await expect(page.locator('#energy-value')).toHaveText('75'); // Check if energy is restored to 100
+        });
+
+        
+    });
+    
 });
