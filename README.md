@@ -87,6 +87,6 @@ These defects were left in place intentionally, as this project was built as a l
 
 ## Final Notes
 
-This project was created for personal learning and exploration.
+While this projectly largely is Complete, I am still adding on to it "passively" as i integrate Playwright/Typescript test Automation for further learning.
 
 Thanks for taking the time ♥
